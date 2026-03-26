@@ -11,8 +11,8 @@ body {
   font-family: sans-serif;
   font-size: 16px;
   line-height: 1.6;
-  color: #222;
-  background-color: #fff;
+  color: #e0e0e6;
+  background-color: #0a0a0f;
 }
 
 a {
@@ -50,28 +50,44 @@ section {
 .btn {
   display: inline-block;
   padding: 12px 28px;
-  background-color: #222;
-  color: #fff;
+  background-color: #ffffff;
+  color: #08080c;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: 600;
 }
 
 .btn:hover {
-  background-color: #444;
+  background-color: rgba(255, 255, 255, 0.88);
 }
 
 
 /* =====================
    NAVIGATION
+   ─────────────────────
+   Starts transparent — floating over the dark hero.
+   Becomes frosted-white once the user scrolls past 40px.
+   The 'scrolled' class is toggled by script.js.
 ===================== */
 header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: #fff;
-  border-bottom: 1px solid #e5e5e5;
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.4s ease,
+              border-color     0.4s ease;
+}
+
+header.scrolled {
+  background-color: rgba(8, 8, 12, 0.78);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04),
+              0 8px 40px rgba(0, 0, 0, 0.5);
 }
 
 .navbar {
@@ -83,9 +99,22 @@ header {
   padding: 16px 24px;
 }
 
+/* Slightly more padding in transparent state — air reads as premium */
+header:not(.scrolled) .navbar {
+  padding-top: 22px;
+  padding-bottom: 22px;
+}
+
 .logo {
   font-size: 1.4rem;
   font-weight: bold;
+}
+
+/* Nav text: white in all states — design system is always dark */
+header .logo,
+header .nav-links a {
+  color: rgba(255, 255, 255, 0.9);
+  transition: color 0.4s ease, opacity 0.18s ease;
 }
 
 .nav-links {
@@ -93,113 +122,550 @@ header {
   gap: 28px;
 }
 
-.nav-links a:hover {
-  text-decoration: underline;
+/* Hover: soft fade in both states */
+header .nav-links a:hover {
+  opacity: 0.6;
 }
 
-/* Mobile toggle button — hidden on desktop */
+/* Mobile toggle — hidden on desktop */
 .nav-toggle {
   display: none;
   background: none;
-  border: 1px solid #222;
   padding: 6px 12px;
   cursor: pointer;
   font-size: 0.9rem;
 }
 
+header .nav-toggle {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+  transition: border-color 0.4s ease, color 0.4s ease;
+}
+
+header.scrolled .nav-toggle {
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ── Nav CTA ──────────────────────────────────────────── */
+/* Glass pill over the hero; solid dark pill after scroll. */
+header .nav-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.46875rem 1.125rem;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background-color 0.4s ease,
+              border-color     0.4s ease,
+              color             0.4s ease,
+              opacity           0.18s ease;
+}
+
+header .nav-cta:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+header.scrolled .nav-cta {
+  background-color: rgba(255, 255, 255, 0.92);
+  color: #08080c;
+  border-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+header.scrolled .nav-cta:hover {
+  background-color: #ffffff;
+  border-color: transparent;
+}
+
 
 /* =====================
    HERO SECTION
+   ─────────────────────
+   Four stacked layers inside #hero:
+     1. #prism-container    (z-index 0) — WebGL canvas
+     2. .hero-overlay       (z-index 1) — full-bleed dark film
+     3. .hero-content::before             — soft radial vignette
+        (inside .hero-content stacking context, z-index -1)
+     4. .hero-content       (z-index 2) — all text, buttons, services
+        .hero-scroll-cue    (z-index 2) — scroll chevron
+
+   Edit this section:
+     • Copy       → index.html inside .hero-content
+     • Animation  → CONFIG block in js/script.js
+     • Overlay    → .hero-overlay background alpha below
+     • Vignette   → .hero-content::before radial-gradient below
 ===================== */
+
+/* ── Hero shell ───────────────────────────────────────── */
 #hero {
+  padding: 0;               /* override global section { padding: 80px 0 } */
+  position: relative;
+  overflow: hidden;
+  height: 86vh;
+  min-height: 580px;
+  background-color: #06060a;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 120px 24px;
-  background-color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  contain: layout style paint;
 }
 
-.hero-content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 16px;
+/* ── WebGL canvas wrapper ─────────────────────────────── */
+#prism-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
-.hero-content p {
-  font-size: 1.1rem;
-  margin-bottom: 28px;
-  max-width: 560px;
+#prism-container canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Full-bleed overlay ───────────────────────────────── */
+/* Uniform dark film that lifts text off the animation.
+   Raise alpha toward 0.45 if text is hard to read.
+   Lower toward 0.12 to let more color through. */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.38);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Hero content container ───────────────────────────── */
+/* Stacks all text/buttons vertically, centered.
+   Spacing is controlled per-element (gap: 0) for
+   intentional hierarchy — not uniform spacing. */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 2.25rem 1.75rem;
+  max-width: 640px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* Soft radial vignette behind the text only.
+   Creates a local dark pool that deepens readability without
+   boxing the content in a card shape.
+   Increase the middle stop (default 0.42) to darken more.
+   The inset: -100px -140px makes the gradient larger than
+   the content box so the fade feels natural. */
+.hero-content::before {
+  content: '';
+  position: absolute;
+  inset: -100px -140px;
+  background: radial-gradient(ellipse at 50% 46%,
+              rgba(0, 0, 0, 0.52) 0%, transparent 58%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ── Agency badge ─────────────────────────────────────── */
+/* One line that immediately positions who you are.
+   The ::before adds a thin editorial rule to the left.
+   Edit the text in index.html inside the .hero-badge span. */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.48);
+  margin-bottom: 0.6875rem;
+}
+
+.hero-badge::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.32);
+  flex-shrink: 0;
+}
+
+/* ── Main headline ────────────────────────────────────── */
+/* clamp() handles fluid scaling from mobile → desktop.
+   The <br> in index.html controls the intentional line break.
+   Keep line-height tight — this is a display typeface setting. */
+#hero h1 {
+  font-size: clamp(2.125rem, 5.75vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin: 0 0 1.125rem;
+}
+
+/* ── Subheadline ──────────────────────────────────────── */
+/* Keep max-width tight — a narrow column reads faster.
+   Edit color alpha to adjust contrast against the background. */
+.hero-sub {
+  font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 380px;
+  margin: 0 0 2.25rem;
+}
+
+/* ── CTA button row ───────────────────────────────────── */
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 0;
+}
+
+/* ── Shared button base ───────────────────────────────── */
+/* These classes are scoped to the hero — they do not affect
+   .btn used in the contact form or elsewhere. */
+.btn-hero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  border-radius: 9999px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn-hero:active {
+  transform: scale(0.96);
+}
+
+/* Primary: white fill + a luminous halo glow.
+   The glow is subtle (0.14 alpha) — just enough to make the
+   button feel lit against the dark background. */
+.btn-hero.btn-primary {
+  background-color: #ffffff;
+  color: #0a0a0a;
+  box-shadow: 0 0 28px rgba(255, 255, 255, 0.14);
+}
+
+.btn-hero.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.2);
+}
+
+/* Secondary: ghost pill — blurred border, no fill. */
+.btn-hero.btn-secondary {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.btn-hero.btn-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.62);
+  transform: translateY(-2px);
+}
+
+/* ── Services / trust row ─────────────────────────────── */
+/* A single discreet line showing your core services.
+   Ultra-low opacity keeps it from competing with the headline.
+   Edit the text in index.html inside .hero-services. */
+.hero-services {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+  line-height: 1;
+  margin: 0;
+  padding-top: 1.625rem;
+  /* Hairline separator above — creates a clear visual tier between
+     the CTAs and the services list, reinforcing hierarchy. */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ── Scroll cue ───────────────────────────────────────── */
+/* Animated chevron at the bottom of the hero.
+   Respects prefers-reduced-motion automatically.
+   Remove the .hero-scroll-cue div in index.html to hide. */
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.28);
+  z-index: 2;
+  pointer-events: none;
+  line-height: 0;
+}
+
+/* ── Keyframes ────────────────────────────────────────── */
+@keyframes heroScrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0);   opacity: 0.28; }
+  50%       { transform: translateX(-50%) translateY(8px); opacity: 0.52; }
+}
+
+/* Fades the scroll cue in to its resting opacity (0.28)
+   before handing off to heroScrollBounce. */
+@keyframes heroScrollCueFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 0.28; }
+}
+
+/* The content fade-up. Uses a spring-eased cubic-bezier
+   so elements feel like they settle, not just slide. */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Hero entrance animations ─────────────────────────── */
+/* Each element fades up in sequence, reinforcing hierarchy.
+   fill-mode: both keeps opacity:0 during the delay — no flash.
+   Fully disabled when prefers-reduced-motion is active. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-badge    { animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s  both; }
+  #hero h1       { animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.25s both; }
+  .hero-sub      { animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.4s  both; }
+  .hero-ctas     { animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.55s both; }
+  .hero-services { animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.68s both; }
+
+  /* Scroll cue: fade in first, then chain into the bounce loop */
+  .hero-scroll-cue {
+    animation:
+      heroScrollCueFadeIn 0.5s ease             0.9s both,
+      heroScrollBounce    2.4s ease-in-out 1.4s infinite;
+  }
 }
 
 
 /* =====================
-   ABOUT SECTION
+   SECTION HEADER
+   Shared by Services, Work, Process.
+   Left-aligned — more editorial, less corporate.
 ===================== */
-#about {
-  background-color: #fff;
+.section-header {
+  margin-bottom: 3.5rem;
 }
 
-#about h2 {
-  font-size: 2rem;
-  margin-bottom: 16px;
+.section-header h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
 }
 
-#about p {
-  max-width: 640px;
-  color: #444;
+.section-header p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.48);
+  max-width: 480px;
+  line-height: 1.65;
 }
 
 
 /* =====================
    SERVICES SECTION
+   Background: Base — first step up from hero Floor.
 ===================== */
 #services {
-  background-color: #f9f9f9;
-}
-
-#services h2 {
-  font-size: 2rem;
-  margin-bottom: 32px;
+  background-color: #0a0a0f;
 }
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;                          /* hairline gaps, cards sit edge-to-edge */
+  background-color: rgba(255, 255, 255, 0.07); /* gap color = thin border grid */
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .service-card {
-  background-color: #fff;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
-  padding: 28px;
+  background-color: #0a0a0f;
+  padding: 2rem 1.75rem;
+}
+
+.service-number {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.22);
+  margin-bottom: 1.25rem;
 }
 
 .service-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.625rem;
 }
 
 .service-card p {
-  color: #555;
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.48);
+  line-height: 1.65;
+}
+
+
+/* =====================
+   WORK SECTION
+   Background: Surface — alternates with Base.
+   Replace .work-card-image gradient backgrounds
+   with real screenshots when work is ready.
+===================== */
+#work {
+  background-color: #111118;
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.work-card {
+  cursor: pointer;
+}
+
+.work-card-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: opacity 0.2s ease;
+}
+
+.work-card:hover .work-card-image {
+  opacity: 0.85;
+}
+
+/* Placeholder gradients — replace with background-image: url() */
+.work-card-image--1 {
+  background: linear-gradient(145deg, #0e0e20 0%, #1c1850 100%);
+}
+
+.work-card-image--2 {
+  background: linear-gradient(145deg, #081318 0%, #0c2535 100%);
+}
+
+.work-card-image--3 {
+  background: linear-gradient(145deg, #100a18 0%, #261042 100%);
+}
+
+.work-card-tags {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.32);
+  margin-bottom: 0.3rem;
+}
+
+.work-card-meta h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+
+/* =====================
+   PROCESS SECTION
+   Background: Base — back to Base for rhythm.
+===================== */
+#process {
+  background-color: #0a0a0f;
+}
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem;
+}
+
+.step-number {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.22);
+  margin-bottom: 1.125rem;
+  padding-bottom: 1.125rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.process-step h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.process-step p {
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.48);
+  line-height: 1.65;
 }
 
 
 /* =====================
    CONTACT SECTION
+   Background: Surface — closes with alternating rhythm.
 ===================== */
 #contact {
-  background-color: #fff;
+  background-color: #111118;
 }
 
-#contact h2 {
-  font-size: 2rem;
-  margin-bottom: 12px;
+/* CTA headline block — centered above the form */
+.cta-block {
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
-#contact > .container > p {
-  margin-bottom: 28px;
-  color: #444;
+.cta-block h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  color: #ffffff;
+  margin-bottom: 0.625rem;
+}
+
+.cta-block p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 420px;
+  margin: 0 auto;
+  line-height: 1.65;
 }
 
 .contact-form {
@@ -207,22 +673,30 @@ header {
   flex-direction: column;
   gap: 16px;
   max-width: 560px;
+  margin: 0 auto;
 }
 
 .contact-form input,
 .contact-form textarea {
   width: 100%;
   padding: 12px 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
   font-size: 1rem;
   font-family: inherit;
+  background-color: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: #222;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 
@@ -230,11 +704,30 @@ header {
    FOOTER
 ===================== */
 footer {
-  background-color: #222;
-  color: #ccc;
+  background-color: #06060a;
+  color: rgba(255, 255, 255, 0.28);
   text-align: center;
   padding: 24px;
   font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+/* =====================
+   MOBILE RESPONSIVE
+===================== */
+/* =====================
+   REDUCED MOTION
+   Respects the user's OS accessibility preference.
+   Hides the canvas and shows a plain dark hero instead.
+===================== */
+@media (prefers-reduced-motion: reduce) {
+  #prism-container {
+    display: none;
+  }
+  #hero {
+    background-color: #06060a;
+  }
 }
 
 
@@ -261,7 +754,82 @@ footer {
     flex-wrap: wrap;
   }
 
-  .hero-content h1 {
-    font-size: 1.8rem;
+  /* Hide nav CTA on small phones — hero CTAs are the primary action */
+  header .nav-cta {
+    display: none;
+  }
+
+  /* Hero: tighter height on iPhone — svh avoids the URL-bar jump */
+  #hero {
+    height: 78svh;
+    min-height: 500px;
+  }
+
+  /* Tighten content box on mobile */
+  .hero-content {
+    padding: 1.5rem 1.25rem;
+  }
+
+  /* Compress spacing between elements on small screens */
+  #hero h1 {
+    margin-bottom: 0.875rem;
+  }
+
+  .hero-sub {
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Full-width pill buttons on mobile for easy tapping */
+  .btn-hero {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  /* Scroll cue sits closer to the bottom edge on small screens */
+  .hero-scroll-cue {
+    bottom: 1.125rem;
+  }
+
+  /* Services: 1 column on mobile, flush no-gap card grid */
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Work: stack to 1 column on mobile */
+  .work-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Process: 2 columns on mobile */
+  .process-steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+
+/* =====================
+   TABLET BREAKPOINT
+   Services + Process grids drop to 2 columns
+   before they get too cramped.
+===================== */
+@media (min-width: 601px) and (max-width: 900px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .process-steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
