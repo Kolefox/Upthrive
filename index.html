@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upthrive</title>
+  <meta name="description" content="Upthrive is a South Florida marketing agency that builds high-converting websites, paid media campaigns, and growth systems for brands ready to scale." />
+  <title>Upthrive — South Florida Marketing Agency</title>
+
+  <!-- Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css" />
@@ -15,70 +21,67 @@
   ===================== -->
   <header>
     <nav class="navbar">
-      <a href="#" class="logo">Upthrive</a>
+      <a href="#" class="logo">
+        <img src="assets/images/Logo_header.png" alt="Upthrive" loading="eager" />
+      </a>
       <ul class="nav-links">
-        <li><a href="#work">Work</a></li>
         <li><a href="#services">Services</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
       </ul>
-      <!-- Nav CTA — always in view on desktop. Hidden on mobile (hero buttons handle it). -->
       <a href="#contact" class="nav-cta">Book a Call</a>
-      <button class="nav-toggle" aria-label="Toggle navigation">Menu</button>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <svg class="icon-menu" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6"  x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6"  x2="6"  y2="18"></line>
+          <line x1="6"  y1="6"  x2="18" y2="18"></line>
+        </svg>
+      </button>
     </nav>
+
+    <!-- Mobile nav drawer — shown when header has .nav-open -->
+    <div class="mobile-nav" aria-hidden="true">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact" class="mobile-cta">Book a Call</a></li>
+      </ul>
+    </div>
   </header>
+
 
   <!-- =====================
        HERO SECTION
-       ─────────────────────
-       The Prism WebGL animation fills the background.
-       To change animation look/feel, edit the CONFIG
-       block at the top of js/script.js.
-       To change text, edit the content below.
   ===================== -->
   <section id="hero">
 
-    <!-- WebGL canvas is injected here by script.js.
-         Do NOT put content inside this div. -->
+    <!-- WebGL canvas injected here by script.js -->
     <div id="prism-container"></div>
 
-    <!-- Overlay: a subtle dark film over the animation
-         so text stays readable. Tweak --hero-overlay
-         in css/style.css to make it lighter or darker. -->
+    <!-- Dark overlay for text readability -->
     <div class="hero-overlay"></div>
 
-    <!-- All hero text + buttons sit above canvas + overlay via z-index -->
+    <!-- Hero text + CTAs -->
     <div class="hero-content">
-
-      <!-- Agency badge — one line that positions who you are.
-           Edit this text to change location or agency descriptor. -->
       <span class="hero-badge">South Florida Marketing Agency</span>
 
-      <!-- Main headline — outcome-focused, designed to break across 2 lines.
-           Keep it under 6 words per line. Edit the copy here. -->
       <h1>We Turn Attention<br>Into Revenue</h1>
 
-      <!-- Subheadline — specific to your services + who you serve.
-           Keep it to 1–2 sentences, max. -->
       <p class="hero-sub">High-converting websites, paid media, and growth systems — built for brands ready to scale.</p>
 
-      <!-- CTA buttons.
-           Primary → direct conversion action (contact/booking).
-           Secondary → soft exploration (services/work).
-           Remove the second <a> if you want a single CTA. -->
       <div class="hero-ctas">
         <a href="#contact"  class="btn-hero btn-primary">Book a Free Call</a>
         <a href="#services" class="btn-hero btn-secondary">View Services</a>
       </div>
 
-      <!-- Services row — tells visitors what you offer at a glance.
-           Edit the items between the · dots to match your services.
-           Remove this <p> entirely if you don't want it. -->
       <p class="hero-services">Paid Ads &nbsp;&middot;&nbsp; Web Design &nbsp;&middot;&nbsp; SEO &nbsp;&middot;&nbsp; Creative Strategy</p>
-
     </div>
 
-    <!-- Scroll cue — subtle animated chevron inviting the visitor to scroll.
-         Remove this entire div to hide it. -->
     <div class="hero-scroll-cue" aria-hidden="true">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
            viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -89,77 +92,124 @@
 
   </section>
 
+
   <!-- =====================
        SERVICES SECTION
   ===================== -->
   <section id="services">
     <div class="container">
-      <div class="section-header">
-        <h2>What We Build</h2>
-        <p>Paid media, web design, SEO, and creative strategy — each one built to drive revenue.</p>
+      <div class="section-header reveal">
+        <span class="section-eyebrow">What We Do</span>
+        <h2>Built to Drive Revenue</h2>
+        <p>Four disciplines, one goal — more customers for your business.</p>
       </div>
       <div class="services-grid">
 
-        <div class="service-card">
-          <span class="service-number">01</span>
+        <div class="service-card reveal" style="--delay:0.05s">
+          <div class="service-icon" aria-hidden="true">
+            <!-- Paid Media: bar chart / performance -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6"  y1="20" x2="6"  y2="14"/>
+              <line x1="2"  y1="20" x2="22" y2="20"/>
+            </svg>
+          </div>
           <h3>Paid Media</h3>
           <p>Performance campaigns across Meta, Google, and beyond — built to convert, not just get clicks.</p>
+          <span class="service-number" aria-hidden="true">01</span>
         </div>
 
-        <div class="service-card">
-          <span class="service-number">02</span>
+        <div class="service-card reveal" style="--delay:0.15s">
+          <div class="service-icon" aria-hidden="true">
+            <!-- Web Design: layout / wireframe grid -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18"/>
+              <path d="M9 21V9"/>
+            </svg>
+          </div>
           <h3>Web Design</h3>
           <p>High-converting websites and landing pages built for speed, clarity, and results.</p>
+          <span class="service-number" aria-hidden="true">02</span>
         </div>
 
-        <div class="service-card">
-          <span class="service-number">03</span>
+        <div class="service-card reveal" style="--delay:0.25s">
+          <div class="service-icon" aria-hidden="true">
+            <!-- SEO: magnifying glass with upward trend -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="M21 21l-4.35-4.35"/>
+              <path d="M8 13.5l2-2.5 2 2 2.5-3"/>
+            </svg>
+          </div>
           <h3>SEO</h3>
           <p>Organic growth strategies that compound over time and lower your cost to acquire.</p>
+          <span class="service-number" aria-hidden="true">03</span>
         </div>
 
-        <div class="service-card">
-          <span class="service-number">04</span>
+        <div class="service-card reveal" style="--delay:0.35s">
+          <div class="service-icon" aria-hidden="true">
+            <!-- Creative Strategy: pen / editorial direction -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 3a2.83 2.83 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+              <path d="M15 5l4 4"/>
+            </svg>
+          </div>
           <h3>Creative Strategy</h3>
           <p>Messaging, positioning, and creative direction that makes every channel work harder.</p>
+          <span class="service-number" aria-hidden="true">04</span>
         </div>
 
       </div>
     </div>
   </section>
 
+
   <!-- =====================
        WORK SECTION
-       ─────────────────────
-       Replace .work-card-image backgrounds with
-       real project screenshots when ready.
+       Replace .work-card-image backgrounds and
+       remove .work-soon-label when real work is ready.
   ===================== -->
   <section id="work">
     <div class="container">
-      <div class="section-header">
-        <h2>Selected Work</h2>
-        <p>A few brands we've helped grow.</p>
+      <div class="section-header reveal">
+        <span class="section-eyebrow">Selected Work</span>
+        <h2>Results in Progress</h2>
+        <p>Case studies coming soon — we're heads-down building results for current clients.</p>
       </div>
       <div class="work-grid">
 
-        <div class="work-card">
-          <div class="work-card-image work-card-image--1"></div>
-          <div class="work-card-meta">
-            <span class="work-card-tags">Paid Ads &nbsp;&middot;&nbsp; Web Design</span>
-            <h3>Project Name</h3>
+        <a class="work-card reveal" style="--delay:0.05s" href="https://www.foxsfleet.com/" target="_blank" rel="noopener noreferrer">
+          <div class="work-card-image work-card-image--1">
+            <div class="work-card-overlay">
+              <span class="work-card-visit">View Live Site &rarr;</span>
+            </div>
           </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-card-image work-card-image--2"></div>
           <div class="work-card-meta">
-            <span class="work-card-tags">SEO &nbsp;&middot;&nbsp; Creative Strategy</span>
-            <h3>Project Name</h3>
+            <span class="work-card-tags">Web Design &nbsp;&middot;&nbsp; Paid Ads &nbsp;&middot;&nbsp; SEO</span>
+            <h3>Fox's Fleet</h3>
+            <p class="work-card-desc">Luxury car rental brand in South Florida — built from the ground up with a conversion-focused site, paid media, and local SEO.</p>
           </div>
-        </div>
+        </a>
 
-        <div class="work-card">
-          <div class="work-card-image work-card-image--3"></div>
+        <a class="work-card reveal" style="--delay:0.15s" href="#" target="_blank" rel="noopener noreferrer">
+          <div class="work-card-image work-card-image--2">
+            <div class="work-card-overlay">
+              <span class="work-card-visit">View Live Site &rarr;</span>
+            </div>
+          </div>
+          <div class="work-card-meta">
+            <span class="work-card-tags">Web Design &nbsp;&middot;&nbsp; Creative Strategy</span>
+            <h3>Upthrive</h3>
+            <p class="work-card-desc">Designed and built our own agency website — a premium, mobile-first experience built to convert visitors into booked calls.</p>
+          </div>
+        </a>
+
+        <div class="work-card reveal" style="--delay:0.25s">
+          <div class="work-card-image work-card-image--3">
+            <span class="work-soon-label">Case Study Coming Soon</span>
+          </div>
           <div class="work-card-meta">
             <span class="work-card-tags">Paid Ads &nbsp;&middot;&nbsp; SEO</span>
             <h3>Project Name</h3>
@@ -170,36 +220,38 @@
     </div>
   </section>
 
+
   <!-- =====================
        PROCESS SECTION
   ===================== -->
   <section id="process">
     <div class="container">
-      <div class="section-header">
-        <h2>How It Works</h2>
-        <p>Simple, structured, and built around your goals.</p>
+      <div class="section-header reveal">
+        <span class="section-eyebrow">How It Works</span>
+        <h2>Simple. Structured. Effective.</h2>
+        <p>A clear process built around your goals — not ours.</p>
       </div>
       <div class="process-steps">
 
-        <div class="process-step">
+        <div class="process-step reveal" style="--delay:0.05s">
           <span class="step-number">01</span>
           <h3>Discovery</h3>
           <p>We learn your business, your market, and what growth actually means for you.</p>
         </div>
 
-        <div class="process-step">
+        <div class="process-step reveal" style="--delay:0.15s">
           <span class="step-number">02</span>
           <h3>Strategy</h3>
           <p>We build a clear, custom growth plan — no templates, no guesswork.</p>
         </div>
 
-        <div class="process-step">
+        <div class="process-step reveal" style="--delay:0.25s">
           <span class="step-number">03</span>
           <h3>Build</h3>
           <p>We execute across design, media, and content with precision and speed.</p>
         </div>
 
-        <div class="process-step">
+        <div class="process-step reveal" style="--delay:0.35s">
           <span class="step-number">04</span>
           <h3>Scale</h3>
           <p>We optimize continuously so your results compound over time.</p>
@@ -209,30 +261,114 @@
     </div>
   </section>
 
+
+  <!-- =====================
+       ABOUT SECTION
+  ===================== -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-left reveal">
+          <span class="section-eyebrow">About Upthrive</span>
+          <h2>Built to Grow Brands.<br>Not Just Manage Them.</h2>
+          <p>Upthrive is a South Florida marketing agency built on one principle: marketing should produce real results. We build high-converting websites, run paid media that performs, and create systems that compound over time.</p>
+          <p>You work directly with us — no account managers, no hand-offs. Just focused strategy and execution, from day one.</p>
+          <a href="#contact" class="btn-outline">Start a Conversation</a>
+        </div>
+
+        <div class="about-right">
+          <div class="about-value reveal" style="--delay:0.1s">
+            <span class="about-value-label">Our approach</span>
+            <p>We start with your business goals, not a service package. Every campaign, page, and creative decision traces back to one question: does this convert?</p>
+          </div>
+          <div class="about-value reveal" style="--delay:0.2s">
+            <span class="about-value-label">Our focus</span>
+            <p>South Florida businesses ready to grow. Whether you're scaling locally or expanding nationally, we build the systems to support it.</p>
+          </div>
+          <div class="about-value reveal" style="--delay:0.3s">
+            <span class="about-value-label">Our commitment</span>
+            <p>We don't take every client. We take the right ones — and when we do, you get our full attention and our best work.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
   <!-- =====================
        CONTACT SECTION
   ===================== -->
   <section id="contact">
     <div class="container">
-      <div class="cta-block">
+      <div class="cta-block reveal">
+        <span class="section-eyebrow">Let's Talk</span>
         <h2>Ready to Scale?</h2>
         <p>Book a free 30-minute strategy call. No pitch — just a clear plan for your brand.</p>
       </div>
-      <form class="contact-form" action="#" method="post">
-        <input type="text"  name="name"    placeholder="Your Name"  required />
-        <input type="email" name="email"   placeholder="Your Email" required />
+      <form class="contact-form reveal" action="#" method="post">
+        <div class="form-row">
+          <input type="text"  name="name"  placeholder="Your Name"  required />
+          <input type="email" name="email" placeholder="Your Email" required />
+        </div>
         <textarea name="message" placeholder="Tell us about your brand and goals" rows="5" required></textarea>
-        <button type="submit" class="btn">Send Message</button>
+        <button type="submit" class="btn-submit">Send Message</button>
       </form>
     </div>
   </section>
+
 
   <!-- =====================
        FOOTER
   ===================== -->
   <footer>
     <div class="container">
-      <p>&copy; 2026 Upthrive. All rights reserved.</p>
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <img src="assets/images/Logo_header.png" alt="Upthrive" class="footer-logo" loading="lazy" />
+          <p>Marketing systems that turn<br>attention into customers.</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-col">
+            <span class="footer-col-label">Services</span>
+            <a href="#services">Paid Media</a>
+            <a href="#services">Web Design</a>
+            <a href="#services">SEO</a>
+            <a href="#services">Creative Strategy</a>
+          </div>
+          <div class="footer-col">
+            <span class="footer-col-label">Company</span>
+            <a href="#about">About</a>
+            <a href="#work">Work</a>
+            <a href="#process">Process</a>
+            <a href="#contact">Book a Call</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Upthrive. All rights reserved.</p>
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram" class="footer-social-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="footer-social-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
+        </div>
+      </div>
     </div>
   </footer>
 

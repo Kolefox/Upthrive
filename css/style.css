@@ -1,5 +1,11 @@
 /* =====================
-   RESET & BASE STYLES
+   GOOGLE FONTS
+===================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+
+/* =====================
+   RESET & BASE
 ===================== */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -7,12 +13,18 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: sans-serif;
+  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
-  color: #e0e0e6;
-  background-color: #0a0a0f;
+  color: #A1A1A1;
+  background-color: #0B0B0B;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -34,42 +46,88 @@ img {
    LAYOUT UTILITY
 ===================== */
 .container {
-  max-width: 960px;
+  max-width: 1040px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 28px;
 }
 
 section {
-  padding: 80px 0;
+  padding: 96px 0;
 }
 
 
 /* =====================
-   BUTTONS
+   SCROLL REVEAL
+   Elements with .reveal animate in when they enter
+   the viewport. The JS adds .visible to trigger it.
+   --delay CSS var staggers grid children.
 ===================== */
-.btn {
-  display: inline-block;
-  padding: 12px 28px;
-  background-color: #ffffff;
-  color: #08080c;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--delay, 0s);
 }
 
-.btn:hover {
-  background-color: rgba(255, 255, 255, 0.88);
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+
+/* =====================
+   SECTION EYEBROW
+   Small uppercase label above section headlines.
+===================== */
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.36);
+  margin-bottom: 0.75rem;
+}
+
+
+/* =====================
+   SECTION HEADER
+   Shared by Services, Work, Process, etc.
+===================== */
+.section-header {
+  margin-bottom: 3.5rem;
+}
+
+.section-header h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  color: #F5F5F5;
+  margin-bottom: 0.625rem;
+  line-height: 1.15;
+}
+
+.section-header p {
+  font-size: 1rem;
+  color: #A1A1A1;
+  max-width: 480px;
+  line-height: 1.7;
 }
 
 
 /* =====================
    NAVIGATION
-   ─────────────────────
-   Starts transparent — floating over the dark hero.
-   Becomes frosted-white once the user scrolls past 40px.
-   The 'scrolled' class is toggled by script.js.
+   Transparent over the hero → frosted dark on scroll.
+   .nav-open shows the mobile drawer.
 ===================== */
 header {
   position: sticky;
@@ -77,153 +135,192 @@ header {
   z-index: 100;
   background-color: transparent;
   border-bottom: 1px solid transparent;
-  transition: background-color 0.4s ease,
-              border-color     0.4s ease;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
 header.scrolled {
-  background-color: rgba(8, 8, 12, 0.78);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background-color: rgba(5, 5, 5, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04),
-              0 8px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03), 0 8px 40px rgba(0, 0, 0, 0.6);
 }
 
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 960px;
+  max-width: 1040px;
   margin: 0 auto;
-  padding: 16px 24px;
+  padding: 4px 28px;
 }
 
-/* Slightly more padding in transparent state — air reads as premium */
 header:not(.scrolled) .navbar {
-  padding-top: 22px;
-  padding-bottom: 22px;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
-.logo {
-  font-size: 1.4rem;
-  font-weight: bold;
+/* Logo image */
+.logo img {
+  height: 80px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
 }
 
-/* Nav text: white in all states — design system is always dark */
-header .logo,
-header .nav-links a {
-  color: rgba(255, 255, 255, 0.9);
-  transition: color 0.4s ease, opacity 0.18s ease;
-}
-
+/* Nav links */
 .nav-links {
   display: flex;
-  gap: 28px;
+  gap: 32px;
 }
 
-/* Hover: soft fade in both states */
-header .nav-links a:hover {
-  opacity: 0.6;
-}
-
-/* Mobile toggle — hidden on desktop */
-.nav-toggle {
-  display: none;
-  background: none;
-  padding: 6px 12px;
-  cursor: pointer;
+header .nav-links a {
   font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(245, 245, 245, 0.82);
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
 }
 
-header .nav-toggle {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: rgba(255, 255, 255, 0.9);
-  transition: border-color 0.4s ease, color 0.4s ease;
+header .nav-links a:hover {
+  color: #F5F5F5;
 }
 
-header.scrolled .nav-toggle {
-  border-color: rgba(255, 255, 255, 0.22);
-  color: rgba(255, 255, 255, 0.9);
-}
-
-/* ── Nav CTA ──────────────────────────────────────────── */
-/* Glass pill over the hero; solid dark pill after scroll. */
+/* Nav CTA */
 header .nav-cta {
   display: inline-flex;
   align-items: center;
-  padding: 0.46875rem 1.125rem;
+  padding: 0.5rem 1.125rem;
   border-radius: 9999px;
   font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  text-decoration: none;
   white-space: nowrap;
   background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #F5F5F5;
+  border: 1px solid rgba(255, 255, 255, 0.24);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  transition: background-color 0.4s ease,
-              border-color     0.4s ease,
-              color             0.4s ease,
-              opacity           0.18s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 header .nav-cta:hover {
   background-color: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.45);
 }
 
 header.scrolled .nav-cta {
-  background-color: rgba(255, 255, 255, 0.92);
-  color: #08080c;
+  background-color: rgba(245, 245, 245, 0.94);
+  color: #0B0B0B;
   border-color: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
 header.scrolled .nav-cta:hover {
-  background-color: #ffffff;
-  border-color: transparent;
+  background-color: #F5F5F5;
+}
+
+/* Hamburger toggle — hidden on desktop */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  padding: 7px 9px;
+  cursor: pointer;
+  color: rgba(245, 245, 245, 0.9);
+  line-height: 0;
+  transition: border-color 0.2s ease;
+}
+
+.nav-toggle:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+/* Swap hamburger / X icons via CSS */
+.nav-toggle .icon-close  { display: none; }
+.nav-toggle .icon-menu   { display: block; }
+
+header.nav-open .nav-toggle .icon-close { display: block; }
+header.nav-open .nav-toggle .icon-menu  { display: none; }
+
+/* Mobile nav drawer */
+.mobile-nav {
+  display: none; /* shown only at mobile breakpoint */
+  max-height: 0;
+  overflow: hidden;
+  background-color: rgba(5, 5, 5, 0.96);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  transition: max-height 0.35s ease;
+}
+
+header.nav-open .mobile-nav {
+  max-height: 360px;
+}
+
+.mobile-nav ul {
+  padding: 12px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-nav ul li a {
+  display: block;
+  padding: 12px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(245, 245, 245, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: color 0.2s ease;
+}
+
+.mobile-nav ul li:last-child a {
+  border-bottom: none;
+}
+
+.mobile-nav ul li a:hover {
+  color: #F5F5F5;
+}
+
+.mobile-nav .mobile-cta {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 13px 28px !important;
+  background-color: #F5F5F5;
+  color: #0B0B0B !important;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.9375rem !important;
+  text-align: center;
+  border-bottom: none !important;
 }
 
 
 /* =====================
    HERO SECTION
-   ─────────────────────
-   Four stacked layers inside #hero:
-     1. #prism-container    (z-index 0) — WebGL canvas
-     2. .hero-overlay       (z-index 1) — full-bleed dark film
-     3. .hero-content::before             — soft radial vignette
-        (inside .hero-content stacking context, z-index -1)
-     4. .hero-content       (z-index 2) — all text, buttons, services
-        .hero-scroll-cue    (z-index 2) — scroll chevron
-
-   Edit this section:
-     • Copy       → index.html inside .hero-content
-     • Animation  → CONFIG block in js/script.js
-     • Overlay    → .hero-overlay background alpha below
-     • Vignette   → .hero-content::before radial-gradient below
+   Four stacked layers:
+     1. #prism-container  — WebGL canvas (z 0)
+     2. .hero-overlay     — dark film (z 1)
+     3. .hero-content     — all text/buttons (z 2)
+     4. .hero-scroll-cue  — scroll chevron (z 2)
 ===================== */
-
-/* ── Hero shell ───────────────────────────────────────── */
 #hero {
-  padding: 0;               /* override global section { padding: 80px 0 } */
+  padding: 0;
   position: relative;
   overflow: hidden;
   height: 86vh;
   min-height: 580px;
-  background-color: #06060a;
+  background-color: #050505;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
   contain: layout style paint;
 }
 
-/* ── WebGL canvas wrapper ─────────────────────────────── */
 #prism-container {
   position: absolute;
   inset: 0;
@@ -240,10 +337,6 @@ header.scrolled .nav-cta:hover {
   display: block;
 }
 
-/* ── Full-bleed overlay ───────────────────────────────── */
-/* Uniform dark film that lifts text off the animation.
-   Raise alpha toward 0.45 if text is hard to read.
-   Lower toward 0.12 to let more color through. */
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -252,15 +345,11 @@ header.scrolled .nav-cta:hover {
   pointer-events: none;
 }
 
-/* ── Hero content container ───────────────────────────── */
-/* Stacks all text/buttons vertically, centered.
-   Spacing is controlled per-element (gap: 0) for
-   intentional hierarchy — not uniform spacing. */
 .hero-content {
   position: relative;
   z-index: 2;
   padding: 2.25rem 1.75rem;
-  max-width: 640px;
+  max-width: 660px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -268,26 +357,15 @@ header.scrolled .nav-cta:hover {
   gap: 0;
 }
 
-/* Soft radial vignette behind the text only.
-   Creates a local dark pool that deepens readability without
-   boxing the content in a card shape.
-   Increase the middle stop (default 0.42) to darken more.
-   The inset: -100px -140px makes the gradient larger than
-   the content box so the fade feels natural. */
 .hero-content::before {
   content: '';
   position: absolute;
   inset: -100px -140px;
-  background: radial-gradient(ellipse at 50% 46%,
-              rgba(0, 0, 0, 0.52) 0%, transparent 58%);
+  background: radial-gradient(ellipse at 50% 46%, rgba(0, 0, 0, 0.52) 0%, transparent 58%);
   z-index: -1;
   pointer-events: none;
 }
 
-/* ── Agency badge ─────────────────────────────────────── */
-/* One line that immediately positions who you are.
-   The ::before adds a thin editorial rule to the left.
-   Edit the text in index.html inside the .hero-badge span. */
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -297,43 +375,30 @@ header.scrolled .nav-cta:hover {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.48);
-  margin-bottom: 0.6875rem;
+  margin-bottom: 0.75rem;
 }
 
 .hero-badge::before {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.32);
-  flex-shrink: 0;
+  display: none;
 }
 
-/* ── Main headline ────────────────────────────────────── */
-/* clamp() handles fluid scaling from mobile → desktop.
-   The <br> in index.html controls the intentional line break.
-   Keep line-height tight — this is a display typeface setting. */
 #hero h1 {
-  font-size: clamp(2.125rem, 5.75vw, 3.75rem);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   color: #ffffff;
   margin: 0 0 1.125rem;
 }
 
-/* ── Subheadline ──────────────────────────────────────── */
-/* Keep max-width tight — a narrow column reads faster.
-   Edit color alpha to adjust contrast against the background. */
 .hero-sub {
   font-size: clamp(0.9375rem, 2vw, 1.0625rem);
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.6);
-  max-width: 380px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.58);
+  max-width: 400px;
   margin: 0 0 2.25rem;
 }
 
-/* ── CTA button row ───────────────────────────────────── */
 .hero-ctas {
   display: flex;
   flex-wrap: wrap;
@@ -342,14 +407,11 @@ header.scrolled .nav-cta:hover {
   margin: 0;
 }
 
-/* ── Shared button base ───────────────────────────────── */
-/* These classes are scoped to the hero — they do not affect
-   .btn used in the contact form or elsewhere. */
 .btn-hero {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 2rem;
+  padding: 0.9375rem 2.125rem;
   border-radius: 9999px;
   font-size: 0.9375rem;
   font-weight: 600;
@@ -359,62 +421,49 @@ header.scrolled .nav-cta:hover {
   transition: opacity 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
   white-space: nowrap;
   -webkit-font-smoothing: antialiased;
+  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
 }
 
 .btn-hero:active {
   transform: scale(0.96);
 }
 
-/* Primary: white fill + a luminous halo glow.
-   The glow is subtle (0.14 alpha) — just enough to make the
-   button feel lit against the dark background. */
 .btn-hero.btn-primary {
-  background-color: #ffffff;
-  color: #0a0a0a;
+  background-color: #F5F5F5;
+  color: #0B0B0B;
   box-shadow: 0 0 28px rgba(255, 255, 255, 0.14);
 }
 
 .btn-hero.btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.22);
 }
 
-/* Secondary: ghost pill — blurred border, no fill. */
 .btn-hero.btn-secondary {
   background-color: transparent;
-  color: #ffffff;
+  color: #F5F5F5;
   border: 1.5px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
 .btn-hero.btn-secondary:hover {
-  border-color: rgba(255, 255, 255, 0.62);
+  border-color: rgba(255, 255, 255, 0.6);
   transform: translateY(-2px);
 }
 
-/* ── Services / trust row ─────────────────────────────── */
-/* A single discreet line showing your core services.
-   Ultra-low opacity keeps it from competing with the headline.
-   Edit the text in index.html inside .hero-services. */
 .hero-services {
   font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(255, 255, 255, 0.38);
   line-height: 1;
   margin: 0;
-  padding-top: 1.625rem;
-  /* Hairline separator above — creates a clear visual tier between
-     the CTAs and the services list, reinforcing hierarchy. */
+  padding-top: 1.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* ── Scroll cue ───────────────────────────────────────── */
-/* Animated chevron at the bottom of the hero.
-   Respects prefers-reduced-motion automatically.
-   Remove the .hero-scroll-cue div in index.html to hide. */
 .hero-scroll-cue {
   position: absolute;
   bottom: 1.75rem;
@@ -426,30 +475,21 @@ header.scrolled .nav-cta:hover {
   line-height: 0;
 }
 
-/* ── Keyframes ────────────────────────────────────────── */
 @keyframes heroScrollBounce {
   0%, 100% { transform: translateX(-50%) translateY(0);   opacity: 0.28; }
   50%       { transform: translateX(-50%) translateY(8px); opacity: 0.52; }
 }
 
-/* Fades the scroll cue in to its resting opacity (0.28)
-   before handing off to heroScrollBounce. */
 @keyframes heroScrollCueFadeIn {
   from { opacity: 0; }
   to   { opacity: 0.28; }
 }
 
-/* The content fade-up. Uses a spring-eased cubic-bezier
-   so elements feel like they settle, not just slide. */
 @keyframes heroFadeUp {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Hero entrance animations ─────────────────────────── */
-/* Each element fades up in sequence, reinforcing hierarchy.
-   fill-mode: both keeps opacity:0 during the delay — no flash.
-   Fully disabled when prefers-reduced-motion is active. */
 @media (prefers-reduced-motion: no-preference) {
   .hero-badge    { animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s  both; }
   #hero h1       { animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.25s both; }
@@ -457,7 +497,6 @@ header.scrolled .nav-cta:hover {
   .hero-ctas     { animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.55s both; }
   .hero-services { animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.68s both; }
 
-  /* Scroll cue: fade in first, then chain into the bounce loop */
   .hero-scroll-cue {
     animation:
       heroScrollCueFadeIn 0.5s ease             0.9s both,
@@ -467,90 +506,185 @@ header.scrolled .nav-cta:hover {
 
 
 /* =====================
-   SECTION HEADER
-   Shared by Services, Work, Process.
-   Left-aligned — more editorial, less corporate.
-===================== */
-.section-header {
-  margin-bottom: 3.5rem;
-}
-
-.section-header h2 {
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  font-weight: 700;
-  letter-spacing: -0.022em;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
-}
-
-.section-header p {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.48);
-  max-width: 480px;
-  line-height: 1.65;
-}
-
-
-/* =====================
    SERVICES SECTION
-   Background: Base — first step up from hero Floor.
 ===================== */
 #services {
-  background-color: #0a0a0f;
+  background-color: #0B0B0B;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Faint ambient radial glow behind the card group */
+#services::before {
+  content: '';
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(1000px, 140vw);
+  height: 70%;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.022) 0%, transparent 62%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* One-time light sweep — fires once ~1.4s after page load */
+@media (prefers-reduced-motion: no-preference) {
+  #services::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      108deg,
+      transparent 28%,
+      rgba(255,255,255,0.03) 50%,
+      transparent 72%
+    );
+    background-size: 300% 100%;
+    background-position: 100% 0;
+    pointer-events: none;
+    z-index: 1;
+    animation: servicesSweep 2s cubic-bezier(0.25, 0, 0.25, 1) 1.4s 1 forwards;
+  }
+
+  @keyframes servicesSweep {
+    from { background-position: 100% 0; }
+    to   { background-position: -100% 0; }
+  }
+}
+
+/* Content sits above the glow layers */
+#services > .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Slightly larger heading to anchor the section */
+#services .section-header h2 {
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
 }
 
 .services-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1px;                          /* hairline gaps, cards sit edge-to-edge */
-  background-color: rgba(255, 255, 255, 0.07); /* gap color = thin border grid */
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 10px;
-  overflow: hidden;
+  gap: 1.125rem;
 }
 
 .service-card {
-  background-color: #0a0a0f;
-  padding: 2rem 1.75rem;
+  background-color: #121212;
+  border: 1px solid #242424;
+  border-radius: 14px;
+  padding: 2rem 1.75rem 1.875rem;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
+  /* Inset top highlight gives the card a dimensional lifted edge */
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.055),
+    0 1px 3px rgba(0,0,0,0.25);
 }
 
-.service-number {
-  display: block;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  color: rgba(255, 255, 255, 0.22);
+/* Soft top-edge gradient — reinforces the "lit from above" feel */
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1) 50%, transparent);
+  pointer-events: none;
+}
+
+/* Icon container */
+.service-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 1.25rem;
+  flex-shrink: 0;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.service-icon svg {
+  display: block;
+  color: rgba(245,245,245,0.5);
+  transition: color 0.3s ease;
+}
+
+/* Ghost number — ornamental, top-right corner */
+.service-number {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.375rem;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(245, 245, 245, 0.1);
+  pointer-events: none;
+  user-select: none;
 }
 
 .service-card h3 {
   font-size: 1.0625rem;
-  font-weight: 600;
-  color: #ffffff;
+  font-weight: 700;
+  color: #F5F5F5;
   margin-bottom: 0.625rem;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
 }
 
 .service-card p {
   font-size: 0.9375rem;
-  color: rgba(255, 255, 255, 0.48);
-  line-height: 1.65;
+  color: #A1A1A1;
+  line-height: 1.7;
+}
+
+/* Desktop hover — only on pointer devices, never triggers on touch */
+@media (hover: hover) {
+  .service-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(245,245,245,0.12);
+    background-color: #161616;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      0 20px 50px rgba(0,0,0,0.5),
+      0 6px 16px rgba(0,0,0,0.3);
+  }
+
+  .service-card:hover .service-icon {
+    background-color: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .service-card:hover .service-icon svg {
+    color: rgba(245,245,245,0.85);
+  }
 }
 
 
 /* =====================
    WORK SECTION
-   Background: Surface — alternates with Base.
-   Replace .work-card-image gradient backgrounds
-   with real screenshots when work is ready.
 ===================== */
 #work {
-  background-color: #111118;
+  background-color: #121212;
 }
 
 .work-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 1.75rem;
 }
 
 .work-card {
@@ -558,28 +692,79 @@ header.scrolled .nav-cta:hover {
 }
 
 .work-card-image {
+  position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  transition: opacity 0.2s ease;
+  border-radius: 10px;
+  margin-bottom: 1.125rem;
+  overflow: hidden;
+  border: 1px solid #242424;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .work-card:hover .work-card-image {
-  opacity: 0.85;
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
 }
 
-/* Placeholder gradients — replace with background-image: url() */
+/* Hover overlay — "View Live Site" appears on hover */
+.work-card-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.work-card-visit {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #F5F5F5;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.work-card:hover .work-card-overlay {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.work-card:hover .work-card-visit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fox's Fleet */
 .work-card-image--1 {
-  background: linear-gradient(145deg, #0e0e20 0%, #1c1850 100%);
+  background: url('../assets/images/hero-image.jpg') center center / cover no-repeat;
 }
 
 .work-card-image--2 {
-  background: linear-gradient(145deg, #081318 0%, #0c2535 100%);
+  background: url('../assets/images/Upthrive-header.png') center center / cover no-repeat;
 }
 
 .work-card-image--3 {
-  background: linear-gradient(145deg, #100a18 0%, #261042 100%);
+  background: linear-gradient(145deg, #0f0814 0%, #22103a 100%);
+}
+
+/* "Coming Soon" label centered inside the card */
+.work-soon-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.25);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
 }
 
 .work-card-tags {
@@ -588,23 +773,30 @@ header.scrolled .nav-cta:hover {
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.32);
-  margin-bottom: 0.3rem;
+  color: rgba(245, 245, 245, 0.3);
+  margin-bottom: 0.35rem;
 }
 
 .work-card-meta h3 {
   font-size: 1.0625rem;
   font-weight: 600;
-  color: #ffffff;
+  color: #F5F5F5;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.375rem;
+}
+
+.work-card-desc {
+  font-size: 0.875rem;
+  color: #A1A1A1;
+  line-height: 1.6;
 }
 
 
 /* =====================
    PROCESS SECTION
-   Background: Base — back to Base for rhythm.
 ===================== */
 #process {
-  background-color: #0a0a0f;
+  background-color: #0B0B0B;
 }
 
 .process-steps {
@@ -618,85 +810,230 @@ header.scrolled .nav-cta:hover {
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.16em;
-  color: rgba(255, 255, 255, 0.22);
-  margin-bottom: 1.125rem;
-  padding-bottom: 1.125rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(245, 245, 245, 0.2);
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #242424;
 }
 
 .process-step h3 {
   font-size: 1.0625rem;
-  font-weight: 600;
-  color: #ffffff;
+  font-weight: 700;
+  color: #F5F5F5;
   margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
 }
 
 .process-step p {
   font-size: 0.9375rem;
-  color: rgba(255, 255, 255, 0.48);
-  line-height: 1.65;
+  color: #A1A1A1;
+  line-height: 1.7;
+}
+
+
+/* =====================
+   ABOUT SECTION
+===================== */
+#about {
+  background-color: #121212;
+  border-top: 1px solid #242424;
+  border-bottom: 1px solid #242424;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.about-left h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #F5F5F5;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+
+.about-left p {
+  font-size: 1rem;
+  color: #A1A1A1;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.about-left p:last-of-type {
+  margin-bottom: 2rem;
+}
+
+/* Outline CTA button */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.875rem 1.875rem;
+  border-radius: 9999px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #F5F5F5;
+  border: 1.5px solid #242424;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-outline:hover {
+  border-color: rgba(245, 245, 245, 0.4);
+  background-color: rgba(245, 245, 245, 0.04);
+}
+
+/* Right column: stacked value cards */
+.about-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.about-value {
+  padding: 1.625rem 0;
+  border-bottom: 1px solid #242424;
+}
+
+.about-value:first-child {
+  border-top: 1px solid #242424;
+}
+
+.about-value-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.3);
+  margin-bottom: 0.625rem;
+}
+
+.about-value p {
+  font-size: 0.9375rem;
+  color: #A1A1A1;
+  line-height: 1.7;
 }
 
 
 /* =====================
    CONTACT SECTION
-   Background: Surface — closes with alternating rhythm.
 ===================== */
 #contact {
-  background-color: #111118;
+  background-color: #0B0B0B;
 }
 
-/* CTA headline block — centered above the form */
 .cta-block {
   text-align: center;
   margin-bottom: 3rem;
 }
 
+.cta-eyebrow {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.36);
+  margin-bottom: 0.75rem;
+}
+
 .cta-block h2 {
   font-size: clamp(1.75rem, 3.5vw, 2.75rem);
   font-weight: 700;
-  letter-spacing: -0.022em;
-  color: #ffffff;
+  letter-spacing: -0.025em;
+  color: #F5F5F5;
   margin-bottom: 0.625rem;
 }
 
 .cta-block p {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: #A1A1A1;
   max-width: 420px;
   margin: 0 auto;
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-width: 560px;
+  gap: 14px;
+  max-width: 580px;
   margin: 0 auto;
+}
+
+/* Name + email side by side on desktop */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
 }
 
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  padding: 12px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  font-size: 1rem;
-  font-family: inherit;
-  background-color: rgba(255, 255, 255, 0.04);
-  color: #ffffff;
+  padding: 14px 16px;
+  border: 1px solid #242424;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #F5F5F5;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(245, 245, 245, 0.28);
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(245, 245, 245, 0.28);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.btn-submit {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9375rem 2.5rem;
+  border-radius: 9999px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  letter-spacing: 0.01em;
+  background-color: #F5F5F5;
+  color: #0B0B0B;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(245, 245, 245, 0.18);
+}
+
+.btn-submit:active {
+  transform: scale(0.97);
+}
+
+/* Success state — added by JS after submit */
+.contact-form.submitted .btn-submit {
+  background-color: rgba(245, 245, 245, 0.12);
+  color: rgba(245, 245, 245, 0.6);
+  pointer-events: none;
 }
 
 
@@ -704,132 +1041,255 @@ header.scrolled .nav-cta:hover {
    FOOTER
 ===================== */
 footer {
-  background-color: #06060a;
-  color: rgba(255, 255, 255, 0.28);
-  text-align: center;
-  padding: 24px;
+  background-color: #050505;
+  border-top: 1px solid #242424;
+  padding: 64px 0 32px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3rem;
+  margin-bottom: 3.5rem;
+  padding-bottom: 3.5rem;
+  border-bottom: 1px solid #242424;
+}
+
+.footer-brand .footer-logo {
+  height: 28px;
+  width: auto;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.footer-brand p {
   font-size: 0.9rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(245, 245, 245, 0.36);
+  line-height: 1.7;
+}
+
+.footer-links {
+  display: flex;
+  gap: 4rem;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.footer-col-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.3);
+  margin-bottom: 0.5rem;
+}
+
+.footer-col a {
+  font-size: 0.9rem;
+  color: rgba(245, 245, 245, 0.5);
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: rgba(245, 245, 245, 0.85);
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-bottom p {
+  font-size: 0.8125rem;
+  color: rgba(245, 245, 245, 0.22);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #242424;
+  color: rgba(245, 245, 245, 0.4);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.footer-social-link:hover {
+  border-color: rgba(245, 245, 245, 0.3);
+  color: rgba(245, 245, 245, 0.8);
 }
 
 
 /* =====================
-   MOBILE RESPONSIVE
-===================== */
-/* =====================
    REDUCED MOTION
-   Respects the user's OS accessibility preference.
-   Hides the canvas and shows a plain dark hero instead.
 ===================== */
 @media (prefers-reduced-motion: reduce) {
   #prism-container {
     display: none;
   }
   #hero {
-    background-color: #06060a;
+    background-color: #050505;
   }
 }
 
 
 /* =====================
-   MOBILE RESPONSIVE
+   TABLET  601–900px
+===================== */
+@media (min-width: 601px) and (max-width: 900px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .process-steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .footer-links {
+    gap: 2.5rem;
+  }
+}
+
+
+/* =====================
+   MOBILE  ≤ 600px
 ===================== */
 @media (max-width: 600px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    gap: 12px;
-    padding: 16px 0 8px;
+
+  section {
+    padding: 72px 0;
   }
 
-  .nav-links.open {
-    display: flex;
+  .container {
+    padding: 0 20px;
   }
 
-  .nav-toggle {
-    display: block;
-  }
-
-  .navbar {
-    flex-wrap: wrap;
-  }
-
-  /* Hide nav CTA on small phones — hero CTAs are the primary action */
+  /* Nav */
+  .nav-links,
   header .nav-cta {
     display: none;
   }
 
-  /* Hero: tighter height on iPhone — svh avoids the URL-bar jump */
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .mobile-nav {
+    display: block;
+  }
+
+  .navbar {
+    padding: 16px 20px;
+  }
+
+  header:not(.scrolled) .navbar {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  /* Hero */
   #hero {
     height: 78svh;
     min-height: 500px;
   }
 
-  /* Tighten content box on mobile */
   .hero-content {
     padding: 1.5rem 1.25rem;
   }
 
-  /* Compress spacing between elements on small screens */
   #hero h1 {
     margin-bottom: 0.875rem;
   }
 
   .hero-sub {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.625rem;
     max-width: 100%;
   }
 
   .hero-ctas {
     flex-direction: column;
     align-items: center;
+    gap: 0.625rem;
   }
 
-  /* Full-width pill buttons on mobile for easy tapping */
   .btn-hero {
     width: 100%;
     max-width: 300px;
   }
 
-  /* Scroll cue sits closer to the bottom edge on small screens */
   .hero-scroll-cue {
     bottom: 1.125rem;
   }
 
-  /* Services: 1 column on mobile, flush no-gap card grid */
+  /* Services */
   .services-grid {
     grid-template-columns: 1fr;
+    gap: 0.875rem;
   }
 
-  /* Work: stack to 1 column on mobile */
+  /* Work */
   .work-grid {
     grid-template-columns: 1fr;
   }
 
-  /* Process: 2 columns on mobile */
+  /* Process */
   .process-steps {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+  }
+
+  /* About */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  /* Contact form */
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-submit {
+    width: 100%;
+  }
+
+  /* Footer */
+  .footer-top {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .footer-links {
     gap: 2rem;
   }
-}
 
-
-/* =====================
-   TABLET BREAKPOINT
-   Services + Process grids drop to 2 columns
-   before they get too cramped.
-===================== */
-@media (min-width: 601px) and (max-width: 900px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .process-steps {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-  }
-
-  .work-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1.25rem;
+    text-align: center;
   }
 }
