@@ -793,41 +793,176 @@ header.nav-open .mobile-nav {
 
 
 /* =====================
-   PROCESS SECTION
+   WHY UPTHRIVE SECTION
 ===================== */
-#process {
+#why {
   background-color: #0B0B0B;
+  position: relative;
+  overflow: hidden;
 }
 
-.process-steps {
+/* Subtle ambient depth — sits behind the content */
+#why::before {
+  content: '';
+  position: absolute;
+  top: 15%;
+  right: -8%;
+  width: 580px;
+  height: 580px;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.016) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#why > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.why-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2.5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
 }
 
-.step-number {
-  display: block;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  color: rgba(245, 245, 245, 0.2);
-  margin-bottom: 1.25rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid #242424;
+/* --- Statement Column --- */
+
+.why-statement {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 0.25rem;
 }
 
-.process-step h3 {
-  font-size: 1.0625rem;
+.why-h2 {
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
   font-weight: 700;
+  letter-spacing: -0.028em;
   color: #F5F5F5;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin-top: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
-.process-step p {
-  font-size: 0.9375rem;
+.why-body {
+  font-size: 1rem;
   color: #A1A1A1;
-  line-height: 1.7;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  max-width: 420px;
+}
+
+.why-body + .why-body {
+  margin-bottom: 2.25rem;
+}
+
+/* --- System Panel --- */
+
+.why-panel {
+  background: #121212;
+  border: 1px solid #242424;
+  border-radius: 16px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.055),
+    0 1px 3px rgba(0,0,0,0.25);
+}
+
+/* Subtle inner glow emanating from the top of the panel */
+.why-panel::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 340px;
+  height: 180px;
+  background: radial-gradient(ellipse at center top, rgba(255,255,255,0.04) 0%, transparent 68%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* PREMIUM MOMENT — Animated top hairline
+   Starts collapsed at center-point, expands to full width on reveal.
+   Fires after the panel's own fade-in has begun. */
+.why-panel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22) 50%, transparent);
+  transition:
+    left  0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s,
+    right 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
+  z-index: 2;
+}
+
+.why-panel.visible::after {
+  left: 0;
+  right: 0;
+}
+
+.why-panel-header {
+  padding: 1.5rem 1.875rem 1.25rem;
+  border-bottom: 1px solid #242424;
+  position: relative;
+  z-index: 1;
+}
+
+.why-panel-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.28);
+}
+
+.why-system-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.why-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1.25rem 1.875rem;
+  border-bottom: 1px solid rgba(36, 36, 36, 0.9);
+  transition: background-color 0.2s ease;
+}
+
+.why-item:last-child {
+  border-bottom: none;
+}
+
+@media (hover: hover) {
+  .why-item:hover {
+    background-color: rgba(255,255,255,0.02);
+  }
+}
+
+.why-item-title {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #F5F5F5;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.why-item-desc {
+  display: block;
+  font-size: 0.8125rem;
+  color: #A1A1A1;
+  line-height: 1.65;
 }
 
 
@@ -1155,9 +1290,9 @@ footer {
     gap: 1rem;
   }
 
-  .process-steps {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
 
   .work-grid {
@@ -1256,10 +1391,22 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  /* Process */
-  .process-steps {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.75rem;
+  /* Why Upthrive */
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  .why-body {
+    max-width: 100%;
+  }
+
+  .why-panel-header {
+    padding: 1.25rem 1.375rem 1rem;
+  }
+
+  .why-item {
+    padding: 1.125rem 1.375rem;
   }
 
   /* About */
@@ -1292,4 +1439,466 @@ footer {
     gap: 1.25rem;
     text-align: center;
   }
+}
+
+
+/* =====================
+   GROWTH SYSTEM / JOURNEY SECTION
+   Vertical story — mobile-first. Replaces the old services
+   grid. Five stages scroll-reveal one by one. A teal track
+   line illuminates as each stage enters the viewport.
+   Primary design target: iPhone.
+===================== */
+
+/* Neutralise the legacy #services ::before / ::after effects
+   so they don't interfere with the journey layout */
+#services.journey-section::before,
+#services.journey-section::after {
+  content: none;
+}
+
+.journey-section {
+  padding: 100px 0 112px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hero-to-section bridge: softens the hard edge between
+   the hero's #050505 and this section's #0B0B0B */
+.j-bridge {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, #050505 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.journey-wrap {
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ——— Section intro ——— */
+
+.journey-intro {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.journey-h2 {
+  font-size: clamp(2rem, 5.5vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #F5F5F5;
+  line-height: 1.1;
+  margin: 0.625rem 0 1rem;
+}
+
+.journey-sub {
+  font-size: 0.9375rem;
+  line-height: 1.78;
+  color: #A1A1A1;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+/* ——— Path container ——— */
+
+.journey-path {
+  position: relative;
+}
+
+/* ——— Vertical track line ———
+   Single 1px line that runs the full height of the path.
+   .journey-track-fill grows downward via JS as stages activate,
+   lighting up with a teal gradient that echoes the hero prism. */
+
+.journey-track {
+  position: absolute;
+  left: 15px;   /* ≈ center of the 32px dot */
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #202020;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.journey-track-fill {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(to bottom,
+    rgba(88, 208, 168, 0.6)  0%,
+    rgba(88, 208, 168, 0.22) 55%,
+    rgba(88, 208, 168, 0.06) 100%
+  );
+  /* No CSS transition — height is driven directly by the rAF
+     scroll handler, which provides naturally smooth updates. */
+  will-change: height;
+}
+
+/* ——— Individual stage ——— */
+
+.journey-stage {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 44px;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity   0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.journey-stage:last-child {
+  margin-bottom: 0;
+}
+
+.journey-stage.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ——— Node dot ——— */
+
+.journey-node {
+  flex-shrink: 0;
+  width: 32px;
+  padding-top: 1px; /* fine vertical alignment with text */
+}
+
+.journey-dot {
+  position: relative; /* needed for ::after pulse ring */
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #101010;
+  border: 1px solid #252525;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(245, 245, 245, 0.22);
+  transition:
+    border-color 0.55s ease,
+    color        0.55s ease,
+    box-shadow   0.55s ease,
+    background   0.55s ease;
+}
+
+/* Dot activates when its stage enters the viewport */
+.journey-stage.active .journey-dot {
+  border-color: rgba(88, 208, 168, 0.45);
+  color: rgba(88, 208, 168, 0.85);
+  background: #0b1714;
+  box-shadow:
+    0 0 0 4px rgba(88, 208, 168, 0.07),
+    0 0 18px rgba(88, 208, 168, 0.14),
+    inset 0 0 8px rgba(88, 208, 168, 0.04);
+}
+
+/* ——— Text content ——— */
+
+.journey-content {
+  flex: 1;
+  padding-top: 4px;
+  min-width: 0; /* prevents text overflow on narrow screens */
+}
+
+.journey-num {
+  display: block;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.15);
+  margin-bottom: 0.2rem;
+  transition: color 0.55s ease;
+}
+
+.journey-stage.active .journey-num {
+  color: rgba(88, 208, 168, 0.52);
+}
+
+.journey-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  /* Start slightly dimmed. Brightens on .active with a short delay
+     so the title "comes alive" just after the stage fades into view. */
+  color: rgba(245, 245, 245, 0.58);
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+  transition: color 0.5s ease 0.15s;
+}
+
+.journey-desc {
+  font-size: 0.9375rem;
+  /* Start calmer. Brightens to full clarity on .active with
+     a slightly longer delay for a cascading "settling" feel. */
+  color: rgba(161, 161, 161, 0.5);
+  line-height: 1.78;
+  transition: color 0.55s ease 0.28s;
+}
+
+/* ——— Premium divider ———
+   Sits between stage 04 and stage 05.
+   margin-left: 52px = dot (32px) + gap (20px),
+   aligning it with the text content column. */
+
+.journey-divider {
+  margin: 36px 0 36px 52px;
+  position: relative;
+  z-index: 1;
+}
+
+.journey-divider-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(88, 208, 168, 0.5);
+  padding: 5px 13px;
+  border: 1px dashed rgba(88, 208, 168, 0.22);
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ——— Premium stage (05): Scale with Automation ———
+   Visually distinct from the core four stages.
+   The dot has a permanent teal tint even when inactive,
+   and the content sits in a subtle card. */
+
+.journey-dot--premium {
+  border-color: rgba(88, 208, 168, 0.16) !important;
+  background: #0c1812 !important;
+}
+
+.journey-stage--premium.active .journey-dot--premium {
+  border-color: rgba(88, 208, 168, 0.6) !important;
+  color: rgba(88, 208, 168, 0.95) !important;
+  background: #0b1e16 !important;
+  box-shadow:
+    0 0 0 4px rgba(88, 208, 168, 0.07),
+    0 0 22px rgba(88, 208, 168, 0.18) !important;
+}
+
+/* Premium content card */
+.journey-content--premium {
+  background: rgba(88, 208, 168, 0.025);
+  border: 1px solid rgba(88, 208, 168, 0.1);
+  border-radius: 14px;
+  padding: 18px 20px 20px;
+  position: relative;
+  overflow: hidden;
+  /* Subtle intensification when the stage becomes active */
+  transition: border-color 0.65s ease, box-shadow 0.65s ease;
+}
+
+/* Subtle teal top-edge accent line on premium card */
+.journey-content--premium::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 15%; right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(88, 208, 168, 0.28) 50%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Add-on tags inside the premium card */
+.journey-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.journey-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(88, 208, 168, 0.06);
+  border: 1px solid rgba(88, 208, 168, 0.15);
+  color: rgba(88, 208, 168, 0.65);
+}
+
+/* ——— Section CTA ——— */
+
+.journey-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+  /* Starts hidden — revealed by JS after the last stage settles */
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity   0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.journey-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9375rem 2.25rem;
+  border-radius: 9999px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  background-color: #F5F5F5;
+  color: #0B0B0B;
+  text-decoration: none;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.journey-cta-btn:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) {
+  .journey-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(245, 245, 245, 0.15);
+  }
+}
+
+/* ——— Reduced motion override ——— */
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-stage {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .journey-track-fill {
+    transition: none !important;
+  }
+  .journey-dot::after {
+    animation: none !important;
+  }
+  .journey-title,
+  .journey-desc {
+    color: inherit !important;
+    transition: none !important;
+  }
+  .journey-footer {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ——— Tablet / desktop refinements ——— */
+
+@media (min-width: 480px) {
+  .journey-wrap {
+    padding: 0 32px;
+  }
+}
+
+@media (min-width: 768px) {
+  .journey-section {
+    padding: 112px 0 124px;
+  }
+  .journey-wrap {
+    padding: 0 40px;
+  }
+  .journey-intro {
+    margin-bottom: 72px;
+  }
+  .journey-stage {
+    gap: 24px;
+    margin-bottom: 52px;
+  }
+  .journey-divider {
+    margin-left: 56px; /* 32px dot + 24px gap */
+  }
+  .journey-title {
+    font-size: 1.1875rem;
+  }
+  .journey-content--premium {
+    padding: 22px 24px 24px;
+  }
+}
+
+
+/* ——— Active state: text brightens ———
+   Title and desc transition from their base (dimmer) color to
+   full clarity once the stage is marked active by the IO.
+   The stagger (0.15s / 0.28s delay) creates a brief cascade
+   where the stage materialises, then the title and desc light up. */
+
+.journey-stage.active .journey-title {
+  color: #F5F5F5;
+}
+
+.journey-stage.active .journey-desc {
+  color: #A1A1A1;
+}
+
+/* ——— Node activation pulse ring ———
+   A one-shot ring expands outward from each dot on activation.
+   It plays once and fades — just enough to make the moment
+   feel intentional. No looping, no radar effect. */
+
+.journey-dot::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(88, 208, 168, 0);
+  pointer-events: none;
+}
+
+.journey-stage.active .journey-dot::after {
+  animation: journeyPulse 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes journeyPulse {
+  0%   { transform: scale(1);   border-color: rgba(88, 208, 168, 0.72); opacity: 1; }
+  100% { transform: scale(2.2); border-color: rgba(88, 208, 168, 0);    opacity: 0; }
+}
+
+/* ——— Premium card intensification on active ———
+   The automation card's border and glow deepen when the stage
+   activates — reinforcing that this is a higher-tier moment. */
+
+.journey-stage--premium.active .journey-content--premium {
+  border-color: rgba(88, 208, 168, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(88, 208, 168, 0.04),
+    0 0 36px rgba(88, 208, 168, 0.07),
+    0 4px 20px rgba(0, 0, 0, 0.28);
+}
+
+/* ——— CTA footer reveal ———
+   Opacity / transform managed entirely by JS (not the generic
+   reveal system) so it triggers with a deliberate delay after
+   the last stage settles, not just when it enters the viewport. */
+
+.journey-footer--visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }

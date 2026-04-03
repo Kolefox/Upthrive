@@ -512,3 +512,133 @@ function initPrism(container, cfg) {
   startRAF();
 
 } // end initPrism
+
+
+// =====================
+// JOURNEY SECTION ANIMATION — v2
+//
+// Two independent systems work together:
+//
+// 1. SCROLL-DRIVEN TRACK FILL
+//    Positions of each dot are cached as document-relative Y values
+//    once on load (and re-cached on resize). A passive scroll listener
+//    schedules a rAF that reads window.pageYOffset (no forced layout)
+//    and writes fill.style.height. This gives true scroll-progress
+//    motion rather than discrete jumps per stage.
+//
+// 2. INTERSECTION OBSERVER — STAGE ACTIVATION
+//    Adds .active to each stage when it reaches the trigger threshold.
+//    .active drives: fade-up reveal, dot glow, one-shot pulse ring,
+//    and cascading text brightening (via CSS transition-delay).
+//    After the final stage activates, the CTA footer is revealed with
+//    a deliberate 360ms delay so it feels like a settling conclusion.
+//
+// Both paths fall back to instant reveal for:
+//   - prefers-reduced-motion
+//   - IntersectionObserver unsupported
+// =====================
+(function journeyInit() {
+  var stages = document.querySelectorAll('.journey-stage');
+  var fill   = document.querySelector('.journey-track-fill');
+  var track  = document.querySelector('.journey-track');
+  var footer = document.querySelector('.journey-footer');
+
+  if (!stages.length) return;
+
+  // ── Instant fallback ─────────────────────────────────────────
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      !('IntersectionObserver' in window)) {
+    stages.forEach(function (s) { s.classList.add('active'); });
+    if (fill)   fill.style.height = '100%';
+    if (footer) footer.classList.add('journey-footer--visible');
+    return;
+  }
+
+  // ── 1. Scroll-driven track fill ──────────────────────────────
+  // Cache document-relative dot centers so the scroll handler
+  // only does arithmetic — zero layout reads at scroll time.
+
+  var dotDocY   = [];   // document-Y of each dot's center
+  var trackDocY = 0;    // document-Y of the track element's top
+
+  function cachePositions() {
+    var sy    = window.pageYOffset;
+    trackDocY = track ? track.getBoundingClientRect().top + sy : 0;
+    dotDocY   = [];
+    stages.forEach(function (stage) {
+      var dot = stage.querySelector('.journey-dot');
+      if (dot) {
+        var r = dot.getBoundingClientRect();
+        dotDocY.push(r.top + sy + r.height * 0.5);
+      }
+    });
+  }
+
+  var fillTicking = false;
+
+  function updateFill() {
+    fillTicking = false;
+    if (!fill || !dotDocY.length) return;
+    // The fill "reaches" a dot when it scrolls to 62% of the viewport —
+    // felt natural across iPhone sizes in testing.
+    var reachY = window.pageYOffset + window.innerHeight * 0.62;
+    var maxH   = 0;
+    for (var i = 0; i < dotDocY.length; i++) {
+      if (dotDocY[i] <= reachY) {
+        var h = dotDocY[i] - trackDocY;
+        if (h > maxH) maxH = h;
+      }
+    }
+    if (maxH > 0) fill.style.height = maxH + 'px';
+  }
+
+  // Passive scroll listener — never blocks scrolling on iOS
+  window.addEventListener('scroll', function () {
+    if (!fillTicking) {
+      window.requestAnimationFrame(updateFill);
+      fillTicking = true;
+    }
+  }, { passive: true });
+
+  // Debounced resize — recompute cached positions
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(cachePositions, 200);
+  });
+
+  // ── 2. Stage activation via IntersectionObserver ─────────────
+  var totalStages = stages.length;
+  var activeCount = 0;
+
+  var journeyObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        journeyObs.unobserve(entry.target);
+        activeCount++;
+        // After the last stage activates, reveal the CTA with
+        // a deliberate delay so it feels like a final beat.
+        if (activeCount >= totalStages && footer) {
+          setTimeout(function () {
+            footer.classList.add('journey-footer--visible');
+          }, 360);
+        }
+      }
+    });
+  }, {
+    threshold:  0.22,
+    rootMargin: '0px 0px -44px 0px'
+  });
+
+  stages.forEach(function (s) { journeyObs.observe(s); });
+
+  // Cache positions once the first paint is done, then run the
+  // fill check in case the section is already partially in view.
+  window.requestAnimationFrame(function () {
+    setTimeout(function () {
+      cachePositions();
+      updateFill();
+    }, 60);
+  });
+}());

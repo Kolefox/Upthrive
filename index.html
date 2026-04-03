@@ -94,75 +94,121 @@
 
 
   <!-- =====================
-       SERVICES SECTION
+       GROWTH SYSTEM SECTION
+       Vertical journey story — replaces "Built to Drive Revenue."
+       Guides the visitor through Upthrive's 5-stage growth
+       system from first assessment to automation.
+       iPhone-first layout. Track line illuminates as you scroll.
   ===================== -->
-  <section id="services">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-eyebrow">What We Do</span>
-        <h2>Built to Drive Revenue</h2>
-        <p>Four disciplines, one goal — more customers for your business.</p>
+  <section id="services" class="journey-section">
+
+    <!-- Gradient bridge from hero (#050505) into this section (#0B0B0B) -->
+    <div class="j-bridge" aria-hidden="true"></div>
+
+    <div class="journey-wrap">
+
+      <!-- Section intro -->
+      <div class="journey-intro reveal">
+        <span class="section-eyebrow">The Growth System</span>
+        <h2 class="journey-h2">From Attention<br>to Booked Client</h2>
+        <p class="journey-sub">We don't just run ads or build websites. We build the complete path — from first impression to a confirmed appointment on your calendar.</p>
       </div>
-      <div class="services-grid">
 
-        <div class="service-card reveal" style="--delay:0.05s">
-          <div class="service-icon" aria-hidden="true">
-            <!-- Paid Media: bar chart / performance -->
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="20" x2="18" y2="10"/>
-              <line x1="12" y1="20" x2="12" y2="4"/>
-              <line x1="6"  y1="20" x2="6"  y2="14"/>
-              <line x1="2"  y1="20" x2="22" y2="20"/>
-            </svg>
-          </div>
-          <h3>Paid Media</h3>
-          <p>Performance campaigns across Meta, Google, and beyond — built to convert, not just get clicks.</p>
-          <span class="service-number" aria-hidden="true">01</span>
+      <!-- Vertical connected path -->
+      <div class="journey-path">
+
+        <!-- Track line behind all stage dots -->
+        <div class="journey-track" aria-hidden="true">
+          <div class="journey-track-fill"></div>
         </div>
 
-        <div class="service-card reveal" style="--delay:0.15s">
-          <div class="service-icon" aria-hidden="true">
-            <!-- Web Design: layout / wireframe grid -->
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <path d="M3 9h18"/>
-              <path d="M9 21V9"/>
-            </svg>
+        <!-- Stage 01: Assess -->
+        <div class="journey-stage" data-stage="0">
+          <div class="journey-node" aria-hidden="true">
+            <div class="journey-dot">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
           </div>
-          <h3>Web Design</h3>
-          <p>High-converting websites and landing pages built for speed, clarity, and results.</p>
-          <span class="service-number" aria-hidden="true">02</span>
+          <div class="journey-content">
+            <span class="journey-num">01</span>
+            <h3 class="journey-title">Assess</h3>
+            <p class="journey-desc">We start by figuring out what your business actually needs. We look at your goals, your market, and what's missing — then build around the highest-impact opportunity first, not the flashiest.</p>
+          </div>
         </div>
 
-        <div class="service-card reveal" style="--delay:0.25s">
-          <div class="service-icon" aria-hidden="true">
-            <!-- SEO: magnifying glass with upward trend -->
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"/>
-              <path d="M21 21l-4.35-4.35"/>
-              <path d="M8 13.5l2-2.5 2 2 2.5-3"/>
-            </svg>
+        <!-- Stage 02: Build the Foundation -->
+        <div class="journey-stage" data-stage="1">
+          <div class="journey-node" aria-hidden="true">
+            <div class="journey-dot">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            </div>
           </div>
-          <h3>SEO</h3>
-          <p>Organic growth strategies that compound over time and lower your cost to acquire.</p>
-          <span class="service-number" aria-hidden="true">03</span>
+          <div class="journey-content">
+            <span class="journey-num">02</span>
+            <h3 class="journey-title">Build the Foundation</h3>
+            <p class="journey-desc">If your website or landing page isn't ready to convert traffic, we fix that first. There's no point driving ads to a page that doesn't work. We build the right destination — whether that's a redesign, a new site, or a focused landing page.</p>
+          </div>
         </div>
 
-        <div class="service-card reveal" style="--delay:0.35s">
-          <div class="service-icon" aria-hidden="true">
-            <!-- Creative Strategy: pen / editorial direction -->
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 3a2.83 2.83 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
-              <path d="M15 5l4 4"/>
-            </svg>
+        <!-- Stage 03: Drive Demand -->
+        <div class="journey-stage" data-stage="2">
+          <div class="journey-node" aria-hidden="true">
+            <div class="journey-dot">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            </div>
           </div>
-          <h3>Creative Strategy</h3>
-          <p>Messaging, positioning, and creative direction that makes every channel work harder.</p>
-          <span class="service-number" aria-hidden="true">04</span>
+          <div class="journey-content">
+            <span class="journey-num">03</span>
+            <h3 class="journey-title">Drive Demand</h3>
+            <p class="journey-desc">We launch targeted paid media campaigns and build funnels that bring in real buyers — not just impressions. Every campaign is connected to the foundation we built, so clicks actually convert.</p>
+          </div>
         </div>
 
+        <!-- Stage 04: Convert and Capture -->
+        <div class="journey-stage" data-stage="3">
+          <div class="journey-node" aria-hidden="true">
+            <div class="journey-dot">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.19h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+            </div>
+          </div>
+          <div class="journey-content">
+            <span class="journey-num">04</span>
+            <h3 class="journey-title">Convert and Capture</h3>
+            <p class="journey-desc">Traffic means nothing if leads fall through the cracks. We connect your ads to the right page, turn interest into real inquiries, and use CRM support to make sure strong leads get followed up — not forgotten.</p>
+          </div>
+        </div>
+
+        <!-- Premium separator: visually marks the transition to advanced services -->
+        <div class="journey-divider" aria-hidden="true">
+          <span class="journey-divider-badge">Advanced Growth Layer</span>
+        </div>
+
+        <!-- Stage 05: Scale with Automation — premium add-on -->
+        <div class="journey-stage journey-stage--premium" data-stage="4">
+          <div class="journey-node" aria-hidden="true">
+            <div class="journey-dot journey-dot--premium">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+          <div class="journey-content journey-content--premium">
+            <span class="journey-num">05</span>
+            <h3 class="journey-title">Scale with Automation</h3>
+            <p class="journey-desc">Once the core system is running, we layer on intelligent automation. Automated SMS keeps leads warm between touchpoints. An optional AI phone agent answers calls, handles common questions, and helps book appointments — so your business never misses an opportunity.</p>
+            <div class="journey-tags">
+              <span class="journey-tag">SMS Follow-Up</span>
+              <span class="journey-tag">AI Phone Agent</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /journey-path -->
+
+      <!-- Section CTA -->
+      <div class="journey-footer">
+        <a href="#contact" class="journey-cta-btn">Start Building &rarr;</a>
       </div>
-    </div>
+
+    </div><!-- /journey-wrap -->
   </section>
 
 
@@ -222,42 +268,57 @@
 
 
   <!-- =====================
-       PROCESS SECTION
+       WHY UPTHRIVE SECTION
   ===================== -->
-  <section id="process">
+  <section id="why">
     <div class="container">
-      <div class="section-header reveal">
-        <span class="section-eyebrow">How It Works</span>
-        <h2>Simple. Structured. Effective.</h2>
-        <p>A clear process built around your goals — not ours.</p>
+
+      <div class="why-grid">
+
+        <!-- Left: Statement Column -->
+        <div class="why-statement reveal">
+          <span class="section-eyebrow">Why Upthrive</span>
+          <h2 class="why-h2">Built as a System.<br>Not a Service Menu.</h2>
+          <p class="why-body">Most agencies hand you a list of services and call it a strategy. Upthrive is built around a single proprietary growth system — designed from the ground up to move a brand from first impression to booked call, with every piece connected.</p>
+          <p class="why-body">Simple pages. Focused funnels. Real tracking. Automated follow-up. It's not a collection of tactics — it's a complete growth infrastructure.</p>
+          <a href="#contact" class="btn-outline why-cta">Book a Free Call &rarr;</a>
+        </div>
+
+        <!-- Right: System Panel -->
+        <div class="why-panel reveal" style="--delay:0.18s">
+          <div class="why-panel-header">
+            <span class="why-panel-label">What's inside the system</span>
+          </div>
+          <ul class="why-system-list">
+            <li class="why-item">
+              <span class="why-item-title">High-Converting Pages</span>
+              <span class="why-item-desc">Simple, focused landing pages built to convert traffic — not impress it.</span>
+            </li>
+            <li class="why-item">
+              <span class="why-item-title">Paid Traffic &amp; Ad Creatives</span>
+              <span class="why-item-desc">Campaigns wired directly into the funnel, not running in isolation.</span>
+            </li>
+            <li class="why-item">
+              <span class="why-item-title">Performance Tracking</span>
+              <span class="why-item-desc">CTR, CVR, and ROAS — monitored and optimized, never guessed.</span>
+            </li>
+            <li class="why-item">
+              <span class="why-item-title">Funnelized CRM</span>
+              <span class="why-item-desc">Every lead captured, organized, and documented. Nothing falls through.</span>
+            </li>
+            <li class="why-item">
+              <span class="why-item-title">Automated SMS Follow-Up</span>
+              <span class="why-item-desc">Leads stay warm between touchpoints — automatically.</span>
+            </li>
+            <li class="why-item">
+              <span class="why-item-title">AI Phone Agent</span>
+              <span class="why-item-desc">After-hours call handling and appointment booking — no lead gets missed.</span>
+            </li>
+          </ul>
+        </div>
+
       </div>
-      <div class="process-steps">
 
-        <div class="process-step reveal" style="--delay:0.05s">
-          <span class="step-number">01</span>
-          <h3>Discovery</h3>
-          <p>We learn your business, your market, and what growth actually means for you.</p>
-        </div>
-
-        <div class="process-step reveal" style="--delay:0.15s">
-          <span class="step-number">02</span>
-          <h3>Strategy</h3>
-          <p>We build a clear, custom growth plan — no templates, no guesswork.</p>
-        </div>
-
-        <div class="process-step reveal" style="--delay:0.25s">
-          <span class="step-number">03</span>
-          <h3>Build</h3>
-          <p>We execute across design, media, and content with precision and speed.</p>
-        </div>
-
-        <div class="process-step reveal" style="--delay:0.35s">
-          <span class="step-number">04</span>
-          <h3>Scale</h3>
-          <p>We optimize continuously so your results compound over time.</p>
-        </div>
-
-      </div>
     </div>
   </section>
 
@@ -343,7 +404,7 @@
             <span class="footer-col-label">Company</span>
             <a href="#about">About</a>
             <a href="#work">Work</a>
-            <a href="#process">Process</a>
+            <a href="#why">Why Upthrive</a>
             <a href="#contact">Book a Call</a>
           </div>
         </div>
