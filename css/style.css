@@ -94,7 +94,7 @@ section {
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(245, 245, 245, 0.36);
+  color: rgba(196, 169, 107, 0.7);
   margin-bottom: 0.75rem;
 }
 
@@ -171,11 +171,11 @@ header:not(.scrolled) .navbar {
 /* Nav links */
 .nav-links {
   display: flex;
-  gap: 32px;
+  gap: 24px;
 }
 
 header .nav-links a {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 500;
   color: rgba(245, 245, 245, 0.82);
   letter-spacing: 0.01em;
@@ -210,7 +210,7 @@ header .nav-cta:hover {
 }
 
 header.scrolled .nav-cta {
-  background-color: rgba(245, 245, 245, 0.94);
+  background-color: #C4A96B;
   color: #0B0B0B;
   border-color: transparent;
   backdrop-filter: none;
@@ -218,7 +218,7 @@ header.scrolled .nav-cta {
 }
 
 header.scrolled .nav-cta:hover {
-  background-color: #F5F5F5;
+  background-color: #D4B55C;
 }
 
 /* Hamburger toggle — hidden on desktop */
@@ -895,7 +895,7 @@ header.nav-open .mobile-nav {
   left: 50%;
   right: 50%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22) 50%, transparent);
+  background: linear-gradient(90deg, transparent, rgba(196, 169, 107, 0.45) 50%, transparent);
   transition:
     left  0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s,
     right 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
@@ -1017,8 +1017,9 @@ header.nav-open .mobile-nav {
 }
 
 .btn-outline:hover {
-  border-color: rgba(245, 245, 245, 0.4);
-  background-color: rgba(245, 245, 245, 0.04);
+  border-color: rgba(196, 169, 107, 0.5);
+  background-color: rgba(196, 169, 107, 0.04);
+  color: rgba(196, 169, 107, 0.9);
 }
 
 /* Right column: stacked value cards */
@@ -1076,12 +1077,18 @@ header.nav-open .mobile-nav {
   margin-bottom: 0.75rem;
 }
 
-.cta-block h2 {
-  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
+.cta-block h2,
+.contact-h2 {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
   color: #F5F5F5;
-  margin-bottom: 0.625rem;
+  margin-bottom: 1rem;
+}
+
+.contact-h2-gold {
+  color: #C4A96B;
 }
 
 .cta-block p {
@@ -1128,7 +1135,7 @@ header.nav-open .mobile-nav {
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: rgba(245, 245, 245, 0.28);
+  border-color: rgba(196, 169, 107, 0.45);
   background-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -1443,6 +1450,189 @@ footer {
 
 
 /* =====================
+   THE UPTHRIVE SYSTEM SECTION
+   "Not an agency. A complete growth machine."
+===================== */
+.system-section {
+  background: #0B0B0B;
+  padding: 96px 0;
+}
+
+/* Two-column layout: text left, cards right */
+.system-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* Stick the intro as cards scroll */
+.system-intro {
+  position: sticky;
+  top: 100px;
+}
+
+@media (max-width: 760px) {
+  .system-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .system-intro {
+    position: static;
+  }
+}
+
+/* Eyebrow pill */
+.system-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(196, 169, 107, 0.75);
+  border: 1px solid rgba(196, 169, 107, 0.18);
+  border-radius: 100px;
+  padding: 6px 14px;
+  margin-bottom: 2rem;
+}
+
+.system-eyebrow-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #C4A96B;
+  flex-shrink: 0;
+}
+
+/* Two-tone headline */
+.system-h2 {
+  font-size: clamp(2.4rem, 6vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: #F5F0E8;
+  margin-bottom: 1.5rem;
+}
+
+.system-h2-gold {
+  color: #C4A96B;
+}
+
+/* Body copy */
+.system-body {
+  font-size: 1rem;
+  color: #777;
+  line-height: 1.75;
+  max-width: 520px;
+  margin-bottom: 1.75rem;
+}
+
+/* Text CTA */
+.system-cta {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #C4A96B;
+  letter-spacing: 0.01em;
+  transition: opacity 0.2s ease;
+}
+
+.system-cta:hover {
+  opacity: 0.65;
+}
+
+/* Layer cards stack */
+.system-layers {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.layer-card {
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 28px 32px;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.layer-card:hover {
+  border-color: rgba(196, 169, 107, 0.2);
+  background: #141414;
+}
+
+/* Layer label */
+.layer-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(196, 169, 107, 0.45);
+  margin-bottom: 10px;
+}
+
+/* Layer title */
+.layer-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #F0EBE0;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+/* Layer description */
+.layer-desc {
+  font-size: 0.9rem;
+  color: #6E6E6E;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+/* Tag pills */
+.layer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.layer-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #888;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 100px;
+  padding: 4px 12px;
+}
+
+@media (max-width: 480px) {
+  .system-section {
+    padding: 72px 0 64px;
+  }
+
+  .system-h2 {
+    font-size: 2.25rem;
+  }
+
+  .layer-card {
+    padding: 22px 20px;
+    border-radius: 14px;
+  }
+
+  .layer-title {
+    font-size: 1.1rem;
+  }
+}
+
+
+/* =====================
    GROWTH SYSTEM / JOURNEY SECTION
    Vertical story — mobile-first. Replaces the old services
    grid. Five stages scroll-reveal one by one. A teal track
@@ -1534,9 +1724,9 @@ footer {
   width: 100%;
   height: 0;
   background: linear-gradient(to bottom,
-    rgba(88, 208, 168, 0.6)  0%,
-    rgba(88, 208, 168, 0.22) 55%,
-    rgba(88, 208, 168, 0.06) 100%
+    rgba(196, 169, 107, 0.7)  0%,
+    rgba(196, 169, 107, 0.28) 55%,
+    rgba(196, 169, 107, 0.06) 100%
   );
   /* No CSS transition — height is driven directly by the rAF
      scroll handler, which provides naturally smooth updates. */
@@ -1596,13 +1786,13 @@ footer {
 
 /* Dot activates when its stage enters the viewport */
 .journey-stage.active .journey-dot {
-  border-color: rgba(88, 208, 168, 0.45);
-  color: rgba(88, 208, 168, 0.85);
-  background: #0b1714;
+  border-color: rgba(196, 169, 107, 0.5);
+  color: rgba(196, 169, 107, 0.9);
+  background: #120f04;
   box-shadow:
-    0 0 0 4px rgba(88, 208, 168, 0.07),
-    0 0 18px rgba(88, 208, 168, 0.14),
-    inset 0 0 8px rgba(88, 208, 168, 0.04);
+    0 0 0 4px rgba(196, 169, 107, 0.07),
+    0 0 18px rgba(196, 169, 107, 0.16),
+    inset 0 0 8px rgba(196, 169, 107, 0.04);
 }
 
 /* ——— Text content ——— */
@@ -1625,7 +1815,7 @@ footer {
 }
 
 .journey-stage.active .journey-num {
-  color: rgba(88, 208, 168, 0.52);
+  color: rgba(196, 169, 107, 0.55);
 }
 
 .journey-title {
@@ -1667,9 +1857,9 @@ footer {
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(88, 208, 168, 0.5);
+  color: rgba(196, 169, 107, 0.65);
   padding: 5px 13px;
-  border: 1px dashed rgba(88, 208, 168, 0.22);
+  border: 1px dashed rgba(196, 169, 107, 0.28);
   border-radius: 20px;
   white-space: nowrap;
 }
@@ -1680,23 +1870,23 @@ footer {
    and the content sits in a subtle card. */
 
 .journey-dot--premium {
-  border-color: rgba(88, 208, 168, 0.16) !important;
-  background: #0c1812 !important;
+  border-color: rgba(196, 169, 107, 0.18) !important;
+  background: #120f04 !important;
 }
 
 .journey-stage--premium.active .journey-dot--premium {
-  border-color: rgba(88, 208, 168, 0.6) !important;
-  color: rgba(88, 208, 168, 0.95) !important;
-  background: #0b1e16 !important;
+  border-color: rgba(196, 169, 107, 0.65) !important;
+  color: rgba(196, 169, 107, 0.98) !important;
+  background: #1a1506 !important;
   box-shadow:
-    0 0 0 4px rgba(88, 208, 168, 0.07),
-    0 0 22px rgba(88, 208, 168, 0.18) !important;
+    0 0 0 4px rgba(196, 169, 107, 0.07),
+    0 0 22px rgba(196, 169, 107, 0.2) !important;
 }
 
 /* Premium content card */
 .journey-content--premium {
-  background: rgba(88, 208, 168, 0.025);
-  border: 1px solid rgba(88, 208, 168, 0.1);
+  background: rgba(196, 169, 107, 0.03);
+  border: 1px solid rgba(196, 169, 107, 0.12);
   border-radius: 14px;
   padding: 18px 20px 20px;
   position: relative;
@@ -1705,7 +1895,7 @@ footer {
   transition: border-color 0.65s ease, box-shadow 0.65s ease;
 }
 
-/* Subtle teal top-edge accent line on premium card */
+/* Subtle gold top-edge accent line on premium card */
 .journey-content--premium::before {
   content: '';
   position: absolute;
@@ -1713,7 +1903,7 @@ footer {
   height: 1px;
   background: linear-gradient(90deg,
     transparent,
-    rgba(88, 208, 168, 0.28) 50%,
+    rgba(196, 169, 107, 0.35) 50%,
     transparent
   );
   pointer-events: none;
@@ -1736,9 +1926,9 @@ footer {
   text-transform: uppercase;
   padding: 5px 10px;
   border-radius: 6px;
-  background: rgba(88, 208, 168, 0.06);
-  border: 1px solid rgba(88, 208, 168, 0.15);
-  color: rgba(88, 208, 168, 0.65);
+  background: rgba(196, 169, 107, 0.07);
+  border: 1px solid rgba(196, 169, 107, 0.18);
+  color: rgba(196, 169, 107, 0.75);
 }
 
 /* ——— Section CTA ——— */
@@ -1765,7 +1955,7 @@ footer {
   font-weight: 600;
   letter-spacing: 0.01em;
   font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
-  background-color: #F5F5F5;
+  background-color: #C4A96B;
   color: #0B0B0B;
   text-decoration: none;
   white-space: nowrap;
@@ -1780,7 +1970,7 @@ footer {
 @media (hover: hover) {
   .journey-cta-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(245, 245, 245, 0.15);
+    box-shadow: 0 8px 28px rgba(196, 169, 107, 0.3);
   }
 }
 
@@ -1868,7 +2058,7 @@ footer {
   position: absolute;
   inset: -2px;
   border-radius: 50%;
-  border: 1.5px solid rgba(88, 208, 168, 0);
+  border: 1.5px solid rgba(196, 169, 107, 0);
   pointer-events: none;
 }
 
@@ -1877,8 +2067,8 @@ footer {
 }
 
 @keyframes journeyPulse {
-  0%   { transform: scale(1);   border-color: rgba(88, 208, 168, 0.72); opacity: 1; }
-  100% { transform: scale(2.2); border-color: rgba(88, 208, 168, 0);    opacity: 0; }
+  0%   { transform: scale(1);   border-color: rgba(196, 169, 107, 0.8); opacity: 1; }
+  100% { transform: scale(2.2); border-color: rgba(196, 169, 107, 0);   opacity: 0; }
 }
 
 /* ——— Premium card intensification on active ———
@@ -1886,10 +2076,10 @@ footer {
    activates — reinforcing that this is a higher-tier moment. */
 
 .journey-stage--premium.active .journey-content--premium {
-  border-color: rgba(88, 208, 168, 0.22);
+  border-color: rgba(196, 169, 107, 0.25);
   box-shadow:
-    0 0 0 1px rgba(88, 208, 168, 0.04),
-    0 0 36px rgba(88, 208, 168, 0.07),
+    0 0 0 1px rgba(196, 169, 107, 0.04),
+    0 0 36px rgba(196, 169, 107, 0.08),
     0 4px 20px rgba(0, 0, 0, 0.28);
 }
 
@@ -1901,4 +2091,340 @@ footer {
 .journey-footer--visible {
   opacity: 1 !important;
   transform: translateY(0) !important;
+}
+
+
+/* =====================
+   WHAT WE DO — SERVICE CARDS
+===================== */
+.svc-section {
+  background: #0B0B0B;
+  padding: 96px 0 80px;
+}
+
+.svc-intro {
+  max-width: 560px;
+  margin-bottom: 56px;
+}
+
+.svc-h2 {
+  font-size: clamp(2rem, 4.5vw, 2.75rem);
+  font-weight: 800;
+  color: #F5F0E8;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+
+.svc-sub {
+  font-size: 1rem;
+  color: #888;
+  line-height: 1.65;
+  max-width: 440px;
+}
+
+/* 2-column grid on desktop, 1-column on mobile */
+.svc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 680px) {
+  .svc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card base */
+.svc-card {
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  padding: 32px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.svc-card:hover {
+  border-color: rgba(196, 169, 107, 0.25);
+  background: #161616;
+}
+
+/* Featured card (Most Popular) */
+.svc-card--featured {
+  border-color: rgba(196, 169, 107, 0.2);
+  background: #131210;
+}
+
+.svc-card--featured:hover {
+  border-color: rgba(196, 169, 107, 0.4);
+  background: #181510;
+}
+
+/* Top row: number + badge side by side (featured card only) */
+.svc-card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Most Popular badge — inline in top row, no absolute positioning */
+.svc-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #C4A96B;
+  background: rgba(196, 169, 107, 0.1);
+  border: 1px solid rgba(196, 169, 107, 0.22);
+  border-radius: 100px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+/* Number label (standalone on non-featured cards) */
+.svc-num {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(196, 169, 107, 0.5);
+  margin-bottom: 20px;
+}
+
+/* Icon box */
+.svc-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: #C4A96B;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+/* Title */
+.svc-title {
+  font-size: 1.175rem;
+  font-weight: 700;
+  color: #F0EBE0;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+/* Description */
+.svc-desc {
+  font-size: 0.9rem;
+  color: #777;
+  line-height: 1.7;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+/* CTA link */
+.svc-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #C4A96B;
+  letter-spacing: 0.01em;
+  padding: 10px 0;
+  transition: opacity 0.2s ease;
+}
+
+.svc-link:hover {
+  opacity: 0.65;
+}
+
+@media (max-width: 480px) {
+  .svc-section {
+    padding: 72px 0 64px;
+  }
+
+  .svc-card {
+    padding: 24px 22px 22px;
+    border-radius: 16px;
+  }
+
+  .svc-title {
+    font-size: 1.1rem;
+  }
+
+  .svc-desc {
+    font-size: 0.875rem;
+  }
+}
+
+
+/* =====================
+   STATS BAR
+   Animated social-proof counters between the hero and journey
+   sections. Numbers count up via JS when they enter the viewport.
+===================== */
+#stats {
+  padding: 0;
+  background-color: #060605;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top gradient border — gold bright at center, fades to transparent at edges */
+#stats::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(196, 169, 107, 0.35) 20%,
+    rgba(196, 169, 107, 0.85) 50%,
+    rgba(196, 169, 107, 0.35) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Bottom gradient border — mirrors the top */
+#stats::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(196, 169, 107, 0.35) 20%,
+    rgba(196, 169, 107, 0.85) 50%,
+    rgba(196, 169, 107, 0.35) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 44px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+  padding: 0 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.stat-item:last-child {
+  border-right: none;
+}
+
+.stat-number {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.02em;
+}
+
+/* Numeric digits — white */
+.stat-val {
+  color: #ffffff;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.12);
+}
+
+/* Symbol characters (+, %, x, $, M+) — gold */
+.stat-sym {
+  color: #C4A96B;
+  text-shadow: 0 0 32px rgba(196, 169, 107, 0.35);
+}
+
+.stat-label {
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.35);
+}
+
+/* Stats bar — fade-in on load */
+@media (prefers-reduced-motion: no-preference) {
+  .stat-item {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity   0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .stat-item.stats-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .stat-item:nth-child(2) { transition-delay: 0.08s; }
+  .stat-item:nth-child(3) { transition-delay: 0.16s; }
+  .stat-item:nth-child(4) { transition-delay: 0.24s; }
+}
+
+/* Stats bar — tablet: stays 4-across, slightly less padding */
+@media (min-width: 601px) and (max-width: 900px) {
+  .stats-bar {
+    padding: 36px 0;
+  }
+}
+
+/* Stats bar — mobile: 2×2 grid */
+@media (max-width: 600px) {
+  .stats-bar {
+    flex-wrap: wrap;
+    padding: 0;
+  }
+
+  .stat-item {
+    flex: 0 0 50%;
+    padding: 26px 16px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .stat-item:nth-child(odd) {
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Bottom row: no bottom border */
+  .stat-item:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+
+  .stat-number {
+    font-size: 1.875rem;
+  }
+
+  .stat-sym {
+    font-size: 1.875rem;
+  }
 }

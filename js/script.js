@@ -642,3 +642,89 @@ function initPrism(container, cfg) {
     }, 60);
   });
 }());
+
+
+// =====================
+// STATS COUNTER ANIMATION
+// Numbers count up with an ease-out curve when the stats bar
+// scrolls into view. Uses IntersectionObserver — fires once only.
+// Each .stat-number element reads:
+//   data-target   — the final numeric value
+//   data-prefix   — text before the number (e.g. "$")
+//   data-suffix   — text after  the number (e.g. "M+", "%")
+//   data-decimals — decimal places to display (default 0)
+// =====================
+(function statsCounterInit() {
+  var statNumbers = document.querySelectorAll('.stat-number');
+  var statItems   = document.querySelectorAll('.stat-item');
+  var statsSection = document.getElementById('stats');
+
+  if (!statNumbers.length || !statsSection) return;
+
+  var hasRun = false;
+  var DURATION = 1800; // ms
+
+  function easeOutQuart(t) {
+    return 1 - Math.pow(1 - t, 4);
+  }
+
+  function animateOne(el) {
+    var target   = parseFloat(el.dataset.target) || 0;
+    var decimals = parseInt(el.dataset.decimals  || '0', 10);
+    var valEl    = el.querySelector('.stat-val');
+    if (!valEl) return;
+    var start = null;
+
+    function step(ts) {
+      if (!start) start = ts;
+      var elapsed  = ts - start;
+      var progress = Math.min(elapsed / DURATION, 1);
+      var eased    = easeOutQuart(progress);
+      var current  = eased * target;
+      valEl.textContent = current.toFixed(decimals);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  function runAnimation() {
+    if (hasRun) return;
+    hasRun = true;
+
+    // Reveal items with stagger, then start counters
+    statItems.forEach(function (item) {
+      item.classList.add('stats-visible');
+    });
+
+    // Slight delay so the fade-in starts before counting begins
+    setTimeout(function () {
+      statNumbers.forEach(function (el) { animateOne(el); });
+    }, 120);
+  }
+
+  if ('IntersectionObserver' in window &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var statsObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          runAnimation();
+          statsObs.disconnect();
+        }
+      });
+    }, { threshold: 0.35 });
+
+    statsObs.observe(statsSection);
+  } else {
+    // No observer or reduced-motion: show final values immediately
+    statNumbers.forEach(function (el) {
+      var target   = parseFloat(el.dataset.target) || 0;
+      var decimals = parseInt(el.dataset.decimals  || '0', 10);
+      var valEl    = el.querySelector('.stat-val');
+      if (valEl) valEl.textContent = target.toFixed(decimals);
+    });
+    statItems.forEach(function (item) {
+      item.classList.add('stats-visible');
+    });
+  }
+}());
