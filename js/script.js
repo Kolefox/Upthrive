@@ -100,6 +100,40 @@ if ('IntersectionObserver' in window) {
 
 
 // =====================
+// LAYER CARD SCROLL ACTIVATION
+// Each .layer-card in #upthrive-system starts hidden and pops in
+// as it scrolls into view. A dedicated IntersectionObserver adds
+// .active, which drives: fade-up reveal, border glow, one-shot
+// pop ring, and cascading text brightening (all via CSS).
+// Falls back to instant reveal for reduced-motion / no IO support.
+// =====================
+(function layerCardInit() {
+  var cards = document.querySelectorAll('.system-layers .layer-card');
+  if (!cards.length) return;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      !('IntersectionObserver' in window)) {
+    cards.forEach(function (c) { c.classList.add('active'); });
+    return;
+  }
+
+  var layerObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        layerObs.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold:  0.22,
+    rootMargin: '0px 0px -44px 0px'
+  });
+
+  cards.forEach(function (c) { layerObs.observe(c); });
+}());
+
+
+// =====================
 // CONTACT FORM
 // Handles submission with a visual success state.
 // Replace the body of this handler with a real fetch/API

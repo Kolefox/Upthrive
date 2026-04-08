@@ -1549,20 +1549,58 @@ footer {
 .system-layers {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .layer-card {
+  position: relative;
   background: #111111;
   border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 16px;
-  padding: 28px 32px;
-  transition: border-color 0.25s ease, background 0.25s ease;
+  border-radius: 14px;
+  padding: 22px 28px;
+  /* Start hidden — IntersectionObserver adds .active on scroll-enter */
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity      0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
+    transform    0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
+    border-color 0.25s ease 0s,
+    background   0.25s ease 0s,
+    box-shadow   0.5s ease  var(--delay, 0s);
 }
 
 .layer-card:hover {
   border-color: rgba(196, 169, 107, 0.2);
   background: #141414;
+}
+
+/* ——— Card activation — added by IntersectionObserver ——— */
+.layer-card.active {
+  opacity: 1;
+  transform: translateY(0);
+  border-color: rgba(196, 169, 107, 0.14);
+  box-shadow:
+    0 0 18px rgba(196, 169, 107, 0.05),
+    0 2px 12px rgba(0, 0, 0, 0.22);
+}
+
+/* ——— One-shot pop ring — expands and fades on card activation ——— */
+.layer-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  border: 1px solid rgba(196, 169, 107, 0);
+  pointer-events: none;
+}
+
+.layer-card.active::after {
+  animation: layerCardPop 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes layerCardPop {
+  0%   { transform: scale(1);    border-color: rgba(196, 169, 107, 0.65); opacity: 1; }
+  100% { transform: scale(1.04); border-color: rgba(196, 169, 107, 0);   opacity: 0; }
 }
 
 /* Layer label */
@@ -1580,18 +1618,28 @@ footer {
 .layer-title {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #F0EBE0;
+  color: rgba(240, 235, 224, 0.48); /* dimmed — brightens on .active */
   letter-spacing: -0.02em;
   line-height: 1.25;
   margin-bottom: 10px;
+  transition: color 0.5s ease 0.15s;
+}
+
+.layer-card.active .layer-title {
+  color: #F0EBE0;
 }
 
 /* Layer description */
 .layer-desc {
   font-size: 0.9rem;
-  color: #6E6E6E;
+  color: rgba(110, 110, 110, 0.45); /* dimmed — brightens on .active */
   line-height: 1.7;
   margin-bottom: 16px;
+  transition: color 0.55s ease 0.28s;
+}
+
+.layer-card.active .layer-desc {
+  color: #6E6E6E;
 }
 
 /* Tag pills */
@@ -1610,6 +1658,71 @@ footer {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 100px;
   padding: 4px 12px;
+}
+
+/* ——— Advanced Growth Layer divider ———
+   Sits above Layer 06, aligning with the card column. */
+.layer-divider {
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+}
+
+.layer-divider-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(196, 169, 107, 0.65);
+  padding: 5px 13px;
+  border: 1px dashed rgba(196, 169, 107, 0.28);
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ——— Premium card (Layer 06: Scale with Automation) ———
+   Permanent faint gold border + top-edge accent.
+   Deeper glow and brighter border on .active. */
+.layer-card--premium {
+  border-color: rgba(196, 169, 107, 0.16) !important;
+  background: rgba(196, 169, 107, 0.02);
+}
+
+/* Subtle gold top-edge accent line */
+.layer-card--premium::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 15%; right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(196, 169, 107, 0.32) 50%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.layer-card--premium.active {
+  border-color: rgba(196, 169, 107, 0.3) !important;
+  box-shadow:
+    0 0 0 1px rgba(196, 169, 107, 0.04),
+    0 0 32px rgba(196, 169, 107, 0.11),
+    0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ——— Reduced motion override ——— */
+@media (prefers-reduced-motion: reduce) {
+  .layer-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: border-color 0.25s ease, background 0.25s ease !important;
+  }
+  .layer-title,
+  .layer-desc {
+    transition: none !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -2426,5 +2539,244 @@ footer {
 
   .stat-sym {
     font-size: 1.875rem;
+  }
+}
+
+
+/* =====================
+   ABOUT SECTION
+   Two-column founder intro — text left, premium image right.
+   Dark luxury feel, gold accents, matches full site design language.
+===================== */
+.about-section {
+  padding: 100px 0 108px;
+  position: relative;
+  overflow: visible;
+}
+
+/* Subtle top separator line */
+.about-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  max-width: 480px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(196, 169, 107, 0.18) 50%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Two-column grid: text left, image right */
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 80px;
+  align-items: center;
+}
+
+/* ——— Left: text content ——— */
+
+.about-h2 {
+  font-size: clamp(2.1rem, 4vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #F5F5F5;
+  line-height: 1.1;
+  margin: 0.5rem 0 2rem;
+}
+
+.about-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.375rem;
+  margin-bottom: 2.25rem;
+}
+
+.about-paragraphs p {
+  font-size: 0.9375rem;
+  line-height: 1.82;
+  color: #A1A1A1;
+  max-width: 520px;
+}
+
+/* Closing line — slightly elevated, gold tint */
+.about-closing {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: rgba(196, 169, 107, 0.85);
+  letter-spacing: 0.01em;
+  line-height: 1.55;
+  padding-top: 1.375rem;
+  border-top: 1px solid rgba(196, 169, 107, 0.12);
+  max-width: 480px;
+}
+
+/* ——— Right: image column ——— */
+.about-image-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Ambient glow — sits behind the card */
+.about-image-glow {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 260px;
+  height: 320px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(196, 169, 107, 0.09) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(30px);
+}
+
+/* Card: background + cutout both contained inside */
+.about-image-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(196, 169, 107, 0.2);
+  background: #0a0a0a;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.6),
+    0 4px 40px rgba(0, 0, 0, 0.55),
+    0 0 50px rgba(196, 169, 107, 0.05);
+  transition: border-color 0.35s ease, box-shadow 0.4s ease;
+  z-index: 1;
+}
+
+.about-image-card:hover {
+  border-color: rgba(196, 169, 107, 0.32);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.6),
+    0 8px 60px rgba(0, 0, 0, 0.65),
+    0 0 70px rgba(196, 169, 107, 0.09);
+}
+
+/* Gold top-edge accent line */
+.about-image-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 12%; right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(196, 169, 107, 0.5) 50%, transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Warm professional ambient background — simulates a soft lit environment */
+.about-image-card {
+  background:
+    radial-gradient(ellipse at 30% 25%, rgba(100, 82, 48, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 70% 80%, rgba(60, 50, 30, 0.12) 0%, transparent 50%),
+    linear-gradient(165deg, #1c1a14 0%, #131109 55%, #0a0906 100%);
+}
+
+/* Person — mix-blend-mode: lighten keeps dark suit solid over dark bg,
+   while making the pure-black PNG background transparent */
+.about-founder-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  mix-blend-mode: lighten;
+}
+
+/* Founder name + title below the card */
+.about-founder-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1;
+}
+
+.about-founder-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #C4A96B;
+  letter-spacing: 0.02em;
+}
+
+/* Separator dash between name and title */
+.about-label-sep {
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  background: rgba(196, 169, 107, 0.35);
+  flex-shrink: 0;
+}
+
+.about-founder-title {
+  font-size: 0.75rem;
+  color: rgba(161, 161, 161, 0.55);
+  letter-spacing: 0.04em;
+}
+
+/* ——— Tablet ——— */
+@media (max-width: 860px) {
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 52px;
+    align-items: start;
+  }
+
+  .about-image-col {
+    max-width: 320px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .about-paragraphs p,
+  .about-closing {
+    max-width: 100%;
+  }
+}
+
+/* ——— Mobile ——— */
+@media (max-width: 480px) {
+  .about-section {
+    padding: 72px 0 80px;
+  }
+
+  .about-h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-paragraphs {
+    gap: 1.125rem;
+  }
+
+  .about-paragraphs p {
+    font-size: 0.875rem;
+    line-height: 1.78;
+  }
+
+  .about-closing {
+    font-size: 0.875rem;
+  }
+
+  .about-image-col {
+    max-width: 260px;
   }
 }
