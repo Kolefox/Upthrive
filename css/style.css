@@ -126,8 +126,9 @@ section {
 
 /* =====================
    NAVIGATION
-   Transparent over the hero → frosted dark on scroll.
+   Transparent over hero → gold-tinted frosted glass on scroll.
    .nav-open shows the mobile drawer.
+   Uppercase links with gold slide-underline on hover.
 ===================== */
 header {
   position: sticky;
@@ -135,15 +136,21 @@ header {
   z-index: 100;
   background-color: transparent;
   border-bottom: 1px solid transparent;
-  transition: background-color 0.4s ease, border-color 0.4s ease;
+  transition:
+    background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color     0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow       0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Scrolled: gold-tinted frosted glass — more cohesive than plain white */
 header.scrolled {
-  background-color: rgba(5, 5, 5, 0.82);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03), 0 8px 40px rgba(0, 0, 0, 0.6);
+  background-color: rgba(4, 4, 4, 0.88);
+  border-bottom: 1px solid rgba(196, 169, 107, 0.14);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  box-shadow:
+    0 1px 0 rgba(196, 169, 107, 0.07),
+    0 12px 48px rgba(0, 0, 0, 0.72);
 }
 
 .navbar {
@@ -152,90 +159,116 @@ header.scrolled {
   justify-content: space-between;
   max-width: 1040px;
   margin: 0 auto;
-  padding: 4px 28px;
+  padding: 0 28px;
+  height: 68px;
 }
 
-header:not(.scrolled) .navbar {
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-
-/* Logo image */
+/* Logo — refined height, no more oversized mark */
 .logo img {
-  height: 80px;
+  height: 60px;
   width: auto;
   display: block;
   filter: brightness(0) invert(1);
+  opacity: 0.92;
+  transition: opacity 0.2s ease;
 }
 
-/* Nav links */
+.logo:hover img {
+  opacity: 0.68;
+}
+
+/* Nav links — uppercase architectural tracking */
 .nav-links {
   display: flex;
-  gap: 24px;
+  gap: 36px;
+  align-items: center;
 }
 
 header .nav-links a {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgba(245, 245, 245, 0.82);
-  letter-spacing: 0.01em;
-  transition: color 0.2s ease;
+  position: relative;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.52);
+  padding-bottom: 3px;
+  transition: color 0.25s ease;
+}
+
+/* Gold slide-underline — the signature detail */
+header .nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #C4A96B, rgba(196, 169, 107, 0.5));
+  transition: width 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 header .nav-links a:hover {
-  color: #F5F5F5;
+  color: rgba(245, 245, 245, 0.92);
 }
 
-/* Nav CTA */
+header .nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Nav CTA — gold-bordered by default, fills gold on scroll */
 header .nav-cta {
   display: inline-flex;
   align-items: center;
-  padding: 0.5rem 1.125rem;
-  border-radius: 9999px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   white-space: nowrap;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #F5F5F5;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  background-color: transparent;
+  color: #C4A96B;
+  border: 1px solid rgba(196, 169, 107, 0.4);
+  transition:
+    background-color 0.25s ease,
+    border-color     0.25s ease,
+    color            0.25s ease,
+    box-shadow       0.25s ease;
 }
 
 header .nav-cta:hover {
-  background-color: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.45);
+  background-color: rgba(196, 169, 107, 0.08);
+  border-color: rgba(196, 169, 107, 0.75);
+  box-shadow: 0 0 22px rgba(196, 169, 107, 0.12);
 }
 
 header.scrolled .nav-cta {
   background-color: #C4A96B;
   color: #0B0B0B;
   border-color: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
 header.scrolled .nav-cta:hover {
-  background-color: #D4B55C;
+  background-color: #d4b96e;
+  box-shadow: 0 0 28px rgba(196, 169, 107, 0.28);
 }
 
-/* Hamburger toggle — hidden on desktop */
+/* Hamburger toggle — gold border matches CTA language */
 .nav-toggle {
   display: none;
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(196, 169, 107, 0.32);
   border-radius: 6px;
   padding: 7px 9px;
   cursor: pointer;
-  color: rgba(245, 245, 245, 0.9);
+  color: rgba(245, 245, 245, 0.8);
   line-height: 0;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
 }
 
 .nav-toggle:hover {
-  border-color: rgba(255, 255, 255, 0.45);
+  border-color: rgba(196, 169, 107, 0.65);
+  background-color: rgba(196, 169, 107, 0.06);
 }
 
 /* Swap hamburger / X icons via CSS */
@@ -245,34 +278,40 @@ header.scrolled .nav-cta:hover {
 header.nav-open .nav-toggle .icon-close { display: block; }
 header.nav-open .nav-toggle .icon-menu  { display: none; }
 
-/* Mobile nav drawer */
+/* Mobile nav drawer — premium dark with gold language */
 .mobile-nav {
-  display: none; /* shown only at mobile breakpoint */
+  display: none;
   max-height: 0;
   overflow: hidden;
-  background-color: rgba(5, 5, 5, 0.96);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  transition: max-height 0.35s ease;
+  background-color: rgba(4, 4, 4, 0.97);
+  border-top: 1px solid rgba(196, 169, 107, 0.1);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  transition: max-height 0.42s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 header.nav-open .mobile-nav {
-  max-height: 360px;
+  max-height: 440px;
 }
 
 .mobile-nav ul {
-  padding: 12px 28px 24px;
+  padding: 8px 28px 28px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
 }
 
 .mobile-nav ul li a {
-  display: block;
-  padding: 12px 0;
-  font-size: 1rem;
-  font-weight: 500;
-  color: rgba(245, 245, 245, 0.8);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 0;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 245, 0.45);
+  border-bottom: 1px solid rgba(196, 169, 107, 0.08);
   transition: color 0.2s ease;
 }
 
@@ -281,20 +320,30 @@ header.nav-open .mobile-nav {
 }
 
 .mobile-nav ul li a:hover {
-  color: #F5F5F5;
+  color: #C4A96B;
 }
 
+/* Mobile CTA — solid gold, same radius as desktop CTA */
 .mobile-nav .mobile-cta {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 13px 28px !important;
-  background-color: #F5F5F5;
+  display: block;
+  margin-top: 18px;
+  padding: 14px 28px !important;
+  background-color: #C4A96B;
   color: #0B0B0B !important;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 0.9375rem !important;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.6875rem !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   text-align: center;
   border-bottom: none !important;
+  justify-content: center !important;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-nav .mobile-cta:hover {
+  background-color: #d4b96e !important;
+  color: #0B0B0B !important;
 }
 
 
@@ -740,11 +789,11 @@ header.nav-open .mobile-nav {
 
 /* Fox's Fleet */
 .work-card-image--1 {
-  background: url('../assets/images/hero-image.jpg') center center / cover no-repeat;
+  background: url('../assets/images/Foxs_Fleet_Client_Work.png') center center / cover no-repeat;
 }
 
 .work-card-image--2 {
-  background: url('../assets/images/Upthrive-header.png') center center / cover no-repeat;
+  background: url('../assets/images/Upthrive_Client_Work.png') center center / cover no-repeat;
 }
 
 .work-card-image--3 {
@@ -1383,12 +1432,8 @@ footer::before {
   }
 
   .navbar {
-    padding: 16px 20px;
-  }
-
-  header:not(.scrolled) .navbar {
-    padding-top: 18px;
-    padding-bottom: 18px;
+    padding: 0 20px;
+    height: 60px;
   }
 
   /* Hero */
