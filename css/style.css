@@ -1488,6 +1488,70 @@ footer::before {
 
 
 /* =====================
+   HERO — iPHONE ONLY  ≤ 480px
+   Fixes the "too zoomed in" feeling. The WebGL scale is also
+   reduced in script.js (SCALE * 0.62 when isMobile).
+   Desktop is completely untouched.
+===================== */
+@media (max-width: 480px) {
+
+  /* Slightly tighter height — removes excess empty vertical space */
+  #hero {
+    height: 80svh;
+    min-height: 540px;
+  }
+
+  /* Stronger overlay to balance the now-smaller prism effect */
+  .hero-overlay {
+    background: rgba(0, 0, 0, 0.48);
+  }
+
+  /* Tighten the radial glow behind content — stops bleed at screen edges */
+  .hero-content::before {
+    inset: -60px -50px;
+  }
+
+  /* Bring content block tighter — more breathing room around it */
+  .hero-content {
+    padding: 1.25rem 1.375rem;
+    gap: 0;
+  }
+
+  /* Eyebrow — slightly less gap to headline */
+  .hero-badge {
+    margin-bottom: 0.5rem;
+    font-size: 0.625rem;
+    letter-spacing: 0.18em;
+  }
+
+  /* Headline — bring bottom margin tighter */
+  #hero h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  /* Sub copy — slightly smaller for proportional fit */
+  .hero-sub {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Service row — smaller text and tighter tracking so it wraps cleanly */
+  .hero-services {
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    padding-top: 1.25rem;
+    line-height: 1.6;
+  }
+
+  /* Scroll cue — less bottom space needed */
+  .hero-scroll-cue {
+    bottom: 1rem;
+  }
+}
+
+
+/* =====================
    THE UPTHRIVE SYSTEM SECTION
    "Not an agency. A complete growth machine."
 ===================== */

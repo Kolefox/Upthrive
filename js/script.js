@@ -215,7 +215,7 @@ function initPrism(container, cfg) {
   const GLOW      = Math.max(0, cfg.glow);
   const NOISE     = Math.max(0, cfg.noise);
   const SAT       = cfg.transparent ? 1.5 : 1;
-  const SCALE     = Math.max(0.001, cfg.scale);
+  let   SCALE     = Math.max(0.001, cfg.scale);
   const HUE       = cfg.hueShift      || 0;
   const CFREQ     = Math.max(0, cfg.colorFrequency || 1);
   const BLOOM     = Math.max(0, cfg.bloom          || 1);
@@ -224,6 +224,7 @@ function initPrism(container, cfg) {
   const INERT     = Math.max(0, Math.min(1, cfg.inertia || 0.12));
 
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if (isMobile) SCALE = Math.max(0.001, SCALE * 0.62); // scale prism down on iPhone
 
   const dpr = isMobile
     ? Math.min(1,   window.devicePixelRatio || 1)
