@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 16px;
   line-height: 1.6;
   color: #A1A1A1;
@@ -366,7 +366,7 @@ header.nav-open .mobile-nav {
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   contain: layout style paint;
 }
 
@@ -428,7 +428,20 @@ header.nav-open .mobile-nav {
 }
 
 .hero-badge::before {
-  display: none;
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #C4A96B;
+  margin-right: 2px;
+  flex-shrink: 0;
+  animation: badgeDotPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes badgeDotPulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(0.65); }
 }
 
 #hero h1 {
@@ -470,7 +483,7 @@ header.nav-open .mobile-nav {
   transition: opacity 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
   white-space: nowrap;
   -webkit-font-smoothing: antialiased;
-  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .btn-hero:active {
@@ -754,6 +767,7 @@ header.nav-open .mobile-nav {
 .work-card:hover .work-card-image {
   transform: translateY(-3px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(196, 169, 107, 0.2);
 }
 
 /* Hover overlay — "View Live Site" appears on hover */
@@ -797,7 +811,7 @@ header.nav-open .mobile-nav {
 }
 
 .work-card-image--3 {
-  background: linear-gradient(145deg, #0f0814 0%, #22103a 100%);
+  background: linear-gradient(145deg, #0c0b08 0%, #1c180e 65%, #141208 100%);
 }
 
 /* "Coming Soon" label centered inside the card */
@@ -807,12 +821,12 @@ header.nav-open .mobile-nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(245, 245, 245, 0.25);
-  border: 1px dashed rgba(255, 255, 255, 0.08);
+  color: rgba(196, 169, 107, 0.32);
+  border: 1px dashed rgba(196, 169, 107, 0.12);
   border-radius: 10px;
 }
 
@@ -832,6 +846,11 @@ header.nav-open .mobile-nav {
   color: #F5F5F5;
   letter-spacing: -0.01em;
   margin-bottom: 0.375rem;
+  transition: color 0.25s ease;
+}
+
+.work-card:hover .work-card-meta h3 {
+  color: #fff;
 }
 
 .work-card-desc {
@@ -1109,6 +1128,26 @@ header.nav-open .mobile-nav {
 ===================== */
 #contact {
   background-color: #0B0B0B;
+  position: relative;
+  overflow: hidden;
+}
+
+#contact::before {
+  content: '';
+  position: absolute;
+  top: -5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 720px;
+  height: 520px;
+  background: radial-gradient(ellipse at center, rgba(196, 169, 107, 0.038) 0%, transparent 62%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#contact > .container {
+  position: relative;
+  z-index: 1;
 }
 
 .cta-block {
@@ -1170,7 +1209,7 @@ header.nav-open .mobile-nav {
   border: 1px solid #242424;
   border-radius: 8px;
   font-size: 0.9375rem;
-  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: rgba(255, 255, 255, 0.03);
   color: #F5F5F5;
   transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -1184,8 +1223,9 @@ header.nav-open .mobile-nav {
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: rgba(196, 169, 107, 0.45);
+  border-color: rgba(196, 169, 107, 0.5);
   background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(196, 169, 107, 0.07);
 }
 
 .contact-form textarea {
@@ -1202,7 +1242,7 @@ header.nav-open .mobile-nav {
   border-radius: 9999px;
   font-size: 0.9375rem;
   font-weight: 600;
-  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   letter-spacing: 0.01em;
   background-color: #F5F5F5;
   color: #0B0B0B;
@@ -1294,10 +1334,11 @@ footer::before {
 }
 
 .footer-brand .footer-logo {
-  height: 26px;
+  height: 70px;
   width: auto;
-  margin-bottom: 1.125rem;
-  opacity: 0.85;
+  margin-bottom: 1.25rem;
+  opacity: 0.82;
+  filter: brightness(0) invert(1);
 }
 
 .footer-brand p {
@@ -1699,11 +1740,15 @@ footer::before {
   font-weight: 600;
   color: #C4A96B;
   letter-spacing: 0.01em;
-  transition: opacity 0.2s ease;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(196, 169, 107, 0);
+  transition: color 0.22s ease, text-decoration-color 0.28s ease;
 }
 
 .system-cta:hover {
-  opacity: 0.65;
+  color: #d4bc82;
+  text-decoration-color: rgba(196, 169, 107, 0.5);
 }
 
 /* Layer cards stack */
@@ -2228,7 +2273,7 @@ footer::before {
   font-size: 0.9375rem;
   font-weight: 600;
   letter-spacing: 0.01em;
-  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: #C4A96B;
   color: #0B0B0B;
   text-decoration: none;
@@ -2431,6 +2476,16 @@ footer::before {
 .svc-card--featured {
   border-color: rgba(196, 169, 107, 0.2);
   background: #131210;
+  position: relative;
+}
+
+.svc-card--featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(196, 169, 107, 0.5) 50%, transparent);
+  pointer-events: none;
 }
 
 .svc-card--featured:hover {
@@ -2513,11 +2568,15 @@ footer::before {
   color: #C4A96B;
   letter-spacing: 0.01em;
   padding: 10px 0;
-  transition: opacity 0.2s ease;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(196, 169, 107, 0);
+  transition: color 0.2s ease, text-decoration-color 0.25s ease;
 }
 
 .svc-link:hover {
-  opacity: 0.65;
+  color: #d4bc82;
+  text-decoration-color: rgba(196, 169, 107, 0.45);
 }
 
 @media (max-width: 480px) {
@@ -2620,7 +2679,7 @@ footer::before {
   letter-spacing: -0.035em;
   line-height: 1;
   color: #ffffff;
-  font-family: 'Plus Jakarta Sans', Inter, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   display: inline-flex;
   align-items: baseline;
   gap: 0.02em;
@@ -2940,6 +2999,29 @@ footer::before {
   .about-image-col {
     max-width: 260px;
   }
+}
+
+/* =======================================================================
+   SCROLL PROGRESS BAR
+   Gold hairline at top of viewport — grows as user scrolls.
+   ======================================================================= */
+
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    rgba(196, 169, 107, 0.0) 0%,
+    #C4A96B 35%,
+    #E8D5A3 100%
+  );
+  z-index: 9999;
+  pointer-events: none;
+  transition: width 0.08s linear;
+  box-shadow: 0 0 8px rgba(196, 169, 107, 0.4);
 }
 
 /* =======================================================================
@@ -3380,4 +3462,104 @@ footer::before {
   border-color: #C4A96B;
   color: #0B0B0B;
   box-shadow: 0 4px 20px rgba(196, 169, 107, 0.22);
+}
+
+
+/* =======================================================================
+   GLOBAL POLISH — miscellaneous refinements
+   ======================================================================= */
+
+/* Hero h1 — sharper text shadow for more drama against the WebGL bg */
+#hero h1 {
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* System section — faint ambient glow at right edge */
+.system-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.system-section::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  right: -8%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(ellipse at center, rgba(196, 169, 107, 0.025) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* About section — warm left-side ambient glow */
+.about-section::after {
+  content: '';
+  position: absolute;
+  bottom: 10%;
+  left: -6%;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(ellipse at center, rgba(196, 169, 107, 0.022) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Stat item — subtle hover brightening */
+@media (hover: hover) {
+  .stat-item:hover .stat-val {
+    text-shadow: 0 0 48px rgba(255, 255, 255, 0.22);
+  }
+  .stat-item:hover .stat-sym {
+    text-shadow: 0 0 36px rgba(196, 169, 107, 0.55);
+  }
+}
+
+/* Work section — add subtle top separator to match site cadence */
+#work {
+  position: relative;
+}
+
+#work::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  max-width: 520px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06) 50%, transparent);
+  pointer-events: none;
+}
+
+/* Section eyebrow refinement — slightly warmer gold on scroll-visible sections */
+.section-eyebrow {
+  color: rgba(196, 169, 107, 0.75);
+}
+
+/* Contact h2 — tighter tracking for more premium feel */
+.contact-h2 {
+  letter-spacing: -0.035em;
+}
+
+/* Nav active link — highlight the current section (progressive enhancement) */
+header .nav-links a.active {
+  color: rgba(245, 245, 245, 0.92);
+}
+
+header .nav-links a.active::after {
+  width: 100%;
+}
+
+/* Footer brand tagline — slightly larger for readability */
+.footer-brand p {
+  font-size: 0.9rem;
+  color: rgba(245, 245, 245, 0.28);
+  line-height: 1.72;
+}
+
+/* Refined section header max-width on work section */
+#work .section-header p {
+  max-width: 520px;
 }

@@ -765,6 +765,23 @@ function initPrism(container, cfg) {
 }());
 
 // =====================================================================
+// SCROLL PROGRESS BAR
+// Gold hairline at top of page that fills as the user scrolls.
+// =====================================================================
+(function () {
+  var bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  function updateBar() {
+    var scrolled = window.scrollY || window.pageYOffset;
+    var total    = document.documentElement.scrollHeight - window.innerHeight;
+    if (total <= 0) return;
+    bar.style.width = Math.min(100, (scrolled / total) * 100) + '%';
+  }
+  window.addEventListener('scroll', updateBar, { passive: true });
+  updateBar();
+}());
+
+// =====================================================================
 // CONTACT FORM — SUBMIT GATE
 // Enables the submit button only when all fields have content AND
 // the consent checkbox is checked.
@@ -960,6 +977,42 @@ function initPrism(container, cfg) {
   window.addEventListener('resize', function () {
     if (successModal.classList.contains('modal-open')) resize();
   });
+}());
+
+// =====================================================================
+// ACTIVE NAV LINK HIGHLIGHTING
+// Adds .active to the nav link whose target section is in view.
+// =====================================================================
+(function () {
+  var navLinks = document.querySelectorAll('header .nav-links a[href^="#"]');
+  if (!navLinks.length) return;
+
+  var sectionIds = [];
+  navLinks.forEach(function (link) {
+    var id = link.getAttribute('href').replace('#', '');
+    if (id) sectionIds.push(id);
+  });
+
+  function getActiveId() {
+    var scrollY = window.scrollY + 120; // offset for sticky header
+    var active  = null;
+    sectionIds.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el && el.offsetTop <= scrollY) active = id;
+    });
+    return active;
+  }
+
+  function updateActive() {
+    var active = getActiveId();
+    navLinks.forEach(function (link) {
+      var id = link.getAttribute('href').replace('#', '');
+      link.classList.toggle('active', id === active);
+    });
+  }
+
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
 }());
 
 // =====================================================================
