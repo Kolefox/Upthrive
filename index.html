@@ -425,13 +425,26 @@
         <h2 class="contact-h2">Ready to build something<br><span class="contact-h2-gold">worth growing?</span></h2>
         <p>Book a free strategy call. We'll audit your current marketing, surface the highest-leverage opportunities, and show you exactly how Upthrive would grow your brand.</p>
       </div>
-      <form class="contact-form reveal" action="#" method="post">
+      <form class="contact-form reveal" id="contact-form" action="#" method="post" novalidate>
         <div class="form-row">
           <input type="text"  name="name"  placeholder="Your Name"  required />
           <input type="email" name="email" placeholder="Your Email" required />
         </div>
         <textarea name="message" placeholder="Tell us about your brand and goals" rows="5" required></textarea>
-        <button type="submit" class="btn-submit">Send Message</button>
+
+        <!-- SMS + Legal consent -->
+        <div class="form-consent">
+          <label class="consent-label">
+            <input type="checkbox" class="consent-checkbox" name="consent" required />
+            <span class="consent-checkmark" aria-hidden="true"></span>
+            <span class="consent-text">
+              I consent to receive non-marketing text messages from Upthrive about my inquiry, consultation scheduling, and account updates. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.<br /><br />
+              By submitting this form, you also agree to our <button type="button" class="consent-link" data-modal="privacy">Privacy Policy</button> and <button type="button" class="consent-link" data-modal="terms">Terms</button>.
+            </span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btn-submit" disabled>Send Message</button>
       </form>
     </div>
   </section>
@@ -488,6 +501,130 @@
 
     </div>
   </footer>
+
+  <!-- =====================
+       PRIVACY POLICY MODAL
+       ===================== -->
+  <div class="legal-modal" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="modal-privacy-title">
+    <div class="legal-modal-backdrop" data-close="privacy"></div>
+    <div class="legal-modal-panel">
+      <div class="legal-modal-header">
+        <span class="legal-modal-title" id="modal-privacy-title">Privacy Policy</span>
+        <button class="legal-modal-close" data-close="privacy" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="legal-modal-body">
+        <p class="legal-updated">Last updated: April 10, 2026</p>
+
+        <h3>Who We Are</h3>
+        <p>Upthrive ("we," "us," or "our") is a digital marketing and growth agency. This Privacy Policy explains how we collect, use, and protect your personal information when you visit our website or contact us through our forms.</p>
+
+        <h3>Information We Collect</h3>
+        <p>We collect information you voluntarily provide, including your name, email address, phone number, and any details you share in our contact form. We may also collect standard usage data such as your IP address, browser type, and pages visited through analytics tools.</p>
+
+        <h3>How We Use Your Information</h3>
+        <p>We use your information to respond to your inquiries, send you information about our services, schedule consultations, and improve our website. We do not sell or rent your personal information to third parties.</p>
+
+        <h3>SMS &amp; Text Messaging</h3>
+        <p>If you opt in via our contact form, we may send you non-marketing text messages related to your inquiry, consultation scheduling, or account updates. Message frequency may vary. Message and data rates may apply. Reply STOP at any time to opt out, or HELP for assistance.</p>
+
+        <h3>Cookies &amp; Analytics</h3>
+        <p>We may use cookies and third-party analytics services (such as Google Analytics) to understand how visitors use our site. You can disable cookies through your browser settings.</p>
+
+        <h3>Data Security</h3>
+        <p>We implement reasonable security measures to protect your personal information from unauthorized access, use, or disclosure. However, no internet transmission is completely secure.</p>
+
+        <h3>Third-Party Services</h3>
+        <p>We may use third-party platforms for email, CRM, or scheduling. These providers have their own privacy policies and we encourage you to review them.</p>
+
+        <h3>Your Rights</h3>
+        <p>You may request access to, correction of, or deletion of your personal information at any time by contacting us at <a href="mailto:hello@upthrive.co">hello@upthrive.co</a>.</p>
+
+        <h3>Changes to This Policy</h3>
+        <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date.</p>
+
+        <h3>Contact</h3>
+        <p>Questions? Reach us at <a href="tel:+15616131583">(561) 613-1583</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================
+       TERMS MODAL
+       ===================== -->
+  <div class="legal-modal" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="modal-terms-title">
+    <div class="legal-modal-backdrop" data-close="terms"></div>
+    <div class="legal-modal-panel">
+      <div class="legal-modal-header">
+        <span class="legal-modal-title" id="modal-terms-title">Terms of Service</span>
+        <button class="legal-modal-close" data-close="terms" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="legal-modal-body">
+        <p class="legal-updated">Last updated: April 10, 2026</p>
+
+        <h3>Acceptance of Terms</h3>
+        <p>By accessing or using the Upthrive website and submitting any form on this site, you agree to be bound by these Terms of Service. If you do not agree, please do not use our website.</p>
+
+        <h3>Services</h3>
+        <p>Upthrive provides digital marketing, web design, CRM implementation, paid advertising management, and related growth services. Specific service terms, deliverables, and pricing are outlined in individual client agreements or proposals.</p>
+
+        <h3>Use of Website</h3>
+        <p>You agree to use this website only for lawful purposes. You may not use this site in a way that could damage, disable, or impair the site, or interfere with other users' access. Automated scraping or data harvesting is prohibited.</p>
+
+        <h3>Intellectual Property</h3>
+        <p>All content on this website — including text, graphics, logos, and code — is the property of Upthrive and is protected by applicable copyright and intellectual property laws. You may not reproduce or distribute any content without our written permission.</p>
+
+        <h3>Disclaimer of Warranties</h3>
+        <p>This website and its content are provided "as is" without warranties of any kind, express or implied. We do not warrant that the site will be uninterrupted, error-free, or free of viruses. Marketing results vary and are not guaranteed.</p>
+
+        <h3>Limitation of Liability</h3>
+        <p>To the fullest extent permitted by law, Upthrive shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of this website or our services, even if we have been advised of the possibility of such damages.</p>
+
+        <h3>Indemnification</h3>
+        <p>You agree to indemnify and hold harmless Upthrive and its officers, employees, and agents from any claims, damages, or expenses arising from your use of the site or violation of these Terms.</p>
+
+        <h3>Governing Law</h3>
+        <p>These Terms are governed by the laws of the State of Florida, without regard to its conflict of law provisions. Any disputes shall be resolved in the courts located in Florida.</p>
+
+        <h3>Changes to Terms</h3>
+        <p>We reserve the right to update these Terms at any time. Continued use of the site after changes constitutes acceptance of the updated Terms.</p>
+
+        <h3>Contact</h3>
+        <p>Questions about these Terms? Contact us at <a href="tel:+15616131583">(561) 613-1583</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti canvas — full viewport, pointer-events none, always present -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- =====================
+       SUCCESS MODAL
+       ===================== -->
+  <div class="success-modal" id="modal-success" role="dialog" aria-modal="true" aria-labelledby="success-modal-title">
+    <div class="success-modal-backdrop"></div>
+    <div class="success-modal-panel">
+      <div class="success-icon">
+        <svg class="success-ring" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle class="success-circle" cx="32" cy="32" r="28" stroke="#C4A96B" stroke-width="1.5"/>
+          <polyline class="success-check" points="20,33 28,41 44,24" stroke="#C4A96B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="success-eyebrow">Inquiry Submitted</span>
+      <h2 class="success-h2" id="success-modal-title">We've got you.</h2>
+      <p class="success-body">Thank you for reaching out. Our team will review your details and be in touch within 24 hours — ready to show you exactly how Upthrive grows brands.</p>
+      <button class="success-close" id="success-close">Close</button>
+    </div>
+  </div>
 
   <!-- JavaScript (type="module" required for OGL CDN import) -->
   <script type="module" src="js/script.js"></script>

@@ -763,3 +763,254 @@ function initPrism(container, cfg) {
     });
   }
 }());
+
+// =====================================================================
+// CONTACT FORM — SUBMIT GATE
+// Enables the submit button only when all fields have content AND
+// the consent checkbox is checked.
+// =====================================================================
+(function () {
+  var form     = document.getElementById('contact-form');
+  var submitBtn = document.getElementById('btn-submit');
+  if (!form || !submitBtn) return;
+
+  var nameInput    = form.querySelector('input[name="name"]');
+  var emailInput   = form.querySelector('input[name="email"]');
+  var msgInput     = form.querySelector('textarea[name="message"]');
+  var consentInput = form.querySelector('input[name="consent"]');
+
+  function checkForm() {
+    var allFilled =
+      nameInput.value.trim() !== '' &&
+      emailInput.value.trim() !== '' &&
+      msgInput.value.trim() !== '' &&
+      consentInput.checked;
+    submitBtn.disabled = !allFilled;
+  }
+
+  [nameInput, emailInput, msgInput].forEach(function (el) {
+    el.addEventListener('input', checkForm);
+  });
+  consentInput.addEventListener('change', checkForm);
+
+  // Run once on load to reflect any browser-autofilled values
+  checkForm();
+}());
+
+// =====================================================================
+// SUCCESS MODAL + GOLD CONFETTI
+// Fires on form submit. Pure-canvas confetti in the Upthrive gold
+// palette — no external libraries.
+// =====================================================================
+(function () {
+  var form         = document.getElementById('contact-form');
+  var successModal = document.getElementById('modal-success');
+  var closeBtn     = document.getElementById('success-close');
+  var canvas       = document.getElementById('confetti-canvas');
+  if (!form || !successModal || !canvas) return;
+
+  var ctx       = canvas.getContext('2d');
+  var particles = [];
+  var animId    = null;
+
+  // Gold palette — weighted toward the richest tones
+  var PALETTE = [
+    '#C4A96B', '#C4A96B', '#C4A96B',   // primary gold  (3×)
+    '#D4BC82', '#D4BC82',               // bright gold   (2×)
+    '#E8D5A3',                          // champagne
+    '#F5EDD5',                          // cream
+    '#B89555',                          // deep gold
+    '#8B6F3A',                          // dark bronze
+    '#FAF0DC',                          // near-white
+  ];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function makeParticle(ox, oy, speed) {
+    var angle  = Math.random() * Math.PI * 2;
+    var spd    = speed * (0.45 + Math.random() * 0.55);
+    var isRing = Math.random() < 0.12;
+    var isCirc = !isRing && Math.random() < 0.22;
+    return {
+      x:        ox,
+      y:        oy,
+      vx:       Math.cos(angle) * spd,
+      vy:       Math.sin(angle) * spd - 3.5,  // slight upward bias
+      rot:      Math.random() * Math.PI * 2,
+      rotSpd:   (Math.random() - 0.5) * 0.28,
+      color:    PALETTE[Math.floor(Math.random() * PALETTE.length)],
+      shape:    isRing ? 'ring' : isCirc ? 'circle' : 'rect',
+      w:        isCirc || isRing ? 3 + Math.random() * 4 : 4 + Math.random() * 9,
+      h:        isCirc || isRing ? 0 : 2 + Math.random() * 3.5,
+      opacity:  1,
+      decay:    0.006 + Math.random() * 0.009,
+    };
+  }
+
+  function burst(count, speed) {
+    var cx = canvas.width  / 2;
+    var cy = canvas.height * 0.52;
+    for (var i = 0; i < count; i++) {
+      particles.push(makeParticle(cx, cy, speed));
+    }
+  }
+
+  function drawParticle(p) {
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, p.opacity);
+    ctx.strokeStyle = p.color;
+    ctx.fillStyle   = p.color;
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+
+    if (p.shape === 'circle') {
+      ctx.beginPath();
+      ctx.arc(0, 0, p.w, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (p.shape === 'ring') {
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.arc(0, 0, p.w, 0, Math.PI * 2);
+      ctx.stroke();
+    } else {
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+    }
+    ctx.restore();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var alive = [];
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.x  += p.vx;
+      p.y  += p.vy;
+      p.vy += 0.19;    // gravity
+      p.vx *= 0.992;   // air drag
+      p.rot += p.rotSpd;
+      p.opacity -= p.decay;
+      if (p.opacity > 0) { drawParticle(p); alive.push(p); }
+    }
+    particles = alive;
+    animId = particles.length > 0 ? requestAnimationFrame(tick) : null;
+  }
+
+  function stopConfetti() {
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles = [];
+  }
+
+  function launchConfetti() {
+    resize();
+    particles = [];
+    burst(160, 14);                          // main explosion
+    setTimeout(function () { burst(80, 10); }, 280);   // second wave
+    setTimeout(function () { burst(50, 7);  }, 600);   // trailing shimmer
+    if (animId) cancelAnimationFrame(animId);
+    animId = requestAnimationFrame(tick);
+  }
+
+  // Reset SVG animations so they replay each time the modal opens
+  function resetSVGAnimations() {
+    var els = successModal.querySelectorAll('.success-circle, .success-check');
+    els.forEach(function (el) {
+      el.style.animation = 'none';
+      void el.offsetWidth;  // force reflow
+      el.style.animation = '';
+    });
+  }
+
+  function openSuccess() {
+    resetSVGAnimations();
+    successModal.classList.add('modal-open');
+    document.body.style.overflow = 'hidden';
+    launchConfetti();
+  }
+
+  function closeSuccess() {
+    successModal.classList.remove('modal-open');
+    document.body.style.overflow = '';
+    stopConfetti();
+  }
+
+  // Form submit
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    openSuccess();
+    form.reset();
+    var submitBtn = document.getElementById('btn-submit');
+    if (submitBtn) submitBtn.disabled = true;
+  });
+
+  closeBtn.addEventListener('click', closeSuccess);
+
+  successModal.querySelector('.success-modal-backdrop')
+    .addEventListener('click', closeSuccess);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && successModal.classList.contains('modal-open')) {
+      closeSuccess();
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    if (successModal.classList.contains('modal-open')) resize();
+  });
+}());
+
+// =====================================================================
+// LEGAL MODALS
+// Open via [data-modal="id"], close via [data-close="id"], backdrop
+// click, or Escape key. Locks body scroll while open.
+// =====================================================================
+(function () {
+  var activeModal = null;
+
+  function openModal(id) {
+    var modal = document.getElementById('modal-' + id);
+    if (!modal) return;
+    if (activeModal) closeModal(activeModal.id.replace('modal-', ''));
+    modal.classList.add('modal-open');
+    document.body.style.overflow = 'hidden';
+    activeModal = modal;
+    // Move focus into panel for accessibility
+    var panel = modal.querySelector('.legal-modal-panel');
+    if (panel) panel.setAttribute('tabindex', '-1'), panel.focus();
+  }
+
+  function closeModal(id) {
+    var modal = document.getElementById('modal-' + id);
+    if (!modal) return;
+    modal.classList.remove('modal-open');
+    document.body.style.overflow = '';
+    if (activeModal === modal) activeModal = null;
+  }
+
+  // Open triggers
+  document.addEventListener('click', function (e) {
+    var opener = e.target.closest('[data-modal]');
+    if (opener) {
+      e.preventDefault();
+      openModal(opener.dataset.modal);
+      return;
+    }
+
+    var closer = e.target.closest('[data-close]');
+    if (closer) {
+      e.preventDefault();
+      closeModal(closer.dataset.close);
+    }
+  });
+
+  // Escape key
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && activeModal) {
+      var id = activeModal.id.replace('modal-', '');
+      closeModal(id);
+    }
+  });
+}());

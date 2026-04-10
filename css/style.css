@@ -1220,6 +1220,20 @@ header.nav-open .mobile-nav {
   transform: scale(0.97);
 }
 
+/* Disabled state — all fields must be filled + consent checked */
+.btn-submit:disabled {
+  background-color: rgba(245, 245, 245, 0.06);
+  color: rgba(245, 245, 245, 0.22);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-submit:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 /* Success state — added by JS after submit */
 .contact-form.submitted .btn-submit {
   background-color: rgba(245, 245, 245, 0.12);
@@ -2926,4 +2940,444 @@ footer::before {
   .about-image-col {
     max-width: 260px;
   }
+}
+
+/* =======================================================================
+   CONSENT BOX
+   ======================================================================= */
+
+.form-consent {
+  margin-top: 4px;
+  margin-bottom: 6px;
+}
+
+.consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Hide the native checkbox */
+.consent-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Custom gold checkbox */
+.consent-checkmark {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  border-radius: 4px;
+  border: 1px solid rgba(196, 169, 107, 0.38);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.consent-checkmark::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 9px;
+  border: 2px solid #0B0B0B;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translateY(-1px);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.consent-checkbox:checked + .consent-checkmark {
+  background: #C4A96B;
+  border-color: #C4A96B;
+  box-shadow: 0 0 0 3px rgba(196, 169, 107, 0.12);
+}
+
+.consent-checkbox:checked + .consent-checkmark::after {
+  opacity: 1;
+}
+
+.consent-label:hover .consent-checkmark {
+  border-color: rgba(196, 169, 107, 0.65);
+}
+
+.consent-text {
+  font-size: 0.6875rem;
+  line-height: 1.68;
+  color: rgba(161, 161, 161, 0.52);
+  letter-spacing: 0.01em;
+}
+
+/* Inline link buttons inside consent text */
+.consent-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: inherit;
+  color: #C4A96B;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(196, 169, 107, 0.4);
+  cursor: pointer;
+  transition: text-decoration-color 0.2s ease, color 0.2s ease;
+}
+
+.consent-link:hover {
+  color: #d4bc82;
+  text-decoration-color: rgba(196, 169, 107, 0.85);
+}
+
+/* =======================================================================
+   LEGAL MODALS
+   ======================================================================= */
+
+.legal-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+@media (min-width: 600px) {
+  .legal-modal {
+    align-items: center;
+  }
+}
+
+.legal-modal.modal-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.legal-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+}
+
+.legal-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 640px;
+  max-height: 82svh;
+  margin: 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+  background: #111111;
+  border: 1px solid rgba(196, 169, 107, 0.18);
+  border-radius: 18px 18px 14px 14px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.55),
+    0 32px 80px rgba(0, 0, 0, 0.72),
+    0 0 60px rgba(196, 169, 107, 0.04);
+  overflow: hidden;
+  transform: translateY(20px);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 600px) {
+  .legal-modal-panel {
+    border-radius: 18px;
+    margin: 0 16px;
+  }
+}
+
+.legal-modal.modal-open .legal-modal-panel {
+  transform: translateY(0);
+}
+
+/* Gold top-edge accent */
+.legal-modal-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(196, 169, 107, 0.55) 50%, transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.legal-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid rgba(196, 169, 107, 0.09);
+  flex-shrink: 0;
+}
+
+.legal-modal-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #f5f5f5;
+  letter-spacing: 0.01em;
+}
+
+.legal-modal-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  cursor: pointer;
+  color: rgba(245, 245, 245, 0.45);
+  transition: background 0.18s ease, color 0.18s ease;
+  flex-shrink: 0;
+}
+
+.legal-modal-close:hover {
+  background: rgba(196, 169, 107, 0.12);
+  color: #C4A96B;
+}
+
+.legal-modal-close svg {
+  display: block;
+}
+
+.legal-modal-body {
+  overflow-y: auto;
+  padding: 24px 24px 32px;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(196, 169, 107, 0.2) transparent;
+}
+
+.legal-modal-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.legal-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.legal-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(196, 169, 107, 0.22);
+  border-radius: 2px;
+}
+
+/* Modal body typography */
+.legal-modal-body h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #C4A96B;
+  margin: 0 0 6px;
+}
+
+.legal-modal-body h3:not(:first-child) {
+  margin-top: 22px;
+}
+
+.legal-modal-body p {
+  font-size: 0.8125rem;
+  line-height: 1.72;
+  color: rgba(200, 200, 200, 0.62);
+  margin: 0 0 8px;
+}
+
+.legal-modal-body a {
+  color: #C4A96B;
+  text-underline-offset: 2px;
+}
+
+.legal-modal-body .legal-updated {
+  font-size: 0.6875rem;
+  color: rgba(161, 161, 161, 0.35);
+  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+}
+
+/* =======================================================================
+   SUCCESS MODAL + CONFETTI CANVAS
+   ======================================================================= */
+
+/* Confetti canvas — always in DOM, drawn by JS when active */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9600;
+}
+
+.success-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9550;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.success-modal.modal-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.success-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 4, 4, 0.82);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+}
+
+.success-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 430px;
+  background: #111111;
+  border: 1px solid rgba(196, 169, 107, 0.22);
+  border-radius: 22px;
+  padding: 48px 36px 40px;
+  text-align: center;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 48px 120px rgba(0, 0, 0, 0.85),
+    0 0 80px rgba(196, 169, 107, 0.06);
+  transform: translateY(32px) scale(0.96);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Gold top-edge accent */
+.success-modal-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 12%; right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(196, 169, 107, 0.65) 50%, transparent);
+  pointer-events: none;
+}
+
+.success-modal.modal-open .success-modal-panel {
+  transform: translateY(0) scale(1);
+}
+
+/* Animated SVG icon */
+.success-icon {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 22px;
+}
+
+.success-ring {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Circle draws itself: circumference = 2π × 28 ≈ 176 */
+.success-circle {
+  stroke-dasharray: 176;
+  stroke-dashoffset: 176;
+  transform-origin: 32px 32px;
+  transform: rotate(-90deg);
+}
+
+/* Check path length ≈ 36 */
+.success-check {
+  stroke-dasharray: 36;
+  stroke-dashoffset: 36;
+  fill: none;
+}
+
+.success-modal.modal-open .success-circle {
+  animation: uc-draw-circle 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.success-modal.modal-open .success-check {
+  animation: uc-draw-check 0.32s ease forwards 0.46s;
+}
+
+@keyframes uc-draw-circle {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes uc-draw-check {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Modal copy */
+.success-eyebrow {
+  display: block;
+  font-size: 0.5875rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C4A96B;
+  margin-bottom: 10px;
+}
+
+.success-h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #f5f5f5;
+  line-height: 1.12;
+  margin: 0 0 14px;
+  letter-spacing: -0.025em;
+}
+
+.success-body {
+  font-size: 0.875rem;
+  line-height: 1.74;
+  color: rgba(200, 200, 200, 0.55);
+  margin: 0 0 30px;
+}
+
+/* Gold outline close button */
+.success-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(196, 169, 107, 0.38);
+  background: transparent;
+  color: #C4A96B;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.success-close:hover {
+  background: #C4A96B;
+  border-color: #C4A96B;
+  color: #0B0B0B;
+  box-shadow: 0 4px 20px rgba(196, 169, 107, 0.22);
 }
