@@ -31,13 +31,7 @@ if (navToggle && siteHeader) {
     }
   });
 
-  // Close drawer when a mobile nav link is clicked
-  document.querySelectorAll('.mobile-nav a').forEach(function (link) {
-    link.addEventListener('click', function () {
-      siteHeader.classList.remove('nav-open');
-      document.querySelector('.mobile-nav')?.setAttribute('aria-hidden', 'true');
-    });
-  });
+  // Mobile nav links are handled by the unified smooth-scroll handler below
 }
 
 
@@ -57,17 +51,36 @@ if (siteHeader) {
 
 // =====================
 // SMOOTH SCROLL
-// All in-page anchor links (#section) scroll smoothly.
-// Also closes the mobile nav after tapping a link.
+// Handles all in-page anchor links. Uses window.scrollTo with a
+// sticky-header offset so sections aren't hidden behind the navbar.
+// Also closes the mobile drawer before scrolling (iPhone fix).
 // =====================
+function scrollToTarget(href) {
+  var target = (href === '#' || !href) ? document.body : document.querySelector(href);
+  if (!target) return;
+  if (target === document.body) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  var headerHeight = siteHeader ? siteHeader.offsetHeight : 68;
+  var targetTop    = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+  window.scrollTo({ top: targetTop, behavior: 'smooth' });
+}
+
 document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   link.addEventListener('click', function (e) {
-    const href   = this.getAttribute('href');
-    const target = href === '#' ? document.body : document.querySelector(href);
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
+    var href = this.getAttribute('href');
+    if (!document.querySelector(href === '#' ? 'body' : href)) return;
+    e.preventDefault();
+
+    // Close mobile nav first (nav is now absolutely positioned so closing
+    // it has zero effect on page layout — scroll position stays accurate)
+    if (siteHeader && siteHeader.classList.contains('nav-open')) {
+      siteHeader.classList.remove('nav-open');
+      document.querySelector('.mobile-nav')?.setAttribute('aria-hidden', 'true');
     }
+
+    scrollToTarget(href);
   });
 });
 

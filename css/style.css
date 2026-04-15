@@ -277,9 +277,14 @@ header.scrolled .nav-cta:hover {
 header.nav-open .nav-toggle .icon-close { display: block; }
 header.nav-open .nav-toggle .icon-menu  { display: none; }
 
-/* Mobile nav drawer — premium dark with gold language */
+/* Mobile nav drawer — absolutely positioned so it overlays the page
+   instead of pushing content down (fixes iPhone scroll-offset bug) */
 .mobile-nav {
   display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   max-height: 0;
   overflow: hidden;
   background-color: rgba(4, 4, 4, 0.97);
@@ -287,6 +292,7 @@ header.nav-open .nav-toggle .icon-menu  { display: none; }
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
   transition: max-height 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 99;
 }
 
 header.nav-open .mobile-nav {
@@ -522,7 +528,6 @@ header.nav-open .mobile-nav {
   line-height: 1;
   margin: 0;
   padding-top: 1.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .hero-scroll-cue {
