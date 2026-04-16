@@ -146,36 +146,6 @@ if ('IntersectionObserver' in window) {
 }());
 
 
-// =====================
-// CONTACT FORM
-// Handles submission with a visual success state.
-// Replace the body of this handler with a real fetch/API
-// call (e.g. Formspree, EmailJS) when you're ready.
-// =====================
-const contactForm = document.querySelector('.contact-form');
-
-if (contactForm) {
-  contactForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const btn = contactForm.querySelector('.btn-submit');
-    if (btn) {
-      btn.textContent = 'Message Sent';
-      btn.style.pointerEvents = 'none';
-      btn.style.opacity = '0.55';
-    }
-
-    // Reset after 4 seconds so the form can be used again
-    setTimeout(function () {
-      contactForm.reset();
-      if (btn) {
-        btn.textContent = 'Send Message';
-        btn.style.pointerEvents = '';
-        btn.style.opacity = '';
-      }
-    }, 4000);
-  });
-}
 
 
 // =====================================================================
