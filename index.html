@@ -440,10 +440,35 @@
       </div>
       <form class="contact-form reveal" id="contact-form" action="#" method="post" novalidate>
         <div class="form-row">
-          <input type="text"  name="name"  placeholder="Your Name"  required />
-          <input type="email" name="email" placeholder="Your Email" required />
+          <div class="field-wrap">
+            <input type="text"  name="name"  placeholder="Full Name"  required />
+          </div>
+          <div class="field-wrap">
+            <input type="email" name="email" placeholder="Your Email" required />
+          </div>
         </div>
-        <textarea name="message" placeholder="Tell us about your brand and goals" rows="5" required></textarea>
+        <div class="form-row">
+          <div class="field-wrap">
+            <input type="tel"  name="phone"   placeholder="Phone Number" required />
+          </div>
+          <div class="field-wrap">
+            <input type="text" name="company" placeholder="Company Name" required />
+          </div>
+        </div>
+        <div class="field-wrap">
+          <select name="service" required>
+            <option value="" disabled selected>Primary Service Needed</option>
+            <option value="paid-ads">Paid Ads</option>
+            <option value="web-design">Web Design</option>
+            <option value="seo">SEO</option>
+            <option value="creative-strategy">Creative Strategy</option>
+            <option value="crm-automation">CRM &amp; Automation</option>
+            <option value="not-sure">Not Sure Yet</option>
+          </select>
+        </div>
+        <div class="field-wrap">
+          <textarea name="message" placeholder="Tell us about your business, goals, and what you need help with" rows="5" required></textarea>
+        </div>
 
         <!-- SMS + Legal consent -->
         <div class="form-consent">
@@ -457,7 +482,7 @@
           </label>
         </div>
 
-        <button type="submit" class="btn-submit" id="btn-submit" disabled>Send Message</button>
+        <button type="submit" class="btn-submit" id="btn-submit">Send Message</button>
       </form>
     </div>
   </section>

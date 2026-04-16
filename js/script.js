@@ -795,37 +795,152 @@ function initPrism(container, cfg) {
 }());
 
 // =====================================================================
-// CONTACT FORM — SUBMIT GATE
-// Enables the submit button only when all fields have content AND
-// the consent checkbox is checked.
+// CONTACT FORM — PHONE FORMATTING + SUBMIT VALIDATION
+// Phone auto-formats as-you-type with zero errors while typing.
+// All field validation fires only when the submit button is clicked.
+// Each error message appears directly under the offending field.
 // =====================================================================
 (function () {
-  var form     = document.getElementById('contact-form');
-  var submitBtn = document.getElementById('btn-submit');
-  if (!form || !submitBtn) return;
+  var form = document.getElementById('contact-form');
+  if (!form) return;
 
-  var nameInput    = form.querySelector('input[name="name"]');
-  var emailInput   = form.querySelector('input[name="email"]');
-  var msgInput     = form.querySelector('textarea[name="message"]');
-  var consentInput = form.querySelector('input[name="consent"]');
-
-  function checkForm() {
-    var allFilled =
-      nameInput.value.trim() !== '' &&
-      emailInput.value.trim() !== '' &&
-      msgInput.value.trim() !== '' &&
-      consentInput.checked;
-    submitBtn.disabled = !allFilled;
+  // ── Phone formatting (silent — no errors while typing) ─────────────
+  var phoneInput = form.querySelector('input[name="phone"]');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function () {
+      var cursor  = this.selectionStart;
+      var prevLen = this.value.length;
+      var d       = this.value.replace(/\D/g, '').slice(0, 10);
+      var fmt     = '';
+      if (d.length > 0) fmt  = '(' + d.slice(0, 3);
+      if (d.length > 3) fmt += ') ' + d.slice(3, 6);
+      if (d.length > 6) fmt += '-' + d.slice(6);
+      this.value  = fmt;
+      var pos = Math.max(0, cursor + (this.value.length - prevLen));
+      this.setSelectionRange(pos, pos);
+    });
   }
 
-  [nameInput, emailInput, msgInput].forEach(function (el) {
-    el.addEventListener('input', checkForm);
-  });
-  consentInput.addEventListener('change', checkForm);
+  // ── Error helpers ───────────────────────────────────────────────────
+  function showError(el, msg) {
+    el.classList.add('input-error');
+    var wrap = el.closest('.field-wrap');
+    if (!wrap) return;
+    var err = wrap.querySelector('.field-error');
+    if (!err) {
+      err = document.createElement('span');
+      err.className = 'field-error';
+      wrap.appendChild(err);
+    }
+    err.textContent = msg;
+    err.style.display = 'block';
+  }
 
-  // Run once on load to reflect any browser-autofilled values
-  checkForm();
+  function clearAllErrors() {
+    form.querySelectorAll('.input-error').forEach(function (el) {
+      el.classList.remove('input-error');
+    });
+    form.querySelectorAll('.field-error').forEach(function (el) {
+      el.style.display = 'none';
+    });
+  }
+
+  // ── Validation rules ────────────────────────────────────────────────
+  function isValidEmail(val) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val.trim());
+  }
+
+  function countWords(str) {
+    return str.trim().split(/\s+/).filter(Boolean).length;
+  }
+
+  function validate() {
+    clearAllErrors();
+    var ok = true;
+
+    var nameEl    = form.querySelector('input[name="name"]');
+    var emailEl   = form.querySelector('input[name="email"]');
+    var phoneEl   = form.querySelector('input[name="phone"]');
+    var companyEl = form.querySelector('input[name="company"]');
+    var serviceEl = form.querySelector('select[name="service"]');
+    var msgEl     = form.querySelector('textarea[name="message"]');
+    var consentEl = form.querySelector('input[name="consent"]');
+
+    if (!nameEl.value.trim()) {
+      showError(nameEl, 'Full name is required.');
+      ok = false;
+    }
+
+    if (!emailEl.value.trim()) {
+      showError(emailEl, 'Email address is required.');
+      ok = false;
+    } else if (!isValidEmail(emailEl.value)) {
+      showError(emailEl, 'Please enter a valid email address.');
+      ok = false;
+    }
+
+    if (phoneEl) {
+      var digits = phoneEl.value.replace(/\D/g, '');
+      if (!phoneEl.value.trim()) {
+        showError(phoneEl, 'Phone number is required.');
+        ok = false;
+      } else if (digits.length !== 10) {
+        showError(phoneEl, 'Please enter a valid 10-digit phone number.');
+        ok = false;
+      }
+    }
+
+    if (companyEl && !companyEl.value.trim()) {
+      showError(companyEl, 'Company name is required.');
+      ok = false;
+    }
+
+    if (serviceEl && !serviceEl.value) {
+      showError(serviceEl, 'Please select a primary service.');
+      ok = false;
+    }
+
+    if (!msgEl.value.trim()) {
+      showError(msgEl, 'Please tell us about your business and goals.');
+      ok = false;
+    } else if (countWords(msgEl.value) < 5) {
+      showError(msgEl, 'Please use at least 5 words.');
+      ok = false;
+    }
+
+    if (!consentEl.checked) {
+      var consentWrap = form.querySelector('.form-consent');
+      if (consentWrap) {
+        var consentErr = consentWrap.querySelector('.field-error');
+        if (!consentErr) {
+          consentErr = document.createElement('span');
+          consentErr.className = 'field-error';
+          consentWrap.appendChild(consentErr);
+        }
+        consentErr.textContent = 'Please accept the terms to continue.';
+        consentErr.style.display = 'block';
+      }
+      ok = false;
+    }
+
+    return ok;
+  }
+
+  // ── Submit handler ──────────────────────────────────────────────────
+  form.addEventListener('submit', function (e) {
+    if (!validate()) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      var firstErr = form.querySelector('.input-error');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    // Valid — fall through to the success modal's submit listener
+  });
+
+  // Clear errors when the form resets (e.g. after success modal closes)
+  form.addEventListener('reset', clearAllErrors);
 }());
+
 
 // =====================================================================
 // SUCCESS MODAL + GOLD CONFETTI
