@@ -1428,6 +1428,18 @@ footer::after {
   color: rgba(245, 245, 245, 0.85);
 }
 
+.footer-email {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 0.8125rem;
+  color: rgba(196, 169, 107, 0.7);
+  transition: color 0.22s ease;
+}
+
+.footer-email:hover {
+  color: rgba(196, 169, 107, 1);
+}
+
 /* Left column — left-aligned */
 .footer-col--left {
   text-align: left;
