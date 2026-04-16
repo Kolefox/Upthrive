@@ -878,21 +878,6 @@ function initPrism(container, cfg) {
       ok = false;
     }
 
-    if (!consentEl.checked) {
-      var consentWrap = form.querySelector('.form-consent');
-      if (consentWrap) {
-        var consentErr = consentWrap.querySelector('.field-error');
-        if (!consentErr) {
-          consentErr = document.createElement('span');
-          consentErr.className = 'field-error';
-          consentWrap.appendChild(consentErr);
-        }
-        consentErr.textContent = 'Please accept the terms to continue.';
-        consentErr.style.display = 'block';
-      }
-      ok = false;
-    }
-
     return ok;
   }
 

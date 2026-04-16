@@ -3232,6 +3232,14 @@ footer::after {
   letter-spacing: 0.01em;
 }
 
+.consent-terms {
+  font-size: 0.6875rem;
+  line-height: 1.68;
+  color: rgba(161, 161, 161, 0.52);
+  letter-spacing: 0.01em;
+  margin-top: 10px;
+}
+
 /* Inline link buttons inside consent text */
 .consent-link {
   background: none;
