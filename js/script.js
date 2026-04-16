@@ -1075,7 +1075,7 @@ function initPrism(container, cfg) {
       consent:         !!(form.querySelector('input[name="consent"]')  || {}).checked
     };
 
-    fetch('https://services.leadconnectorhq.com/hooks/XCmNK4RxWkr73hPCuKzR/webhook-trigger/a4ada71b-967f-43c4-a34c-7ee40c6a247e', {
+    fetch('https://services.leadconnectorhq.com/hooks/XCmNK4RxWkr73hPCuKzR/webhook-trigger/2c2e59a6-8290-47b3-98b3-c7e5357071aa', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(payload)
