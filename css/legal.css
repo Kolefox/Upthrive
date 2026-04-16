@@ -1,0 +1,187 @@
+/* ============================================================
+   LEGAL PAGES — privacy-policy.html & terms-of-service.html
+   Standalone stylesheet. No dependency on style.css.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #0a0a0a;
+  color: #f5f5f5;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.75;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: #C4A96B;
+  text-decoration: none;
+  transition: opacity 0.18s ease;
+}
+
+a:hover { opacity: 0.75; }
+
+/* ── Top bar ─────────────────────────────────────────────── */
+.legal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: sticky;
+  top: 0;
+  background-color: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 10;
+}
+
+.legal-header-logo {
+  height: 56px;
+  width: auto;
+  display: block;
+}
+
+.legal-back {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(245, 245, 245, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.18s ease;
+}
+
+.legal-back:hover {
+  color: #C4A96B;
+  opacity: 1;
+}
+
+.legal-back svg {
+  flex-shrink: 0;
+}
+
+/* ── Page container ──────────────────────────────────────── */
+.legal-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 72px 32px 96px;
+}
+
+/* ── Page title block ────────────────────────────────────── */
+.legal-title-block {
+  margin-bottom: 56px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.legal-eyebrow {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #C4A96B;
+  margin-bottom: 14px;
+}
+
+.legal-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #f5f5f5;
+  margin-bottom: 12px;
+}
+
+.legal-date {
+  font-size: 0.8125rem;
+  color: rgba(245, 245, 245, 0.35);
+}
+
+/* ── Section headings ────────────────────────────────────── */
+.legal-page h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #f5f5f5;
+  margin-top: 44px;
+  margin-bottom: 14px;
+  padding-left: 14px;
+  border-left: 2px solid rgba(196, 169, 107, 0.5);
+}
+
+/* ── Body copy ───────────────────────────────────────────── */
+.legal-page p {
+  font-size: 0.9375rem;
+  color: rgba(245, 245, 245, 0.65);
+  margin-bottom: 14px;
+  line-height: 1.8;
+}
+
+.legal-page p strong {
+  color: rgba(245, 245, 245, 0.88);
+  font-weight: 600;
+}
+
+.legal-page p a {
+  color: #C4A96B;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Footer bar ──────────────────────────────────────────── */
+.legal-footer {
+  margin-top: 80px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.legal-footer-copy {
+  font-size: 0.75rem;
+  color: rgba(245, 245, 245, 0.25);
+}
+
+.legal-footer-link {
+  font-size: 0.75rem;
+  color: rgba(245, 245, 245, 0.35);
+}
+
+.legal-footer-link:hover {
+  color: #C4A96B;
+  opacity: 1;
+}
+
+/* ── Mobile ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .legal-header {
+    padding: 16px 20px;
+  }
+
+  .legal-header-logo {
+    height: 44px;
+  }
+
+  .legal-page {
+    padding: 48px 20px 72px;
+  }
+
+  .legal-title-block {
+    margin-bottom: 40px;
+  }
+}
