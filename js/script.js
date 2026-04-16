@@ -1052,13 +1052,64 @@ function initPrism(container, cfg) {
     stopConfetti();
   }
 
-  // Form submit
+  // Form submit — POST to GoHighLevel inbound webhook, then show success
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    openSuccess();
-    form.reset();
+
     var submitBtn = document.getElementById('btn-submit');
-    if (submitBtn) submitBtn.disabled = true;
+    var btnLabel  = submitBtn ? submitBtn.textContent : 'Book My Free Audit';
+
+    // Loading state
+    if (submitBtn) {
+      submitBtn.textContent = 'Sending\u2026';
+      submitBtn.disabled    = true;
+    }
+
+    var payload = {
+      full_name:       (form.querySelector('input[name="name"]')       || {}).value || '',
+      email:           (form.querySelector('input[name="email"]')      || {}).value || '',
+      phone:           (form.querySelector('input[name="phone"]')      || {}).value || '',
+      company_name:    (form.querySelector('input[name="company"]')    || {}).value || '',
+      primary_service: (form.querySelector('select[name="service"]')   || {}).value || '',
+      message:         (form.querySelector('textarea[name="message"]') || {}).value || '',
+      consent:         !!(form.querySelector('input[name="consent"]')  || {}).checked
+    };
+
+    fetch('https://services.leadconnectorhq.com/hooks/XCmNK4RxWkr73hPCuKzR/webhook-trigger/a4ada71b-967f-43c4-a34c-7ee40c6a247e', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    })
+    .then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      // Success — show modal, reset form, restore button
+      openSuccess();
+      form.reset();
+      if (submitBtn) {
+        submitBtn.textContent = btnLabel;
+        submitBtn.disabled    = false;
+      }
+    })
+    .catch(function () {
+      // Restore button so the user can retry
+      if (submitBtn) {
+        submitBtn.textContent = btnLabel;
+        submitBtn.disabled    = false;
+      }
+      // Show a submit-level error above the button (cleared on next reset)
+      var submitErr = form.querySelector('.submit-error');
+      if (!submitErr) {
+        submitErr = document.createElement('p');
+        submitErr.className = 'submit-error field-error';
+        if (submitBtn) {
+          submitBtn.parentNode.insertBefore(submitErr, submitBtn);
+        } else {
+          form.appendChild(submitErr);
+        }
+      }
+      submitErr.textContent    = 'Something went wrong. Please try again.';
+      submitErr.style.display  = 'block';
+    });
   });
 
   closeBtn.addEventListener('click', closeSuccess);
