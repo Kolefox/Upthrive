@@ -1069,6 +1069,7 @@ function initPrism(container, cfg) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       // Success — show modal, reset form, restore button
       openSuccess();
+      if (typeof fbq === 'function') fbq('track', 'Lead');
       form.reset();
       if (submitBtn) {
         submitBtn.textContent = btnLabel;
