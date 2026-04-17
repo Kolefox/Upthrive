@@ -1070,6 +1070,7 @@ function initPrism(container, cfg) {
       // Success — show modal, reset form, restore button
       openSuccess();
       if (typeof fbq === 'function') fbq('track', 'Lead');
+      if (typeof gtag === 'function') gtag('event', 'generate_lead');
       form.reset();
       if (submitBtn) {
         submitBtn.textContent = btnLabel;
