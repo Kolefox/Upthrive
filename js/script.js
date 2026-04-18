@@ -1060,16 +1060,20 @@ function initPrism(container, cfg) {
       consent:         !!(form.querySelector('input[name="consent"]')  || {}).checked
     };
 
+    console.log('[DEBUG] Form submit started — sending to GHL webhook');
     fetch('https://services.leadconnectorhq.com/hooks/XCmNK4RxWkr73hPCuKzR/webhook-trigger/2c2e59a6-8290-47b3-98b3-c7e5357071aa', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(payload)
     })
     .then(function (res) {
+      console.log('[DEBUG] Fetch response received — status:', res.status, '| res.ok:', res.ok);
       if (!res.ok) throw new Error('HTTP ' + res.status);
       // Success — show modal, reset form, restore button
       openSuccess();
+      console.log('[DEBUG] About to fire fbq Lead — fbq type:', typeof fbq);
       if (typeof fbq === 'function') fbq('track', 'Lead');
+      console.log('[DEBUG] fbq Lead fired');
       if (typeof gtag === 'function') gtag('event', 'generate_lead');
       form.reset();
       if (submitBtn) {
@@ -1077,7 +1081,8 @@ function initPrism(container, cfg) {
         submitBtn.disabled    = false;
       }
     })
-    .catch(function () {
+    .catch(function (err) {
+      console.log('[DEBUG] Fetch FAILED — error:', err);
       // Restore button so the user can retry
       if (submitBtn) {
         submitBtn.textContent = btnLabel;
