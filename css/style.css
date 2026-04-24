@@ -824,27 +824,11 @@ header.nav-open .mobile-nav {
 }
 
 .work-card-image--2 {
-  background: url('../assets/images/Upthrive_Client_Work.png') center center / cover no-repeat;
+  background: url('../assets/images/Precision_Stone_client.png') center center / cover no-repeat;
 }
 
 .work-card-image--3 {
-  background: linear-gradient(145deg, #0c0b08 0%, #1c180e 65%, #141208 100%);
-}
-
-/* "Coming Soon" label centered inside the card */
-.work-soon-label {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.5625rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(196, 169, 107, 0.32);
-  border: 1px dashed rgba(196, 169, 107, 0.12);
-  border-radius: 10px;
+  background: url('../assets/images/Upthrive_Client_Work.png') center center / cover no-repeat;
 }
 
 .work-card-tags {
