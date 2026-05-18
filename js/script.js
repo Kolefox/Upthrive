@@ -14,20 +14,30 @@ import { Renderer, Triangle, Program, Mesh } from 'https://esm.sh/ogl';
 // =====================
 const siteHeader = document.querySelector('header');
 const navToggle  = document.querySelector('.nav-toggle');
+const mobileNav  = document.querySelector('.mobile-nav');
+
+function setMobileNavState(open) {
+  mobileNav?.setAttribute('aria-hidden', String(!open));
+  if (open) {
+    mobileNav?.removeAttribute('inert');
+  } else {
+    mobileNav?.setAttribute('inert', '');
+  }
+}
 
 if (navToggle && siteHeader) {
   navToggle.addEventListener('click', function (e) {
     e.stopPropagation();
     siteHeader.classList.toggle('nav-open');
     const isOpen = siteHeader.classList.contains('nav-open');
-    document.querySelector('.mobile-nav')?.setAttribute('aria-hidden', !isOpen);
+    setMobileNavState(isOpen);
   });
 
   // Close drawer when clicking outside the header
   document.addEventListener('click', function (e) {
     if (!siteHeader.contains(e.target)) {
       siteHeader.classList.remove('nav-open');
-      document.querySelector('.mobile-nav')?.setAttribute('aria-hidden', 'true');
+      setMobileNavState(false);
     }
   });
 
@@ -77,7 +87,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     // it has zero effect on page layout — scroll position stays accurate)
     if (siteHeader && siteHeader.classList.contains('nav-open')) {
       siteHeader.classList.remove('nav-open');
-      document.querySelector('.mobile-nav')?.setAttribute('aria-hidden', 'true');
+      setMobileNavState(false);
     }
 
     scrollToTarget(href);

@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "void-style": "off",
+    "no-inline-style": "off",
+    "script-type": "error",
+    "no-implicit-button-type": "error",
+    "hidden-focusable": "error",
+    "unique-landmark": "error",
+    "element-permitted-content": "off",
+    "require-sri": "off",
+    "no-raw-characters": "warn"
+  }
+}
