@@ -4805,3 +4805,308 @@ header .nav-links a[aria-current="page"]::after {
     padding: 1.25rem;
   }
 }
+
+
+/* =====================
+   SERVICES PAGE v2 — REDESIGN
+   All classes prefixed srv-* (additive only, no existing selectors modified).
+===================== */
+
+/* ——— Pipeline Hero ——— */
+.srv-pipeline {
+  padding: 1.75rem 0 1.5rem;
+}
+
+.srv-pipeline-nodes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  position: relative;
+}
+
+/* Gold connecting line — from center of col 1 to center of col 4 */
+/* phase label (~10px) + gap (8px) + icon (24px) + gap (8px) = top of dot at 50px; center at 54px */
+.srv-pipeline-nodes::before {
+  content: '';
+  position: absolute;
+  top: 54px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(196,169,107,0.2) 0%,
+    rgba(196,169,107,0.9) 12%,
+    #C4A96B 50%,
+    rgba(196,169,107,0.9) 88%,
+    rgba(196,169,107,0.2) 100%
+  );
+  pointer-events: none;
+}
+
+.srv-pipeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: opacity 0.22s ease;
+}
+
+.srv-pipeline-node:hover {
+  opacity: 0.72;
+}
+
+.srv-pipeline-node-phase {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #C4A96B;
+  line-height: 1.2;
+}
+
+.srv-pipeline-node-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.srv-pipeline-node-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #C4A96B;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 8px rgba(196,169,107,0.45);
+  flex-shrink: 0;
+}
+
+.srv-pipeline-node-name {
+  font-size: 0.6875rem;
+  color: #6E6E6E;
+  text-align: center;
+  max-width: 88px;
+  line-height: 1.4;
+}
+
+/* Mobile pipeline — vertical list shown on small screens */
+.srv-pipeline-mobile {
+  display: none;
+  flex-direction: column;
+  padding-left: 20px;
+  position: relative;
+  margin: 0 auto;
+  max-width: 260px;
+}
+
+.srv-pipeline-mobile::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 1px;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    #C4A96B 20%,
+    #C4A96B 80%,
+    transparent 100%
+  );
+}
+
+.srv-pipeline-mobile-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.srv-pm-phase {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #C4A96B;
+  min-width: 68px;
+}
+
+.srv-pm-name {
+  font-size: 0.8125rem;
+  color: #6E6E6E;
+}
+
+/* ——— Asymmetric Service Sections ——— */
+.srv-asym {
+  padding: 80px 0;
+  border-bottom: 1px solid rgba(196,169,107,0.07);
+}
+
+.srv-asym-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+/* Flip modifier: visual moves to right column, body to left */
+.srv-asym-grid--flip .srv-asym-visual { order: 2; }
+.srv-asym-grid--flip .srv-asym-body   { order: 1; }
+
+/* Section headings inside new service wrappers */
+.srv-asym h2,
+.srv-featured h2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #F5F5F5;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+
+/* Icon chip — replaces "Service 0X" eyebrow */
+.srv-icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #242424;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.02);
+  margin-bottom: 1.25rem;
+}
+
+/* SVG illustration frame */
+.srv-visual-frame {
+  background: #0D0D0D;
+  border: 1px solid #242424;
+  border-radius: 14px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+/* "Who It's For" — label removed, text restyled as qualifier footnote */
+.srv-for-qualifier {
+  font-size: 0.875rem;
+  color: #6E6E6E;
+  line-height: 1.65;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 1rem;
+  margin-top: 0.25rem;
+}
+
+/* ——— Most Popular — Elevated Featured Section ——— */
+.srv-featured {
+  padding: 80px 28px;
+  border-bottom: 1px solid rgba(196,169,107,0.07);
+}
+
+.srv-featured-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  border: 1px solid rgba(196,169,107,0.55);
+  border-radius: 14px;
+  background: rgba(196,169,107,0.04);
+  overflow: hidden;
+}
+
+/* "MOST POPULAR" ribbon across the top of the container */
+.srv-featured-ribbon {
+  background: #C4A96B;
+  color: #0B0B0B;
+  text-align: center;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  padding: 0.6875rem 0;
+}
+
+/* Content area below ribbon */
+.srv-featured-content {
+  padding: 3.25rem 3.5rem 3.75rem;
+}
+
+/* Two-column grid inside featured section */
+.srv-featured-grid {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: 4.5rem;
+  align-items: start;
+}
+
+/* Large flagship metric callout */
+.srv-featured-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 2rem;
+}
+
+.srv-featured-metric-val {
+  font-size: clamp(3.5rem, 6vw, 4.75rem);
+  font-weight: 800;
+  color: #C4A96B;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.srv-featured-metric-label {
+  font-size: 0.8125rem;
+  color: #6E6E6E;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+/* Gold solid CTA button — Most Popular section only */
+.srv-btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9375rem 2.25rem;
+  background: #C4A96B;
+  color: #0B0B0B;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  margin-top: 1.75rem;
+}
+
+.srv-btn-gold:hover {
+  background-color: #d4b96e;
+  box-shadow: 0 0 28px rgba(196,169,107,0.28);
+}
+
+/* ——— Responsive: services v2 ——— */
+@media (max-width: 900px) {
+  .srv-asym-grid {
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+  }
+  .srv-asym-grid--flip .srv-asym-visual,
+  .srv-asym-grid--flip .srv-asym-body {
+    order: 0;
+  }
+  .srv-featured-grid {
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+  }
+  .srv-featured-content {
+    padding: 2.5rem 2.25rem 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .srv-pipeline-track  { display: none; }
+  .srv-pipeline-mobile { display: flex; }
+  .srv-pipeline        { padding: 1.25rem 0 1.5rem; }
+  .srv-featured        { padding: 64px 16px; }
+  .srv-featured-content { padding: 2rem 1.5rem 2.5rem; }
+  .srv-asym            { padding: 56px 0; }
+}
