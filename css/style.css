@@ -4448,3 +4448,360 @@ header .nav-links a[aria-current="page"]::after {
     padding: 56px 0;
   }
 }
+
+
+/* =====================
+   PROCESS PAGE — SYS RAIL (v2)
+   Vertical gold rail connecting six layer nodes across three
+   phase groups (Foundation / Conversion / Scale). Additive only
+   — existing .layer-* classes reused for content, no selectors modified.
+===================== */
+
+.sys-rail-section {
+  padding: 80px 0 96px;
+  background: #0B0B0B;
+}
+
+/* Phase group: left gutter (label) + right rail */
+.sys-phase-group {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  margin-bottom: 5rem;
+}
+.sys-phase-group:last-child {
+  margin-bottom: 0;
+}
+
+/* Vertical phase label in left gutter */
+.sys-phase-label {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-right: 1.5rem;
+  padding-top: 18px;
+}
+.sys-phase-label span {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(196, 169, 107, 0.4);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  user-select: none;
+  position: sticky;
+  top: 110px;
+}
+
+/* Rail container — the vertical gold thread lives here */
+.sys-rail {
+  position: relative;
+  padding-left: 3.25rem;
+}
+.sys-rail::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 18px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(196, 169, 107, 0.65) 0%,
+    rgba(196, 169, 107, 0.3) 65%,
+    rgba(196, 169, 107, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* Individual node: icon dot + content body */
+.sys-node {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 0 1.5rem;
+  margin-bottom: 3.75rem;
+}
+.sys-node:last-child {
+  margin-bottom: 0;
+}
+
+/* Gold circle dot — sits on the rail line */
+.sys-node-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #0D0D0D;
+  border: 1px solid rgba(196, 169, 107, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(196, 169, 107, 0.8);
+  flex-shrink: 0;
+  box-shadow:
+    0 0 0 5px rgba(196, 169, 107, 0.05),
+    0 0 0 10px rgba(196, 169, 107, 0.02);
+  position: relative;
+  z-index: 1;
+}
+
+/* Node text — override the .active-gated defaults from index.html */
+.sys-node .layer-title {
+  color: #F0EBE0;
+  font-size: 1.25rem;
+  transition: none;
+}
+.sys-node .layer-desc {
+  color: #6E6E6E;
+  transition: none;
+}
+
+/* Align body text with dot center */
+.sys-node-body {
+  padding-top: 0.375rem;
+}
+
+/* Layer 06 premium panel */
+.sys-node--premium .sys-node-body {
+  background: rgba(196, 169, 107, 0.035);
+  border: 1px solid rgba(196, 169, 107, 0.14);
+  border-left: 2px solid rgba(196, 169, 107, 0.6);
+  border-radius: 10px;
+  padding: 1.5rem 1.75rem;
+  padding-top: 1.25rem;
+}
+.sys-node--premium .layer-tag {
+  color: rgba(196, 169, 107, 0.85);
+  border-color: rgba(196, 169, 107, 0.2);
+  background: rgba(196, 169, 107, 0.06);
+}
+.sys-node-dot--premium {
+  border-color: rgba(196, 169, 107, 0.7);
+  box-shadow:
+    0 0 0 5px rgba(196, 169, 107, 0.08),
+    0 0 14px rgba(196, 169, 107, 0.12);
+  color: #C4A96B;
+}
+
+/* "Advanced Growth Layer" badge inside L06 body */
+.sys-node-badge {
+  display: inline-block;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #C4A96B;
+  border: 1px solid rgba(196, 169, 107, 0.3);
+  border-radius: 100px;
+  padding: 3px 10px;
+  margin-bottom: 0.625rem;
+}
+
+
+/* =====================
+   PROCESS PAGE — TIMELINE (v2)
+   Open editorial horizontal track — no card boxes.
+   Three phases hang off a connecting gold line.
+   Structurally opposite to the vertical rail above.
+===================== */
+
+.tl-outer {
+  padding: 72px 0;
+  border-top: 1px solid rgba(196, 169, 107, 0.08);
+}
+.tl-head {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.tl-head h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #F5F5F5;
+  margin-bottom: 0.75rem;
+}
+.tl-head p {
+  color: #A1A1A1;
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Three-column track */
+.tl-track {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  position: relative;
+  gap: 0 3rem;
+}
+/* Horizontal connecting gold line */
+.tl-track::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: calc(100% / 6);
+  right: calc(100% / 6);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(196, 169, 107, 0.35) 0%,
+    rgba(196, 169, 107, 0.7) 50%,
+    rgba(196, 169, 107, 0.35) 100%
+  );
+  pointer-events: none;
+}
+
+.tl-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Dot + week label above content */
+.tl-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 1.5rem;
+}
+.tl-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #C4A96B;
+  box-shadow:
+    0 0 0 4px rgba(196, 169, 107, 0.12),
+    0 0 10px rgba(196, 169, 107, 0.15);
+  flex-shrink: 0;
+}
+.tl-week {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(196, 169, 107, 0.85);
+  white-space: nowrap;
+}
+
+/* Phase content */
+.tl-body h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #F5F5F5;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.tl-body p {
+  font-size: 0.875rem;
+  color: #A1A1A1;
+  line-height: 1.7;
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+
+/* =====================
+   PROCESS PAGE — RESPONSIVE
+===================== */
+
+@media (max-width: 768px) {
+  .sys-phase-group {
+    grid-template-columns: 1fr;
+    margin-bottom: 3.5rem;
+  }
+  .sys-phase-label {
+    justify-content: flex-start;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 1.25rem;
+    padding-left: 3.25rem; /* align with node body content */
+  }
+  .sys-phase-label span {
+    writing-mode: horizontal-tb;
+    transform: none;
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(196, 169, 107, 0.55);
+  }
+  .sys-phase-label span::after {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: rgba(196, 169, 107, 0.3);
+  }
+
+  /* Timeline: horizontal → vertical stack */
+  .tl-track {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+  .tl-track::before {
+    display: none;
+  }
+  .tl-point {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 1.25rem;
+  }
+  .tl-top {
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 52px;
+    margin-bottom: 0;
+  }
+  .tl-week {
+    white-space: normal;
+    text-align: center;
+  }
+  .tl-body {
+    flex: 1;
+  }
+  .tl-body p {
+    max-width: none;
+    margin: 0;
+  }
+
+  /* Vertical connector between timeline items on mobile */
+  .tl-point + .tl-point::before {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .sys-rail-section {
+    padding: 56px 0 72px;
+  }
+  .sys-node {
+    grid-template-columns: 30px 1fr;
+    gap: 0 1rem;
+    margin-bottom: 2.75rem;
+  }
+  .sys-node-dot {
+    width: 30px;
+    height: 30px;
+  }
+  .sys-node-dot svg {
+    width: 14px;
+    height: 14px;
+  }
+  .sys-rail {
+    padding-left: 2.75rem;
+  }
+  .sys-rail::before {
+    left: 14px;
+  }
+  .sys-phase-label {
+    padding-left: 2.75rem;
+  }
+  .sys-node--premium .sys-node-body {
+    padding: 1.25rem;
+  }
+}
