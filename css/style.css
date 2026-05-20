@@ -5581,3 +5581,10 @@ header .nav-links a[aria-current="page"]::after {
 .contact-alt-path a:hover {
   color: rgba(245, 245, 245, 0.8);
 }
+
+@media (max-width: 768px) {
+  .contact-steps,
+  .contact-signature {
+    display: none;
+  }
+}
