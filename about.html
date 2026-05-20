@@ -169,54 +169,62 @@
     </div>
 
     <!-- =====================
-         PAGE HERO
+         ABOUT HERO — SPLIT LAYOUT
     ===================== -->
-    <section class="page-hero">
+    <section class="about-hero">
       <div class="container">
-        <span class="page-hero-eyebrow">Meet the Founder</span>
-        <h1>Built by a finance-trained operator.<br>Engineered to scale.</h1>
-        <p class="page-hero-sub">Upthrive exists because most agencies sell one piece. We build the whole system.</p>
-        <div class="page-hero-divider"></div>
+        <div class="about-hero-inner">
+
+          <!-- Photo Column -->
+          <div class="about-hero-photo reveal">
+            <div class="about-image-glow" aria-hidden="true"></div>
+            <div class="about-image-card">
+              <picture><source type="image/webp" srcset="assets/images/webp/About_myself_New.webp"><img width="1024" height="1536" src="assets/images/About_myself_New.png" alt="Kole Fox, Founder of Upthrive Digital" class="about-founder-img" loading="eager" /></picture>
+            </div>
+            <div class="about-hero-photo-mask" aria-hidden="true"></div>
+          </div>
+
+          <!-- Text Column -->
+          <div class="about-hero-text reveal" style="--delay:0.1s">
+            <span class="page-hero-eyebrow">Meet the Founder</span>
+            <h1>Built by a finance-trained operator.<br>Engineered to scale.</h1>
+            <p class="page-hero-sub">Upthrive exists because most agencies sell one piece. We build the whole system.</p>
+            <div class="page-hero-divider" style="margin:1.75rem 0 0;"></div>
+            <div class="about-hero-identity">
+              <span class="about-founder-name">Kole Fox</span>
+              <span class="about-label-sep" aria-hidden="true"></span>
+              <span class="about-founder-title">Founder, Upthrive</span>
+              <span class="about-hero-geo">Based in South Florida</span>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
 
     <!-- =====================
-         FOUNDER BLOCK
+         FOUNDER BLOCK — EDITORIAL
     ===================== -->
     <section class="about-section">
       <div class="container">
-        <div class="about-layout">
+        <div class="about-editorial reveal">
+          <span class="section-eyebrow">The Founder</span>
+          <h2 class="about-h2">About Kole</h2>
 
-          <div class="about-content reveal">
-            <span class="section-eyebrow">The Founder</span>
-            <h2 class="about-h2">About Upthrive</h2>
+          <div class="about-paragraphs">
+            <p class="about-drop-cap">I built Upthrive because I kept seeing the same problem: businesses investing in marketing but not in systems. They'd run ads without a follow-up process. They'd launch a website without a conversion path. They'd generate leads that disappeared into a spreadsheet no one managed. The inputs were there. The infrastructure wasn't.</p>
 
-            <div class="about-paragraphs">
-              <p>I built Upthrive because I kept seeing the same problem: businesses investing in marketing but not in systems. They'd run ads without a follow-up process. They'd launch a website without a conversion path. They'd generate leads that disappeared into a spreadsheet no one managed. The inputs were there. The infrastructure wasn't.</p>
+            <p>My background is in Finance and Computer Science — I graduated from Florida Atlantic University with a Bachelor's in Finance and a minor in CS. Early in my career, I worked at an investment bank where I led the company's automation initiatives. We built systems that eliminated manual workflows, reduced errors, and freed the team to focus on higher-value work. The efficiency gains were significant, and the lesson was clear: the right system, built right, changes the output.</p>
 
-              <p>My background is in Finance and Computer Science — I graduated from Florida Atlantic University with a Bachelor's in Finance and a minor in CS. Early in my career, I worked at an investment bank where I led the company's automation initiatives. We built systems that eliminated manual workflows, reduced errors, and freed the team to focus on higher-value work. The efficiency gains were significant, and the lesson was clear: the right system, built right, changes the output.</p>
+            <p>That experience is the foundation of Upthrive. I brought the operator mindset from finance — where every dollar is accounted for, every process has a purpose — and combined it with the technical ability to actually build the infrastructure. The result is an agency that doesn't just run campaigns or design sites in isolation. We build connected growth systems where traffic feeds conversion, conversion feeds a CRM, and the CRM feeds automation that keeps working after hours.</p>
 
-              <p>That experience is the foundation of Upthrive. I brought the operator mindset from finance — where every dollar is accounted for, every process has a purpose — and combined it with the technical ability to actually build the infrastructure. The result is an agency that doesn't just run campaigns or design sites in isolation. We build connected growth systems where traffic feeds conversion, conversion feeds a CRM, and the CRM feeds automation that keeps working after hours.</p>
-
-              <p>Today, I work with business owners across South Florida to audit their current setup, identify where the highest-leverage improvements are, and build the systems that turn marketing spend into compounding revenue. The work is methodical, data-driven, and built to last. That's what Upthrive was built to deliver.</p>
-            </div>
-
-            <p class="about-closing">Upthrive was built to help businesses scale smarter.</p>
+            <p>Today, I work with business owners across South Florida to audit their current setup, identify where the highest-leverage improvements are, and build the systems that turn marketing spend into compounding revenue. The work is methodical, data-driven, and built to last. That's what Upthrive was built to deliver.</p>
           </div>
 
-          <div class="about-image-col reveal" style="--delay:0.12s">
-            <div class="about-image-glow" aria-hidden="true"></div>
-            <div class="about-image-card">
-              <picture><source type="image/webp" srcset="assets/images/webp/About_myself_New.webp"><img width="1024" height="1536" src="assets/images/About_myself_New.png" alt="Kole Fox, Founder of Upthrive Digital" class="about-founder-img" loading="lazy" /></picture>
-            </div>
-            <div class="about-founder-label">
-              <span class="about-founder-name">Kole Fox</span>
-              <span class="about-label-sep" aria-hidden="true"></span>
-              <span class="about-founder-title">Founder, Upthrive</span>
-            </div>
-          </div>
-
+          <blockquote class="about-pull-quote">
+            Upthrive was built to help businesses scale smarter.
+          </blockquote>
         </div>
       </div>
     </section>
@@ -241,42 +249,70 @@
 
 
     <!-- =====================
-         VALUES
+         VALUES — MANIFESTO
     ===================== -->
-    <section class="values-section">
+    <section class="manifesto-section">
       <div class="container">
+
         <div class="reveal">
           <span class="section-eyebrow">How We Operate</span>
-          <h2>Four things we don't compromise on.</h2>
-          <p style="color:#A1A1A1;font-size:1rem;max-width:480px;line-height:1.7;margin-bottom:2.5rem;">These aren't slogans. They're the operating principles behind every client engagement, every campaign, every system we build.</p>
+          <p class="manifesto-intro">These aren't slogans. They're the operating principles behind every client engagement, every campaign, every system we build.</p>
         </div>
-        <div class="values-grid">
 
-          <div class="value-card reveal" style="--delay:0.05s">
-            <span class="value-card-label">01</span>
-            <h3>Systems over tactics.</h3>
-            <p>Tactics produce results once. Systems produce results repeatedly. We build infrastructure that works when you're not looking — not one-off fixes that need constant attention to maintain.</p>
+        <!-- Value 01 — Left -->
+        <article class="manifesto-value reveal" style="--delay:0.05s">
+          <div class="manifesto-value-inner">
+            <span class="manifesto-value-num">01 / 04</span>
+            <div class="manifesto-value-display">
+              <span class="manifesto-value-primary">Systems</span>
+              <span class="manifesto-value-connector">over</span>
+              <span class="manifesto-value-secondary">tactics.</span>
+            </div>
+            <p class="manifesto-value-desc">Tactics produce results once. Systems produce results repeatedly. We build infrastructure that works when you're not looking — not one-off fixes that need constant attention to maintain.</p>
           </div>
+        </article>
+        <div class="manifesto-divider" aria-hidden="true"></div>
 
-          <div class="value-card reveal" style="--delay:0.1s">
-            <span class="value-card-label">02</span>
-            <h3>Data over opinion.</h3>
-            <p>Every recommendation we make is grounded in what the numbers say. We don't guess what creative will perform or which audience will convert. We test, measure, and follow the data — even when it surprises us.</p>
+        <!-- Value 02 — Right -->
+        <article class="manifesto-value manifesto-value--right reveal" style="--delay:0.05s">
+          <div class="manifesto-value-inner">
+            <span class="manifesto-value-num">02 / 04</span>
+            <div class="manifesto-value-display">
+              <span class="manifesto-value-primary">Data</span>
+              <span class="manifesto-value-connector">over</span>
+              <span class="manifesto-value-secondary">opinion.</span>
+            </div>
+            <p class="manifesto-value-desc">Every recommendation we make is grounded in what the numbers say. We don't guess what creative will perform or which audience will convert. We test, measure, and follow the data — even when it surprises us.</p>
           </div>
+        </article>
+        <div class="manifesto-divider" aria-hidden="true"></div>
 
-          <div class="value-card reveal" style="--delay:0.15s">
-            <span class="value-card-label">03</span>
-            <h3>Compounding over flash.</h3>
-            <p>We optimize for long-term compounding returns, not short-term wins that look good in a screenshot. The work we do in month one should still be paying dividends in month twelve.</p>
+        <!-- Value 03 — Left -->
+        <article class="manifesto-value reveal" style="--delay:0.05s">
+          <div class="manifesto-value-inner">
+            <span class="manifesto-value-num">03 / 04</span>
+            <div class="manifesto-value-display">
+              <span class="manifesto-value-primary">Compounding</span>
+              <span class="manifesto-value-connector">over</span>
+              <span class="manifesto-value-secondary">flash.</span>
+            </div>
+            <p class="manifesto-value-desc">We optimize for long-term compounding returns, not short-term wins that look good in a screenshot. The work we do in month one should still be paying dividends in month twelve.</p>
           </div>
+        </article>
+        <div class="manifesto-divider" aria-hidden="true"></div>
 
-          <div class="value-card reveal" style="--delay:0.2s">
-            <span class="value-card-label">04</span>
-            <h3>Operator mindset.</h3>
-            <p>We think like business owners, not marketers. Every decision we make is weighed against the actual cost and the actual return — because the goal isn't to look busy, it's to move the number that matters.</p>
+        <!-- Value 04 — Right (no X/Y connector) -->
+        <article class="manifesto-value manifesto-value--right reveal" style="--delay:0.05s">
+          <div class="manifesto-value-inner">
+            <span class="manifesto-value-num">04 / 04</span>
+            <div class="manifesto-value-display">
+              <span class="manifesto-value-primary">Operator</span>
+              <span class="manifesto-value-secondary">mindset.</span>
+            </div>
+            <p class="manifesto-value-desc">We think like business owners, not marketers. Every decision we make is weighed against the actual cost and the actual return — because the goal isn't to look busy, it's to move the number that matters.</p>
           </div>
+        </article>
 
-        </div>
       </div>
     </section>
 
@@ -292,17 +328,18 @@
             <h3>Where we work.</h3>
             <p>Upthrive is based in South Florida and works with businesses throughout the region — from Miami to Palm Beach and across the I-95 corridor. We're also fully remote-capable and work with clients outside South Florida who want a systems-driven approach to growth.</p>
             <p style="margin-top:0.875rem;">If your market is local, we know the landscape. If it's national, we build for scale.</p>
+            <div class="about-location-tags">Miami &middot; Fort Lauderdale &middot; Palm Beach</div>
           </div>
 
           <div class="about-meta-block">
             <h3>What working with us looks like.</h3>
-            <ul>
-              <li>A full audit of your current setup before any work begins — no assumptions</li>
-              <li>A clear strategy document with priorities ranked by impact</li>
-              <li>Weekly reporting with plain-language interpretation, not just numbers</li>
-              <li>Direct access — no account managers passing messages back and forth</li>
-              <li>Honest timelines and honest expectations about what each channel can do</li>
-            </ul>
+            <ol class="about-checklist">
+              <li class="about-checklist-item">A full audit of your current setup before any work begins — no assumptions</li>
+              <li class="about-checklist-item">A clear strategy document with priorities ranked by impact</li>
+              <li class="about-checklist-item">Weekly reporting with plain-language interpretation, not just numbers</li>
+              <li class="about-checklist-item">Direct access — no account managers passing messages back and forth</li>
+              <li class="about-checklist-item">Honest timelines and honest expectations about what each channel can do</li>
+            </ol>
           </div>
 
         </div>
@@ -313,7 +350,7 @@
     <!-- =====================
          CLOSING CTA
     ===================== -->
-    <section class="page-cta-block">
+    <section class="page-cta-block about-cta-spacer">
       <div class="container reveal">
         <span class="section-eyebrow">Get Started</span>
         <h2>Have a problem worth solving?</h2>

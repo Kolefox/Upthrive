@@ -859,17 +859,6 @@ function initPrism(container, cfg) {
       ok = false;
     }
 
-    if (phoneEl) {
-      var digits = phoneEl.value.replace(/\D/g, '');
-      if (!phoneEl.value.trim()) {
-        showError(phoneEl, 'Phone number is required.');
-        ok = false;
-      } else if (digits.length !== 10) {
-        showError(phoneEl, 'Please enter a valid 10-digit phone number.');
-        ok = false;
-      }
-    }
-
     if (companyEl && !companyEl.value.trim()) {
       showError(companyEl, 'Company name is required.');
       ok = false;

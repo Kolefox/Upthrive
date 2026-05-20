@@ -4248,12 +4248,6 @@ header .nav-links a[aria-current="page"]::after {
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.cs-placeholder-note {
-  font-size: 0.75rem;
-  color: rgba(196, 169, 107, 0.4);
-  font-style: italic;
-  margin-bottom: 1.25rem;
-}
 .cs-link {
   display: inline-flex;
   align-items: center;
@@ -4263,11 +4257,14 @@ header .nav-links a[aria-current="page"]::after {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #C4A96B;
-  transition: gap 0.22s ease, opacity 0.22s ease;
+  border: 1px solid #C4A96B;
+  border-radius: 9999px;
+  padding: 0.625rem 1.5rem;
+  transition: background 0.22s ease, color 0.22s ease, gap 0.22s ease;
 }
 .cs-link:hover {
+  background: rgba(196, 169, 107, 0.12);
   gap: 0.75rem;
-  opacity: 0.82;
 }
 
 
@@ -5109,4 +5106,478 @@ header .nav-links a[aria-current="page"]::after {
   .srv-featured        { padding: 64px 16px; }
   .srv-featured-content { padding: 2rem 1.5rem 2.5rem; }
   .srv-asym            { padding: 56px 0; }
+}
+
+
+/* ============================================================
+   ABOUT PAGE — EDITORIAL REDESIGN
+   All selectors below are additive. No existing selector modified.
+   ============================================================ */
+
+/* ——— Split Hero ——— */
+
+.about-hero {
+  padding: 56px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 50% 60% at 18% 50%, rgba(196,169,107,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.about-hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}
+
+.about-hero-photo {
+  flex: 0 0 42%;
+  max-width: 400px;
+  position: relative;
+}
+
+.about-hero-photo-mask {
+  position: absolute;
+  top: 0;
+  right: -1px;
+  width: 42%;
+  height: 100%;
+  background: linear-gradient(to right, transparent 0%, #0B0B0B 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.about-hero-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.about-hero-text h1 {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  color: #F5F5F5;
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.about-hero-identity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.about-hero-geo {
+  font-size: 0.75rem;
+  color: rgba(161,161,161,0.5);
+  letter-spacing: 0.04em;
+  padding-left: 0.125rem;
+}
+
+/* ——— Editorial Founder Bio ——— */
+
+.about-editorial {
+  max-width: 660px;
+}
+
+.about-drop-cap::first-letter {
+  float: left;
+  font-size: 5.25rem;
+  font-weight: 800;
+  line-height: 0.78;
+  color: #C4A96B;
+  margin-right: 0.13em;
+  margin-top: 0.1em;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.about-pull-quote {
+  position: relative;
+  margin: 3rem 0;
+  padding: 1.5rem 0 1.5rem 2rem;
+  border-left: 3px solid #C4A96B;
+  font-size: clamp(1.8rem, 3vw, 2.2rem);
+  font-weight: 600;
+  color: rgba(196,169,107,0.85);
+  line-height: 1.3;
+  font-style: normal;
+  quotes: none;
+}
+
+.about-pull-quote::before {
+  content: '\201C';
+  position: absolute;
+  top: -0.875rem;
+  left: 1.5rem;
+  font-size: 4rem;
+  font-weight: 800;
+  color: rgba(196,169,107,0.28);
+  line-height: 1;
+  font-family: Georgia, serif;
+}
+
+/* ——— Manifesto Values ——— */
+
+.manifesto-section {
+  padding: 80px 0 48px;
+}
+
+.manifesto-intro {
+  color: #A1A1A1;
+  font-size: 1rem;
+  max-width: 480px;
+  line-height: 1.7;
+  margin: 0.5rem 0 3.5rem;
+}
+
+.manifesto-value {
+  padding: 3.5rem 0;
+}
+
+.manifesto-value-inner {
+  max-width: 640px;
+}
+
+.manifesto-value--right .manifesto-value-inner {
+  margin-left: auto;
+}
+
+.manifesto-value-num {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(196,169,107,0.4);
+  margin-bottom: 0.875rem;
+}
+
+.manifesto-value--right .manifesto-value-num {
+  text-align: right;
+}
+
+.manifesto-value-display {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35em;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+.manifesto-value--right .manifesto-value-display {
+  justify-content: flex-end;
+}
+
+.manifesto-value-primary {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  color: #F5F0E8;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.manifesto-value-connector {
+  font-size: clamp(1.1rem, 2vw, 1.625rem);
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(196,169,107,0.5);
+  letter-spacing: 0.01em;
+  align-self: center;
+  margin: 0 0.1em;
+}
+
+.manifesto-value-secondary {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  color: rgba(245,240,232,0.6);
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.manifesto-value-desc {
+  font-size: 0.9375rem;
+  color: #A1A1A1;
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+.manifesto-value--right .manifesto-value-desc {
+  margin-left: auto;
+  text-align: right;
+}
+
+.manifesto-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(196,169,107,0.1);
+}
+
+/* ——— Location Tags ——— */
+
+.about-location-tags {
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.45);
+}
+
+/* ——— Gold-Numeral Checklist ——— */
+
+.about-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  counter-reset: checklist;
+}
+
+.about-checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  font-size: 0.9375rem;
+  color: #A1A1A1;
+  line-height: 1.65;
+  counter-increment: checklist;
+}
+
+.about-checklist-item::before {
+  content: counter(checklist, decimal-leading-zero);
+  flex-shrink: 0;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #C4A96B;
+  padding-top: 0.325em;
+}
+
+/* ——— CTA extra breathing room (about page only) ——— */
+
+.about-cta-spacer {
+  padding-top: 128px;
+}
+
+/* ——— About Editorial Responsive ——— */
+
+@media (max-width: 860px) {
+  .about-hero-inner { gap: 3rem; }
+  .about-hero-photo { flex: 0 0 38%; max-width: 340px; }
+}
+
+@media (max-width: 768px) {
+  .about-hero-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+  .about-hero-photo {
+    flex: none;
+    width: min(65vw, 320px);
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .about-hero-photo-mask { display: none; }
+  .about-hero-text { align-items: flex-start; }
+  .about-pull-quote {
+    font-size: clamp(1.4rem, 5vw, 1.75rem);
+    padding: 1.25rem 0 1.25rem 1.5rem;
+    margin: 2.25rem 0;
+  }
+  .manifesto-value--right .manifesto-value-inner { margin-left: 0; }
+  .manifesto-value--right .manifesto-value-num { text-align: left; }
+  .manifesto-value--right .manifesto-value-display { justify-content: flex-start; }
+  .manifesto-value--right .manifesto-value-desc { margin-left: 0; text-align: left; }
+}
+
+@media (max-width: 600px) {
+  .manifesto-value { padding: 2.5rem 0; }
+  .manifesto-value-desc { font-size: 0.9rem; }
+}
+
+@media (max-width: 480px) {
+  .about-hero { padding: 36px 0 56px; }
+  .about-hero-photo {
+    width: min(72vw, 260px);
+    max-width: 260px;
+  }
+  .about-hero-text h1 { font-size: 1.75rem; }
+  .manifesto-value { padding: 2rem 0; }
+  .manifesto-value-primary { font-size: 1.875rem; letter-spacing: -0.015em; }
+  .manifesto-value-secondary { font-size: 1.875rem; letter-spacing: -0.015em; }
+  .manifesto-value-connector { font-size: 0.9375rem; }
+  .about-pull-quote {
+    font-size: 1.25rem;
+    padding: 1rem 0 1rem 1.25rem;
+    margin: 2rem 0;
+  }
+  .about-cta-spacer { padding-top: 80px; }
+}
+
+
+/* =====================
+   CONTACT PAGE — RIGHT PANEL (CONFIDENCE COLUMN)
+===================== */
+.contact-right-panel {
+  padding-top: 0.5rem;
+}
+
+/* 3-step flow */
+.contact-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-left: 1px dashed rgba(196, 169, 107, 0.22);
+  padding-left: 1.5rem;
+}
+.contact-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.contact-step-num {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #C4A96B;
+  text-transform: uppercase;
+}
+.contact-step-body {
+  font-size: 0.9375rem;
+  color: rgba(245, 245, 245, 0.72);
+  line-height: 1.55;
+}
+
+/* Signature statement */
+.contact-signature {
+  margin-top: 2.5rem;
+}
+.contact-signature-mark {
+  display: block;
+  font-size: 3rem;
+  line-height: 0.75;
+  color: #C4A96B;
+  margin-bottom: 0.35rem;
+  font-style: normal;
+  user-select: none;
+  aria-hidden: attr(aria-hidden);
+}
+.contact-signature-text {
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: #C4A96B;
+  line-height: 1.1;
+}
+
+/* Trust card */
+.contact-trust-card {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(196, 169, 107, 0.1);
+}
+.contact-trust-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(196, 169, 107, 0.06);
+}
+.contact-trust-row:first-child {
+  padding-top: 0;
+}
+.contact-trust-row:last-child {
+  border-bottom: none;
+}
+.contact-trust-label {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(196, 169, 107, 0.55);
+}
+.contact-trust-value {
+  font-size: 0.875rem;
+  color: rgba(245, 245, 245, 0.7);
+  line-height: 1.55;
+}
+.contact-trust-value a {
+  color: #C4A96B;
+  transition: opacity 0.2s;
+}
+.contact-trust-value a:hover {
+  opacity: 0.8;
+}
+
+/* Submit button — gold override */
+.btn-submit--gold {
+  background-color: #C4A96B;
+  color: #0B0B0B;
+}
+.btn-submit--gold:hover {
+  background-color: #d4b96e;
+  box-shadow: 0 0 28px rgba(196, 169, 107, 0.28);
+  transform: translateY(-2px);
+}
+.btn-submit--gold:active {
+  transform: scale(0.97);
+}
+.btn-submit--gold:disabled {
+  background-color: rgba(196, 169, 107, 0.25);
+  color: rgba(11, 11, 11, 0.4);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Reassurance microcopy below submit */
+.contact-form-assurance {
+  font-size: 0.75rem;
+  color: rgba(245, 245, 245, 0.32);
+  text-align: center;
+  margin-top: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+/* "(optional)" label tag */
+.field-optional {
+  font-size: 0.75em;
+  font-weight: 400;
+  color: rgba(245, 245, 245, 0.35);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Alternative CTA path (tertiary — below form section) */
+.contact-alt-path {
+  padding: 2.5rem 0 3rem;
+  text-align: center;
+}
+.contact-alt-path p {
+  font-size: 0.8125rem;
+  color: rgba(245, 245, 245, 0.38);
+  line-height: 1.8;
+}
+.contact-alt-path a {
+  color: rgba(245, 245, 245, 0.55);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(245, 245, 245, 0.25);
+  transition: color 0.2s;
+}
+.contact-alt-path a:hover {
+  color: rgba(245, 245, 245, 0.8);
 }
