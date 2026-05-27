@@ -1115,6 +1115,28 @@ function initPrism(container, cfg) {
 }());
 
 // =====================================================================
+// VIDEO PHONE FRAMES — VIEWPORT-AWARE PLAYBACK
+// Plays the Kerri Fox's Med Spa ad videos only when they're visible
+// on screen. Pauses when scrolled away to save CPU/battery on mobile.
+// =====================================================================
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  document.querySelectorAll('.cs-video-phone video').forEach(function (video) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          video.play().catch(function () {});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.3 });
+    obs.observe(video);
+  });
+}());
+
+
+// =====================================================================
 // ACTIVE NAV LINK HIGHLIGHTING
 // Adds .active to the nav link whose target section is in view.
 // =====================================================================
