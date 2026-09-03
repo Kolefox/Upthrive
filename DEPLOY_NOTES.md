@@ -4,7 +4,7 @@
 
 ### Required before going live
 - [ ] **Replace placeholder stats on results.html** — Search for `[PLACEHOLDER` in results.html and fill in verified client metrics for Fox's Fleet and Precision Stone sections
-- [ ] **Verify form submissions reach GoHighLevel** — Submit a test form on both `index.html` and `contact.html`; confirm the lead appears in your GoHighLevel CRM
+- [ ] **Verify form submissions reach Web3Forms** — Submit a test form on both `index.html` and `contact.html`; confirm the lead notification is received with the correct field values
 - [ ] **Review About page copy** — Read through the founder bio on `about.html` and edit to match your exact voice and any details that need updating
 
 ### Deployment steps
@@ -21,8 +21,8 @@
 - [ ] HTTPS is enforced (Vercel default)
 
 ### Forms
-- [ ] Submit test form on `index.html` → confirm GoHighLevel receives it with correct field values
-- [ ] Submit test form on `contact.html` → confirm GoHighLevel receives it
+- [ ] Submit test form on `index.html` → confirm Web3Forms receives it with correct field values
+- [ ] Submit test form on `contact.html` → confirm Web3Forms receives it
 - [ ] SMS consent language is displayed verbatim and checkbox works correctly
 - [ ] Success confetti/modal fires after form submission on both pages
 
@@ -77,12 +77,12 @@ Removing the Meta Pixel would raise this to ~92. That is a business decision, no
 
 ## Form Endpoint
 
-**Webhook URL (do not change):**
+**Web3Forms endpoint:**
 ```
-https://services.leadconnectorhq.com/hooks/XCmNK4RxWkr73hPCuKzR/webhook-trigger/2c2e59a6-8290-47b3-98b3-c7e5357071aa
+https://api.web3forms.com/submit
 ```
 
-This endpoint is used in `js/script.js` for the `#contact-form` handler. Both `index.html` and `contact.html` share the same `#contact-form` ID and the same JS handler.
+The access key is included as a hidden field in both lead forms. `js/script.js` submits each `#contact-form` asynchronously with `FormData`. Both `index.html` and `contact.html` share the same `#contact-form` ID and the same JS handler.
 
 ## Git Branches
 - `main` — production-ready after merge

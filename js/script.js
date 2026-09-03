@@ -859,6 +859,11 @@ function initPrism(container, cfg) {
       ok = false;
     }
 
+    if (phoneEl && phoneEl.required && !phoneEl.value.trim()) {
+      showError(phoneEl, 'Phone number is required.');
+      ok = false;
+    }
+
     if (companyEl && !companyEl.value.trim()) {
       showError(companyEl, 'Company name is required.');
       ok = false;
@@ -898,7 +903,7 @@ function initPrism(container, cfg) {
 
 // =====================================================================
 // SUCCESS MODAL + GOLD CONFETTI
-// Fires on form submit. Pure-canvas confetti in the Upthrive gold
+// Fires after a successful form submit. Pure-canvas confetti in the Upthrive gold
 // palette — no external libraries.
 // =====================================================================
 (function () {
@@ -911,6 +916,9 @@ function initPrism(container, cfg) {
   var ctx       = canvas.getContext('2d');
   var particles = [];
   var animId    = null;
+  var isSubmitting = false;
+  var WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+  var WEB3FORMS_ACCESS_KEY = 'cf3e3269-21eb-4386-b2a2-4d4c64e1b0ec';
 
   // Gold palette — weighted toward the richest tones
   var PALETTE = [
@@ -1036,54 +1044,69 @@ function initPrism(container, cfg) {
     stopConfetti();
   }
 
-  // Form submit — POST to GoHighLevel inbound webhook, then show success
+  // Form submit — POST to Web3Forms, then show success
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    if (isSubmitting) return;
 
-    var submitBtn = document.getElementById('btn-submit');
+    var submitBtn = form.querySelector('button[type="submit"]');
     var btnLabel  = submitBtn ? submitBtn.textContent : 'Book My Free Audit';
+    var submitErr = form.querySelector('.submit-error');
+    if (submitErr) {
+      submitErr.textContent = '';
+      submitErr.style.display = 'none';
+    }
 
     // Loading state
+    isSubmitting = true;
     if (submitBtn) {
       submitBtn.textContent = 'Sending\u2026';
       submitBtn.disabled    = true;
     }
 
-    var payload = {
-      full_name:       (form.querySelector('input[name="name"]')       || {}).value || '',
-      email:           (form.querySelector('input[name="email"]')      || {}).value || '',
-      phone:           (form.querySelector('input[name="phone"]')      || {}).value || '',
-      company_name:    (form.querySelector('input[name="company"]')    || {}).value || '',
-      primary_service: (form.querySelector('select[name="service"]')   || {}).value || '',
-      message:         (form.querySelector('textarea[name="message"]') || {}).value || '',
-      consent:         !!(form.querySelector('input[name="consent"]')  || {}).checked
-    };
+    var formData = new FormData(form);
+    var consentEl = form.querySelector('input[name="consent"]');
+    formData.set('access_key', WEB3FORMS_ACCESS_KEY);
+    formData.set('subject', 'New Upthrive Website Lead');
+    formData.set('consent', consentEl && consentEl.checked ? 'Yes' : 'No');
+    formData.set('page_url', window.location.href);
 
-    fetch('https://services.leadconnectorhq.com/hooks/XCmNK4RxWkr73hPCuKzR/webhook-trigger/2c2e59a6-8290-47b3-98b3-c7e5357071aa', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(payload)
+    fetch(WEB3FORMS_ENDPOINT, {
+      method: 'POST',
+      body: formData
     })
     .then(function (res) {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json().catch(function () {
+        return {};
+      }).then(function (data) {
+        if (!res.ok || data.success === false) {
+          throw new Error(data.message || ('HTTP ' + res.status));
+        }
+        return data;
+      });
+    })
+    .then(function () {
       // Success — show modal, reset form, restore button
       openSuccess();
       if (typeof fbq === 'function') fbq('track', 'Lead');
       if (typeof gtag === 'function') gtag('event', 'generate_lead');
       form.reset();
+      isSubmitting = false;
       if (submitBtn) {
         submitBtn.textContent = btnLabel;
         submitBtn.disabled    = false;
       }
     })
-    .catch(function () {
+    .catch(function (err) {
+      console.error('Web3Forms submission failed:', err);
       // Restore button so the user can retry
+      isSubmitting = false;
       if (submitBtn) {
         submitBtn.textContent = btnLabel;
         submitBtn.disabled    = false;
       }
       // Show a submit-level error above the button (cleared on next reset)
-      var submitErr = form.querySelector('.submit-error');
+      submitErr = form.querySelector('.submit-error');
       if (!submitErr) {
         submitErr = document.createElement('p');
         submitErr.className = 'submit-error field-error';
