@@ -775,6 +775,44 @@ function initPrism(container, cfg) {
 }());
 
 // =====================================================================
+// GA4 ENGAGEMENT — generic metadata only; never read form values.
+// =====================================================================
+(function () {
+  document.querySelectorAll('a[href="contact.html"], a[href="#contact"]').forEach(function (cta) {
+    var location;
+    if (cta.matches('.mobile-cta')) location = 'mobile_navbar';
+    else if (cta.matches('.nav-cta')) location = 'navbar';
+    else if (cta.closest('#hero')) location = 'hero';
+    else if (cta.closest('.page-cta-block')) location = 'final_cta';
+    else if (cta.closest('footer')) location = 'footer';
+    else if (cta.matches('.service-cta-link, .srv-btn-gold')) location = cta.closest('section').id;
+    else return; // Ordinary navigation links are not primary CTAs.
+
+    cta.addEventListener('click', function () {
+      if (typeof gtag === 'function') {
+        gtag('event', 'cta_click', {
+          cta_text: cta.textContent.trim().replace(/\s+/g, ' '),
+          cta_location: location
+        });
+      }
+    });
+  });
+
+  var form = document.getElementById('contact-form');
+  if (!form) return;
+  var started = false;
+  function trackStart(event) {
+    if (started || !event.target.matches('input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([name="botcheck"]), select, textarea')) return;
+    started = true;
+    if (typeof gtag === 'function') {
+      gtag('event', 'form_start', { form_name: 'free_audit_form' });
+    }
+  }
+  form.addEventListener('focusin', trackStart);
+  form.addEventListener('change', trackStart);
+}());
+
+// =====================================================================
 // CONTACT FORM — PHONE FORMATTING + SUBMIT VALIDATION
 // Phone auto-formats as-you-type with zero errors while typing.
 // All field validation fires only when the submit button is clicked.
@@ -1085,11 +1123,16 @@ function initPrism(container, cfg) {
         return data;
       });
     })
-    .then(function () {
+    .then(function (data) {
       // Success — show modal, reset form, restore button
       openSuccess();
       if (typeof fbq === 'function') fbq('track', 'Lead');
-      if (typeof gtag === 'function') gtag('event', 'generate_lead');
+      if (data.success === true && typeof gtag === 'function') {
+        gtag('event', 'generate_lead', {
+          form_name: 'free_audit_form',
+          method: 'web3forms'
+        });
+      }
       form.reset();
       isSubmitting = false;
       if (submitBtn) {
