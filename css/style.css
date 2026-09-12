@@ -216,6 +216,33 @@ header .nav-links a:hover::after {
   width: 100%;
 }
 
+/* Nav secondary CTA — Free Website Audit link, subtle outline so it doesn't compete with the primary gold CTA */
+header .nav-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.25rem;
+  margin-right: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background-color: transparent;
+  color: rgba(245, 245, 245, 0.75);
+  border: 1px solid rgba(245, 245, 245, 0.22);
+  transition:
+    background-color 0.25s ease,
+    border-color     0.25s ease,
+    color            0.25s ease;
+}
+
+header .nav-cta-secondary:hover {
+  color: #F5F5F5;
+  border-color: rgba(245, 245, 245, 0.5);
+  background-color: rgba(245, 245, 245, 0.06);
+}
+
 /* Nav CTA — gold-bordered by default, fills gold on scroll */
 header .nav-cta {
   display: inline-flex;
@@ -351,6 +378,30 @@ header.nav-open .mobile-nav {
 .mobile-nav .mobile-cta:hover {
   background-color: #d4b96e !important;
   color: #0B0B0B !important;
+}
+
+/* Mobile secondary CTA — Free Website Audit, outline so it stays secondary to Book a Call */
+.mobile-nav .mobile-cta-secondary {
+  display: block;
+  margin-top: 12px;
+  padding: 13px 28px !important;
+  background-color: transparent;
+  color: rgba(245, 245, 245, 0.8) !important;
+  border: 1px solid rgba(245, 245, 245, 0.25);
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.6875rem !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  border-bottom: 1px solid rgba(245, 245, 245, 0.25) !important;
+  justify-content: center !important;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.mobile-nav .mobile-cta-secondary:hover {
+  border-color: rgba(245, 245, 245, 0.5);
+  color: #F5F5F5 !important;
 }
 
 
@@ -1637,7 +1688,8 @@ footer::after {
 
   /* Nav */
   .nav-links,
-  header .nav-cta {
+  header .nav-cta,
+  header .nav-cta-secondary {
     display: none;
   }
 
